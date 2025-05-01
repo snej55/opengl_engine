@@ -17,7 +17,7 @@ elseif (CMAKE_SYSTEM MATCHES Linux)
     set(GL_LIBS GL GLU glfw3 assimp)
 endif()
 
-set(SOURCES main.cpp)
+set(SOURCES main.cpp src/app.h)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
