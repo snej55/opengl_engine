@@ -19,7 +19,7 @@ public:
     void tick();
 
     // creates a new window
-    Window* createWindow() const;
+    [[nodiscard]] Window* createWindow() const;
     // allows app to manage window
     void addWindow(Window* window);
 
