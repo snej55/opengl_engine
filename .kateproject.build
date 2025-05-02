@@ -1,0 +1,12 @@
+{
+    "Auto_generated": "This file is auto-generated. Any extra tags or formatting will be lost",
+    "target_sets": [
+        {
+            "cmake_config": "NONE",
+            "directory": "/home/jenskromdijk/Documents/coding/opengl_project/build",
+            "loaded_via_cmake": true,
+            "name": "main@/home/jenskromdijk/Documents/coding/opengl_project/build - [NONE]",
+            "targets": null
+        }
+    ]
+}
