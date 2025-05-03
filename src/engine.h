@@ -19,6 +19,7 @@ public:
             if (e != nullptr)
             {
                 e->free();
+                delete e;
                 e = nullptr;
             }
         }

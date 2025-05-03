@@ -4,10 +4,13 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-class App
+#include "engine.h"
+#include "window.h"
+
+class App : public EngineObject
 {
 public:
-    explicit App();
+    App();
     virtual ~App();
 
     virtual bool init();
