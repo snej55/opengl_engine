@@ -7,14 +7,21 @@
 class EngineObject
 {
 public:
-    EngineObject(void* parent, const std::vector<void*> children = {})
+    EngineObject(EngineObject* parent, const std::vector<EngineObject*> children = {})
      : m_parent{parent}, m_children{children}
     {
     }
 
     virtual void free()
     {
-        
+        for (EngineObject*& e: m_children)
+        {
+            if (e != nullptr)
+            {
+                e->free();
+                e = nullptr;
+            }
+        }
     }
 
     template <typename T>
@@ -23,22 +30,22 @@ public:
         return static_cast<T*>(m_parent);
     }
 
-    void* get_parent() const
+    EngineObject* get_parent() const
     {
         return m_parent;
     }
     
     void clear_parent() {m_parent = nullptr;}
-    void set_parent(void* parent) {m_parent = parent;}
+    void set_parent(EngineObject* parent) {m_parent = parent;}
 
-    std::vector<void*> get_children() const
+    std::vector<EngineObject*> get_children() const
     {
         return m_children;
     }
 
 protected:
-    void* m_parent;
-    std::vector<void*> m_children;
+    EngineObject* m_parent;
+    std::vector<EngineObject*> m_children;
 };
 
 #endif
