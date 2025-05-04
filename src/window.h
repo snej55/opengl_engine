@@ -36,6 +36,11 @@ public:
 
     [[nodiscard]] GLFWwindow* getWindow() const {return m_window;}
 
+    // window callbacks
+    void framebuffer_size_callback(int width, int height);
+    void mouse_callback(double xpos, double ypos);
+    void scroll_callback(double xoffset, double yoffset);
+
 private:
     int m_width{0};
     int m_height{0};

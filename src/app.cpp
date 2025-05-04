@@ -39,6 +39,11 @@ bool App::init(const int width, const int height, const char* title)
         std::cout << "Failed to initialize GLAD!" << std::endl;
         return false;
     }
+
+    // create view port and add window callbacks
+    m_window->createViewPort();
+
+    return true;
 }
 
 bool App::createWindow(const int width, const int height, const char* title)
