@@ -10,6 +10,11 @@ public:
     EngineObject(EngineObject* parent, const std::vector<EngineObject*> children = {})
      : m_parent{parent}, m_children{children}
     {
+        if (parent != nullptr)
+        {
+            // add self as node
+            parent->addChild(this);
+        }
     }
 
     virtual void free()
@@ -31,17 +36,22 @@ public:
         return static_cast<T*>(m_parent);
     }
 
-    EngineObject* getParent() const
+    virtual EngineObject* getParent() const
     {
         return m_parent;
     }
     
-    void clearParent() {m_parent = nullptr;}
-    void setParent(EngineObject* parent) {m_parent = parent;}
+    virtual void clearParent() {m_parent = nullptr;}
+    virtual void setParent(EngineObject* parent) {m_parent = parent;}
 
-    std::vector<EngineObject*> getChildren() const
+    virtual std::vector<EngineObject*> getChildren() const
     {
         return m_children;
+    }
+
+    virtual void addChild(EngineObject* child)
+    {
+        m_children.push_back(child);
     }
 
 protected:

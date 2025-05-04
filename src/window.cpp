@@ -25,3 +25,13 @@ bool Window::init(const int width, const int height, const char* title)
 
     return true;
 }
+
+void Window::createViewPort()
+{
+    glViewport(0, 0, m_width, m_height);
+}
+
+void Window::free()
+{
+    EngineObject::free();
+}

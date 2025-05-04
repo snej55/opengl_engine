@@ -14,7 +14,10 @@ public:
     Window(EngineObject* parent);
 
     virtual bool init(const int width, const int height, const char* title);
+    virtual void createViewPort();
+
     virtual void free();
+
 
     // getters & setters
     [[nodiscard]] int getWidth() const {return m_width;}
@@ -40,6 +43,11 @@ private:
     std::string m_title{};
 
     GLFWwindow* m_window{nullptr};
+
+    // glfw callbacks
+    static void win_framebuffer_size_callback(GLFWwindow* window, int width, int height);
+    static void win_mouse_callback(GLFWwindow* window, double xpos, double ypos);
+    static void win_scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 };
 
 #endif
