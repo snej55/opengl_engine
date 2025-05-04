@@ -12,6 +12,7 @@ class Window : public EngineObject
 {
 public:
     Window(EngineObject* parent);
+    virtual ~Window();
 
     virtual bool init(const int width, const int height, const char* title);
     virtual void createViewPort();
