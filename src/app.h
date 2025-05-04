@@ -15,8 +15,6 @@ public:
 
     virtual bool init();
     virtual void free();
-
-    [[nodiscard]] void* get_parent() const;
 };
 
 #endif

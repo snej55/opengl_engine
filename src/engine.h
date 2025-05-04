@@ -26,20 +26,20 @@ public:
     }
 
     template <typename T>
-    T* get_parent() const
+    T* getParent() const
     {
         return static_cast<T*>(m_parent);
     }
 
-    EngineObject* get_parent() const
+    EngineObject* getParent() const
     {
         return m_parent;
     }
     
-    void clear_parent() {m_parent = nullptr;}
-    void set_parent(EngineObject* parent) {m_parent = parent;}
+    void clearParent() {m_parent = nullptr;}
+    void setParent(EngineObject* parent) {m_parent = parent;}
 
-    std::vector<EngineObject*> get_children() const
+    std::vector<EngineObject*> getChildren() const
     {
         return m_children;
     }

@@ -5,7 +5,7 @@ Window::Window(EngineObject* parent)
 {
 }
 
-bool Window::init(const int width, const int height)
+bool Window::init(const int width, const int height, const char* title)
 {
-    
+
 }
