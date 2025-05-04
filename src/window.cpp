@@ -45,6 +45,8 @@ void Window::createViewPort()
 void Window::free()
 {
     EngineObject::free();
+    glfwDestroyWindow(m_window);
+    m_window = nullptr;
 }
 
 // window callbacks
