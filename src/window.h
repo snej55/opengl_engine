@@ -3,10 +3,13 @@
 
 #include "engine.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 class Window : public EngineObject
 {
 public:
-    Window();
+    Window(EngineObject* parent);
 
     bool init(const int width, const int height);
     void free();
@@ -14,6 +17,8 @@ public:
 private:
     int m_width{0};
     int m_height{0};
+
+    GLFWwindow* m_Window{nullptr};
 };
 
 #endif
