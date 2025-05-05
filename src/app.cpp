@@ -3,13 +3,16 @@
 #include <iostream>
 
 App::App()
- : EngineObject{nullptr}
+ : EngineObject{nullptr, "App"}
 {
 }
 
 App::~App()
 {
-    free();
+    if (!m_freed)
+    {
+        free();
+    }
 }
 
 bool App::init(const int width, const int height, const char* title)
@@ -62,4 +65,5 @@ void App::free()
 {
     EngineObject::free();
     glfwTerminate();
+    std::cout << "Terminated OpenGL context!" << std::endl;
 }

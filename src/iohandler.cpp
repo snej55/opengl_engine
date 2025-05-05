@@ -2,7 +2,7 @@
 #include "window.h"
 
 IOHandler::IOHandler(EngineObject* window)
- : EngineObject{window}, m_window{window}
+ : EngineObject{window, "IOHandler"}, m_window{window}
 {
 }
 

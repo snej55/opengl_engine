@@ -3,13 +3,16 @@
 #include <iostream>
 
 Window::Window(EngineObject* parent)
- : EngineObject{parent}
+ : EngineObject{parent, "Window"}
 {
 }
 
 Window::~Window()
 {
-    free();
+    if (!m_freed)
+    {
+        free();
+    }
 }
 
 bool Window::init(const int width, const int height, const char* title)
@@ -47,6 +50,7 @@ void Window::free()
     EngineObject::free();
     glfwDestroyWindow(m_window);
     m_window = nullptr;
+    std::cout << "Destroyed GLFW window!\n";
 }
 
 // window callbacks
