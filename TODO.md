@@ -9,4 +9,4 @@
 - [X] Give engine objects names
 - [X] Tracking
 - [ ] Add clock object
-- [ ] Finish setting up main loop
+- [X] Finish setting up main loop
