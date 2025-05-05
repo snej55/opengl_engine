@@ -36,12 +36,16 @@ bool App::init(const int width, const int height, const char* title)
         return false;
     }
 
+    std::cout << "Successfully initialized GLFW!\n";
+
     // initialize glad
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
     {
         std::cout << "Failed to initialize GLAD!" << std::endl;
         return false;
     }
+
+    std::cout << "Successfully initialized GLAD!\n";
 
     // create view port and add window callbacks
     m_window->createViewPort();

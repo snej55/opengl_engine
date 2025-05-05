@@ -31,6 +31,8 @@ bool Window::init(const int width, const int height, const char* title)
     setHeight(height);
     setTitle(title);
 
+    std::cout << "Created GLFW window: {dimensions: " << width << " * " << height << ", title: '" << title << "'}\n";
+
     return true;
 }
 
@@ -45,12 +47,28 @@ void Window::createViewPort()
     glfwSetScrollCallback(m_window, win_scroll_callback);
 }
 
+bool Window::createIOHandler()
+{
+    if (m_iohandler == nullptr)
+    {
+        m_iohandler = new IOHandler{this};
+        return true;
+    } else {
+        std::cout << "APP::WINDOW::CREATE_IOHANDLER::ERROR: IOHandler already exists!" << std::endl;
+        return false;
+    }
+}
+
 void Window::free()
 {
     EngineObject::free();
     glfwDestroyWindow(m_window);
     m_window = nullptr;
     std::cout << "Destroyed GLFW window!\n";
+}
+
+bool Window::getPressed(int key) const
+{
 }
 
 // window callbacks

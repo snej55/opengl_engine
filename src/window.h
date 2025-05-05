@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include "engine.h"
+#include "iohandler.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -15,10 +16,17 @@ public:
     virtual ~Window();
 
     virtual bool init(const int width, const int height, const char* title);
-    virtual void createViewPort();
-
+    
     virtual void free();
+    
+    virtual void update();
 
+    virtual void createViewPort();
+    virtual bool createIOHandler();
+
+    // io handler stuff
+    IOHandler* getIOHandler() const {return m_iohandler;}
+    bool getPressed(int key) const;
 
     // getters & setters
     [[nodiscard]] int getWidth() const {return m_width;}
@@ -49,6 +57,8 @@ private:
     std::string m_title{};
 
     GLFWwindow* m_window{nullptr};
+
+    IOHandler* m_iohandler{nullptr};
 
     // glfw callbacks
     static void win_framebuffer_size_callback(GLFWwindow* window, int width, int height);
