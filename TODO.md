@@ -15,6 +15,7 @@
 - [ ] Shader templates
 - [ ] Custom shaders
 - [ ] Basic lighting shaders (Phong & Blinn-Phong)
+- [ ] Point lights, directional lights, spot-lights
 - [ ] Model loading with assimp
 - [ ] Material system
 - [ ] Render queue
@@ -41,3 +42,5 @@
 - [ ] Fonts
 - [ ] Screen coordinates rendering
 - [ ] 2D mode
+- [ ] Loading assets splash screen
+- [ ] Proper fullscreen
