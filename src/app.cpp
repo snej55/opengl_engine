@@ -1,6 +1,7 @@
 #include "app.h"
 
 #include <iostream>
+#include <cassert>
 
 App::App()
  : EngineObject{nullptr, "App"}
@@ -53,6 +54,19 @@ bool App::init(const int width, const int height, const char* title)
     return true;
 }
 
+void App::free()
+{
+    EngineObject::free();
+    glfwTerminate();
+    std::cout << "Terminated OpenGL context!" << std::endl;
+}
+
+void App::update()
+{
+    assert(m_window != nullptr);
+    m_window->update();
+}
+
 bool App::createWindow(const int width, const int height, const char* title)
 {
     if (m_window == nullptr)
@@ -63,11 +77,4 @@ bool App::createWindow(const int width, const int height, const char* title)
         std::cout << "APP::CREATE_WINDOW::ERROR: Window already exists!" << std::endl;
         return false;
     }
-}
-
-void App::free()
-{
-    EngineObject::free();
-    glfwTerminate();
-    std::cout << "Terminated OpenGL context!" << std::endl;
 }
