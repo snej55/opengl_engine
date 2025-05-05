@@ -1,9 +1,11 @@
 #include "src/app.h"
+#include "src/logging.h"
 
 #include <iostream>
 
 int main()
 {
+    Logger logger{".logs/cout1.log"};
     App app{};
     if (!app.init(640, 480, "OpenGL window"))
     {
