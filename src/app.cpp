@@ -50,6 +50,12 @@ bool App::init(const int width, const int height, const char* title)
 
     // create view port and add window callbacks
     m_window->createViewPort();
+    // allow keyboard input and stuff
+    if (!m_window->createIOHandler())
+    {
+        std::cout << "Failed to create IOHandler!" << std::endl;
+        return false;
+    }
 
     return true;
 }

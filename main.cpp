@@ -11,5 +11,14 @@ int main()
         return 1;
     }
     std::cout << "Initialized!\n";
+
+    Window* window{app.getWindow()};
+    while (!window->getShouldClose())
+    {
+        window->update();
+        window->clear();
+
+        window->tick();
+    }
     return 0;
 }
