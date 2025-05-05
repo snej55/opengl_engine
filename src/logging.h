@@ -4,13 +4,25 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <ctime>
 
 class Logger
 {
 public:
-    Logger(std::string_view outPath)
-     : m_path{outPath}
+    Logger(std::string_view dir, std::string_view name="")
+     : m_dir{dir}, m_fileName{name}
     {
+        std::stringstream fileName;
+        // get current time
+        std::time_t time {std::time(0)};
+        std::tm* now {std::localtime(&time)};
+        // write date to stringstream
+        fileName << now->tm_hour << ':' << (now->tm_min < 10 ? ("0" + std::to_string(now->tm_min)) : std::to_string(now->tm_min)) << ':' << (now->tm_sec < 10 ? ("0" + std::to_string(now->tm_sec)) : std::to_string(now->tm_sec))
+         << "::" << now->tm_mday << '-' << now->tm_mon + 1 << '-' << now->tm_year + 1900 << ".log";
+        m_fileName = fileName.str();
+        // get file path
+        m_path = (m_dir + '/' + m_fileName);
         // open log file
         m_file = std::ofstream{m_path.c_str()};
         if (m_file.is_open())
@@ -37,6 +49,8 @@ public:
     }
 
 private:
+    std::string m_dir;
+    std::string m_fileName;
     std::string m_path;
     std::ofstream m_file;
 };
