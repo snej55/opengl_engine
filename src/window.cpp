@@ -80,10 +80,20 @@ bool Window::createIOHandler()
     {
         m_iohandler = new IOHandler{this};
         return true;
-    } else {
-        std::cout << "APP::WINDOW::CREATE_IOHANDLER::ERROR: IOHandler already exists!" << std::endl;
-        return false;
     }
+    std::cout << "APP::WINDOW::CREATE_IOHANDLER::ERROR: IOHandler already exists!" << std::endl;
+    return false;
+}
+
+bool Window::createClock()
+{
+    if (m_clock == nullptr)
+    {
+        m_clock = new Clock{this};
+        return true;
+    }
+    std::cout << "APP::WINDOW::CREATE_CLOCK::ERROR: Clock already exists!" << std::endl;
+    return false;
 }
 
 // checks if user has pressed esc or something
@@ -122,6 +132,13 @@ bool Window::getPressed(int key) const
     return m_iohandler->getPressed(key);
 }
 
+float Window::getDeltaTime() const
+{
+    assert(m_clock != nullptr);
+    return m_clock->getDeltaTime();
+}
+
+// CALLBACKS
 // window callbacks
 void Window::framebuffer_size_callback(int width, int height)
 {

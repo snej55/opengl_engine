@@ -3,8 +3,8 @@
 
 #include "engine.h"
 #include "iohandler.h"
+#include "clock.h"
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <string>
@@ -28,6 +28,7 @@ public:
     virtual void createViewPort();
     // create new IOHandler object
     virtual bool createIOHandler();
+    virtual bool createClock();
 
     // --- Window management stuff ---
     // checks if window should close
@@ -40,7 +41,12 @@ public:
 
     // io handler stuff
     IOHandler* getIOHandler() const {return m_iohandler;}
+    // get state of keyboard keys from iohandler
     bool getPressed(int key) const;
+
+    // clock stuff
+    Clock* getClock() const {return m_clock;}
+    float getDeltaTime() const;
 
     // getters & setters
     [[nodiscard]] int getWidth() const {return m_width;}
@@ -75,6 +81,7 @@ private:
     GLFWwindow* m_window{nullptr};
 
     IOHandler* m_iohandler{nullptr};
+    Clock* m_clock{nullptr};
 
     // glfw callbacks
     static void win_framebuffer_size_callback(GLFWwindow* window, int width, int height);

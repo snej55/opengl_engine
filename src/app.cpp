@@ -48,12 +48,20 @@ bool App::init(const int width, const int height, const char* title)
 
     std::cout << "Successfully initialized GLAD!\n";
 
+    // --- INITIALIZE WINDOW OBJECTS --- //
+
     // create view port and add window callbacks
     m_window->createViewPort();
     // allow keyboard input and stuff
     if (!m_window->createIOHandler())
     {
         std::cout << "Failed to create IOHandler!" << std::endl;
+        return false;
+    }
+    // create clock for deltatime, etc
+    if (!m_window->createClock())
+    {
+        std::cout << "Failed to create Clock!" << std::endl;
         return false;
     }
 
@@ -83,4 +91,12 @@ bool App::createWindow(const int width, const int height, const char* title)
         std::cout << "APP::CREATE_WINDOW::ERROR: Window already exists!" << std::endl;
         return false;
     }
+}
+
+// --- WINDOW FUNCTIONS --- //
+
+// get deltatime from window clock
+float App::getDeltaTime() const
+{
+    return m_window->getDeltaTime();
 }

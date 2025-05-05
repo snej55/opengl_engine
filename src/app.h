@@ -23,6 +23,8 @@ public:
     virtual bool createWindow(const int width, const int height, const char* title); // initializes window
     [[nodiscard]] Window* getWindow() const {return m_window;}
 
+    float getDeltaTime() const;
+
 private:
     Window* m_window{nullptr};
 };
