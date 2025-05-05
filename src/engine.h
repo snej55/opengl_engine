@@ -20,6 +20,14 @@ public:
         std::cout << "Created {" << name << "} as child of {" << (parent == nullptr ? "NULL" : parent->getName()) << "}\n";
     }
 
+    virtual ~EngineObject()
+    {
+        if (!m_freed)
+        {
+            free();
+        }
+    }
+
     virtual void free()
     {
         for (EngineObject*& e: m_children)
