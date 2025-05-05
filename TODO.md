@@ -38,3 +38,6 @@
 - [ ] World data object
 - [ ] Octrees for world map physics data
 - [ ] UI
+- [ ] Fonts
+- [ ] Screen coordinates rendering
+- [ ] 2D mode
