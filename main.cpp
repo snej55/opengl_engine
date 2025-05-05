@@ -5,7 +5,6 @@
 
 int main()
 {
-    // // create logger
     // Logger logger{".logs"};
     App app{};
     if (!app.init(640, 480, "OpenGL window"))

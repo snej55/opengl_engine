@@ -4,9 +4,9 @@
 - [X] Add app component
 - [X] Add window component
 - [X] Add IOHandler
-- [X] Add proper initialization and termination
+- [X] Fix initialization and termination
 - [X] Add logs
 - [X] Give engine objects names
 - [X] Tracking
-- [ ] Add clock object
+- [X] Add clock object
 - [X] Finish setting up main loop
