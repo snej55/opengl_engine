@@ -10,3 +10,31 @@
 - [X] Tracking
 - [X] Add clock object
 - [X] Finish setting up main loop
+- [ ] Set up renderer class
+- [ ] Default shaders
+- [ ] Shader templates
+- [ ] Custom shaders
+- [ ] Basic lighting shaders (Phong & Blinn-Phong)
+- [ ] Model loading with assimp
+- [ ] Material system
+- [ ] Render queue
+- [ ] Postprocessing (framebuffer system)
+- [ ] Shadows
+- [ ] PBR
+- [ ] Model animations
+- [ ] Physics system
+- [ ] Physics mesh generation
+- [ ] Texture loading
+- [ ] Texture rendering
+- [ ] Audio loading
+- [ ] Audio playback
+- [ ] Scene system
+- [ ] Objects
+- [ ] Items
+- [ ] Entities
+- [ ] Item manager
+- [ ] Entity manager
+- [ ] Level loading
+- [ ] World data object
+- [ ] Octrees for world map physics data
+- [ ] UI
