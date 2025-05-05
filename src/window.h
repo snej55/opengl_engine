@@ -33,6 +33,10 @@ public:
     // checks if window should close
     bool getQuit() const;
     bool getShouldClose() const;
+    // clear screen
+    virtual void clear() const;
+    // swap buffers and calculate delta time
+    virtual void tick();
 
     // io handler stuff
     IOHandler* getIOHandler() const {return m_iohandler;}

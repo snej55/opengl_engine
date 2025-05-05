@@ -102,6 +102,19 @@ bool Window::getShouldClose() const
     return glfwWindowShouldClose(m_window) || getQuit();
 }
 
+// clear screen
+void Window::clear() const
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+}
+
+void Window::tick()
+{
+    glfwSwapBuffers(m_window);
+    glfwPollEvents();
+}
+
 // Get key state for GLFW key from IOHandler
 bool Window::getPressed(int key) const
 {
