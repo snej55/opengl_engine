@@ -6,5 +6,7 @@
 - [X] Add IOHandler
 - [X] Add proper initialization and termination
 - [ ] Add logs
-- [ ] Give engine objects names
-- [ ] Tracking
+- [X] Give engine objects names
+- [X] Tracking
+- [ ] Add clock object
+- [ ] Finish setting up main loop
