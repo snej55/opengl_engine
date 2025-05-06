@@ -1,6 +1,7 @@
 #ifndef SHADER_H
 #define SHADER_H
 
+#include <glad/glad.h>
 #include "engine.h"
 
 #include <GLFW/glfw3.h>
@@ -15,7 +16,7 @@ public:
 
     virtual void loadFromFile(const char* fragPath, const char* vertPath);
 
-    virtual void loadDefault();
+    // virtual void loadDefault();
 
     [[nodiscard]] unsigned int getID() const;
 
