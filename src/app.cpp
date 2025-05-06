@@ -1,15 +1,19 @@
 #include "app.h"
 
 #include <iostream>
+#include <cassert>
 
 App::App()
- : EngineObject{nullptr}
+ : EngineObject{nullptr, "App"}
 {
 }
 
 App::~App()
 {
-    free();
+    if (!m_freed)
+    {
+        free();
+    }
 }
 
 bool App::init(const int width, const int height, const char* title)
@@ -33,6 +37,8 @@ bool App::init(const int width, const int height, const char* title)
         return false;
     }
 
+    std::cout << "Successfully initialized GLFW!\n";
+
     // initialize glad
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
     {
@@ -40,10 +46,39 @@ bool App::init(const int width, const int height, const char* title)
         return false;
     }
 
+    std::cout << "Successfully initialized GLAD!\n";
+
+    // --- INITIALIZE WINDOW OBJECTS --- //
+
     // create view port and add window callbacks
     m_window->createViewPort();
+    // allow keyboard input and stuff
+    if (!m_window->createIOHandler())
+    {
+        std::cout << "Failed to create IOHandler!" << std::endl;
+        return false;
+    }
+    // create clock for deltatime, etc
+    if (!m_window->createClock())
+    {
+        std::cout << "Failed to create Clock!" << std::endl;
+        return false;
+    }
 
     return true;
+}
+
+void App::free()
+{
+    EngineObject::free();
+    glfwTerminate();
+    std::cout << "Terminated OpenGL context!" << std::endl;
+}
+
+void App::update()
+{
+    assert(m_window != nullptr);
+    m_window->update();
 }
 
 bool App::createWindow(const int width, const int height, const char* title)
@@ -58,7 +93,10 @@ bool App::createWindow(const int width, const int height, const char* title)
     }
 }
 
-void App::free()
+// --- WINDOW FUNCTIONS --- //
+
+// get deltatime from window clock
+float App::getDeltaTime() const
 {
-    EngineObject::free();
+    return m_window->getDeltaTime();
 }

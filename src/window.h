@@ -2,8 +2,9 @@
 #define WINDOW_H
 
 #include "engine.h"
+#include "iohandler.h"
+#include "clock.h"
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <string>
@@ -11,14 +12,41 @@
 class Window : public EngineObject
 {
 public:
-    Window(EngineObject* parent);
-    virtual ~Window();
+    Window(EngineObject* parent); // initialize EngineObject
+    virtual ~Window(); // free
 
+    // initializes glfw window
     virtual bool init(const int width, const int height, const char* title);
-    virtual void createViewPort();
-
+    
+    // free resources
     virtual void free();
+    
+    // update objects
+    virtual void update();
 
+    // create viewport and setup glfw callbacks
+    virtual void createViewPort();
+    // create new IOHandler object
+    virtual bool createIOHandler();
+    virtual bool createClock();
+
+    // --- Window management stuff ---
+    // checks if window should close
+    bool getQuit() const;
+    bool getShouldClose() const;
+    // clear screen
+    virtual void clear() const;
+    // swap buffers and calculate delta time
+    virtual void tick();
+
+    // io handler stuff
+    IOHandler* getIOHandler() const {return m_iohandler;}
+    // get state of keyboard keys from iohandler
+    bool getPressed(int key) const;
+
+    // clock stuff
+    Clock* getClock() const {return m_clock;}
+    float getDeltaTime() const;
 
     // getters & setters
     [[nodiscard]] int getWidth() const {return m_width;}
@@ -31,10 +59,12 @@ public:
     void setHeight(const int& val) {m_height = val;}
     void setHeight(const int&& val) {m_height = val;}
 
+    // title setters
     void setTitle(const char* title) {m_title = title;}
     void setTitle(std::string_view title) {m_title = title;}
     void setTitle(const std::string& title) {m_title = title;}
 
+    // returns pointer to GLFWWindow member
     [[nodiscard]] GLFWwindow* getWindow() const {return m_window;}
 
     // window callbacks
@@ -49,6 +79,9 @@ private:
     std::string m_title{};
 
     GLFWwindow* m_window{nullptr};
+
+    IOHandler* m_iohandler{nullptr};
+    Clock* m_clock{nullptr};
 
     // glfw callbacks
     static void win_framebuffer_size_callback(GLFWwindow* window, int width, int height);

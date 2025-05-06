@@ -13,12 +13,14 @@ if (CMAKE_SYSTEM MATCHES Windows)
 elseif (CMAKE_SYSTEM MATCHES Linux)
     message(STATUS "Target system is linux")
     include_directories(${CMAKE_SOURCE_DIR}/include/linux ${CMAKE_SOURCE_DIR}/src/glad)
+    # link_directories(lib)
     link_directories(${CMAKE_SOURCE_DIR}/lib/linux)
     # fedora: mesa-libGLU
     set(GL_LIBS GL GLU glfw3 assimp)
 endif()
 
-set(SOURCES main.cpp src/extern/glad.c src/app.h src/app.cpp src/engine.h src/window.h src/window.cpp)
+set(SOURCES main.cpp src/extern/glad.c src/app.h src/app.cpp src/engine.h src/window.h src/window.cpp src/iohandler.h src/iohandler.cpp
+src/clock.h src/clock.cpp src/logging.h src/shader.h src/shader.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
