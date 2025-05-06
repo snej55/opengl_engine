@@ -102,5 +102,5 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
 
 unsigned int Shader::getID() const
 {
-    return 0;
+    return m_ID;
 }
