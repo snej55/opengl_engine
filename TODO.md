@@ -10,7 +10,7 @@
 - [X] Tracking
 - [X] Add clock object
 - [X] Finish setting up main loop
-- [ ] Set up renderer class
+- [X] Set up renderer class
 - [ ] Default shaders
 - [ ] Shader templates
 - [ ] Custom shaders
@@ -18,7 +18,7 @@
 - [ ] Point lights, directional lights, spot-lights
 - [ ] Model loading with assimp
 - [ ] Material system
-- [ ] Render queue
+- [X] Render queue
 - [ ] Postprocessing (framebuffer system)
 - [ ] Shadows
 - [ ] PBR
