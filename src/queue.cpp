@@ -25,3 +25,8 @@ void RenderQueue::popBack()
 {
     m_objects.pop_back();
 }
+
+bool RenderQueue::isEmpty() const
+{
+    return m_objects.empty();
+}

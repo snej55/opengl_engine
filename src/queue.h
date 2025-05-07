@@ -19,6 +19,8 @@ public:
     std::pair<Shader*, void*> getNext() const;
     void popBack();
 
+    bool isEmpty() const;
+
 private:
     std::vector<std::pair<Shader*, void*>> m_objects{};
 };
