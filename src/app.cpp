@@ -65,6 +65,13 @@ bool App::init(const int width, const int height, const char* title)
         return false;
     }
 
+    // --- INITIALIZE RENDERER --- //
+    if (!createRenderer())
+    {
+        std::cout << "Failed to create renderer!" << std::endl;
+        return false;
+    }
+
     return true;
 }
 
@@ -87,10 +94,20 @@ bool App::createWindow(const int width, const int height, const char* title)
     {
         m_window = new Window{this};
         return m_window->init(width, height, title);
-    } else {
-        std::cout << "APP::CREATE_WINDOW::ERROR: Window already exists!" << std::endl;
-        return false;
     }
+    std::cout << "APP::CREATE_WINDOW::ERROR: Window already exists!" << std::endl;
+    return false;
+}
+
+bool App::createRenderer()
+{
+    if (m_renderer == nullptr)
+    {
+        m_renderer = new Renderer{this};
+        return m_renderer->init();
+    }
+    std::cout << "APP::CREATE_RENDERER::ERROR: Renderer already exists!" << std::endl;
+    return false;
 }
 
 // --- WINDOW FUNCTIONS --- //

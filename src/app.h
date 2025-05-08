@@ -6,6 +6,7 @@
 
 #include "engine.h"
 #include "window.h"
+#include "renderer.h"
 
 class App : public EngineObject
 {
@@ -23,10 +24,14 @@ public:
     virtual bool createWindow(const int width, const int height, const char* title); // initializes window
     [[nodiscard]] Window* getWindow() const {return m_window;}
 
+    virtual bool createRenderer();
+    [[nodiscard]] Renderer* getRenderer() const {return m_renderer;}
+
     float getDeltaTime() const;
 
 private:
     Window* m_window{nullptr};
+    Renderer* m_renderer{nullptr};
 };
 
 #endif
