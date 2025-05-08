@@ -18,7 +18,7 @@ public:
     // clears the queue and renders all the objects from it
     virtual void renderQueue();
     virtual void drawObject(const Shader* shader, void* object);
-    // virtual void addObject();
+    virtual void addObject(Shader* shader, void* object);
 
 protected:
     RenderQueue* m_renderQueue{nullptr};

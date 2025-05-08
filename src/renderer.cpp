@@ -69,3 +69,8 @@ void Renderer::drawObject(const Shader* shader, void* object)
 {
     return;
 }
+
+void Renderer::addObject(Shader* shader, void* object)
+{
+    m_renderQueue->addObject(std::pair<Shader*, void*>{shader, object});
+}
