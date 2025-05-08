@@ -39,6 +39,8 @@
 - [ ] World data object
 - [ ] Octrees for world map physics data
 - [ ] UI
+- [ ] FPS Counter
+- [ ] Debug popup
 - [ ] Fonts
 - [ ] Screen coordinates rendering
 - [ ] 2D mode
