@@ -70,14 +70,14 @@ int main()
     // main loop
     while (!window->getShouldClose())
     {
-        window->update();
-        window->clear();
+        window->update(); // update deltatime and other stuff
+        window->clear(); // clear buffers
 
         shader->use();
         glBindVertexArray(object->getVAO());
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
-        window->tick();
+        window->tick(); // swap buffers and poll events
     }
     return 0;
 }

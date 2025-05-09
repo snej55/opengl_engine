@@ -72,6 +72,9 @@ bool App::init(const int width, const int height, const char* title)
         return false;
     }
 
+    // configure global opengl state
+    glEnable(GL_DEPTH_TEST);
+
     return true;
 }
 

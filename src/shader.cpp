@@ -98,6 +98,8 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
     // no longer needed
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+
+    std::cout << "Loaded shader from files: `" << vertPath << "` `" << fragPath << "`\n";
 }
 
 void Shader::use() const
