@@ -30,6 +30,8 @@ void Object::init(const float* vertices)
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), reinterpret_cast<void*>(0));
     glEnableVertexAttribArray(0);
+
+    std::cout << "Loaded vertex data: " << sizeof(vertices) << " bytes\n";
 }
 
 void Object::free()
