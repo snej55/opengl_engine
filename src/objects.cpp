@@ -13,7 +13,7 @@ Object::~Object()
     }
 }
 
-void Object::init(const std::vector<float>& vertices)
+void Object::init(const float* vertices)
 {
     // vertex array & vertex buffer objects
     unsigned int vao, vbo;
@@ -23,7 +23,7 @@ void Object::init(const std::vector<float>& vertices)
 
     // buffer vertices
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     // load vertex array
     glBindVertexArray(vao);
