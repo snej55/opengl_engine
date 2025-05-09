@@ -15,7 +15,8 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Add clock object
 - [X] Finish setting up main loop
 - [X] Set up renderer class
-- [ ] Draw a cube
+- [X] Draw a cube
+- [ ] Add camera
 - [ ] Default shaders
 - [ ] Shader templates
 - [ ] Custom shaders
