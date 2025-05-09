@@ -32,3 +32,7 @@ void Object::init(const std::vector<float>& vertices)
     glEnableVertexAttribArray(0);
 }
 
+void Object::free()
+{
+    EngineObject::free();
+}
