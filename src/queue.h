@@ -3,6 +3,7 @@
 
 #include "engine.h"
 #include "shader.h"
+#include "objects.h"
 
 #include <vector>
 #include <utility> // for std::pair
@@ -12,17 +13,17 @@ class RenderQueue : EngineObject
 public:
     RenderQueue(EngineObject* parent);
 
-    void addObject(const std::pair<Shader*, void*>&& object);
-    const std::vector<std::pair<Shader*, void*>>& getObjects() const;
+    void addObject(const std::pair<Shader*, Object*>&& object);
+    const std::vector<std::pair<Shader*, Object*>>& getObjects() const;
 
     // gets last element from the stack
-    std::pair<Shader*, void*> getNext() const;
+    std::pair<Shader*, Object*> getNext() const;
     void popBack();
 
     bool isEmpty() const;
 
 private:
-    std::vector<std::pair<Shader*, void*>> m_objects{};
+    std::vector<std::pair<Shader*, Object*>> m_objects{};
 };
 
 #endif

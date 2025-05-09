@@ -50,7 +50,7 @@ void Renderer::renderQueue()
     assert(m_renderQueue != nullptr);
 
     // object to render
-    std::pair<Shader*, void*> item;
+    std::pair<Shader*, Object*> item;
 
     // loop until all objects have been rendered from the stack
     do {
@@ -65,12 +65,12 @@ void Renderer::renderQueue()
 }
 
 // TODO: Implement this!
-void Renderer::drawObject(const Shader* shader, void* object)
+void Renderer::drawObject(const Shader* shader, Object* object)
 {
     return;
 }
 
-void Renderer::addObject(Shader* shader, void* object)
+void Renderer::addObject(Shader* shader, Object* object)
 {
-    m_renderQueue->addObject(std::pair<Shader*, void*>{shader, object});
+    m_renderQueue->addObject(std::pair<Shader*, Object*>{shader, object});
 }

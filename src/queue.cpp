@@ -5,18 +5,18 @@ RenderQueue::RenderQueue(EngineObject* parent)
 {
 }
 
-void RenderQueue::addObject(const std::pair<Shader*, void*>&& object)
+void RenderQueue::addObject(const std::pair<Shader*, Object*>&& object)
 {
     m_objects.push_back(object);
 }
 
-const std::vector<std::pair<Shader*, void*>>& RenderQueue::getObjects() const
+const std::vector<std::pair<Shader*, Object*>>& RenderQueue::getObjects() const
 {
     return m_objects;
 }
 
 // returns last item from the stack
-std::pair<Shader*, void*> RenderQueue::getNext() const
+std::pair<Shader*, Object*> RenderQueue::getNext() const
 {
     return m_objects.back();
 }
