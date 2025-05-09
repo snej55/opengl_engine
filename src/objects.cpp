@@ -13,7 +13,7 @@ Object::~Object()
     }
 }
 
-void Object::init(const float* vertices)
+void Object::init(const std::vector<float>& vertices)
 {
     // vertex array & vertex buffer objects
     unsigned int vao, vbo;
@@ -23,7 +23,7 @@ void Object::init(const float* vertices)
 
     // buffer vertices
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size(), vertices.data(), GL_STATIC_DRAW);
 
     // load vertex array
     glBindVertexArray(vao);
@@ -31,7 +31,11 @@ void Object::init(const float* vertices)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), reinterpret_cast<void*>(0));
     glEnableVertexAttribArray(0);
 
-    std::cout << "Loaded vertex data: " << sizeof(vertices) << " bytes\n";
+    std::cout << "Loaded vertex data: " << std::size(vertices) * sizeof(float) << " bytes\n";
+
+    // update vao & vbo values
+    m_VAO = vao;
+    m_VBO = vbo;
 }
 
 void Object::free()

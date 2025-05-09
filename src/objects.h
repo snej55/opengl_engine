@@ -13,7 +13,7 @@ public:
     virtual ~Object(); // destroy VAO, VBO
 
     // load vertex array objects & vertex buffer objects
-    virtual void init(const float* vertices);
+    virtual void init(const std::vector<float>& vertices);
     virtual void free();
 
     // getters & setters
