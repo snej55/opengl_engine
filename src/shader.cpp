@@ -100,6 +100,11 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
     glDeleteShader(fragment);
 }
 
+void Shader::use() const
+{
+    glUseProgram(m_ID);
+}
+
 unsigned int Shader::getID() const
 {
     return m_ID;

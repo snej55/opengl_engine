@@ -73,6 +73,10 @@ int main()
         window->update();
         window->clear();
 
+        shader->use();
+        glBindVertexArray(object->getVAO());
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
         window->tick();
     }
     return 0;

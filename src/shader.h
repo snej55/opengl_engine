@@ -16,7 +16,7 @@ public:
 
     virtual void loadFromFile(const char* fragPath, const char* vertPath);
 
-    // virtual void loadDefault();
+    virtual void use() const;
 
     [[nodiscard]] unsigned int getID() const;
 
