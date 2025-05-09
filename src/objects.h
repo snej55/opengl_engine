@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-class Object : EngineObject
+class Object : public EngineObject
 {
 public:
     Object(EngineObject* parent);

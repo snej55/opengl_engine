@@ -1,6 +1,7 @@
 #include "src/app.h"
 #include "src/logging.h"
 #include "src/objects.h"
+#include "src/shader.h"
 
 #include <iostream>
 
@@ -62,6 +63,9 @@ int main()
 
     Object* object {new Object{app.getRenderer()}};
     object->init(cubeVertices);
+
+    Shader* shader {new Shader{object}};
+    shader->loadFromFile("shaders/cube.frag", "shaders/cube.vert");
 
     // main loop
     while (!window->getShouldClose())
