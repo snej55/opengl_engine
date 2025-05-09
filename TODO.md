@@ -1,3 +1,7 @@
+## Target:
+
+Make a game engine that can handle world loading, model loading, render basic objects, and lighting (Blinn-Phong (for specular), SSAO, PBR)
+
 ## TODO:
 
 - [X] Set up engine objects
@@ -11,6 +15,7 @@
 - [X] Add clock object
 - [X] Finish setting up main loop
 - [X] Set up renderer class
+- [ ] Draw a cube
 - [ ] Default shaders
 - [ ] Shader templates
 - [ ] Custom shaders
