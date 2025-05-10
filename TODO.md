@@ -18,6 +18,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Draw a cube
 - [ ] Add camera ..
 - [ ] Shader uniforms ..
+- [ ] Geometry shader option
 - [ ] Default shaders
 - [ ] Shader templates
 - [ ] Custom shaders
