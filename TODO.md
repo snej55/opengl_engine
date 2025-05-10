@@ -16,7 +16,8 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Finish setting up main loop
 - [X] Set up renderer class
 - [X] Draw a cube
-- [ ] Add camera
+- [ ] Add camera ..
+- [ ] Shader uniforms ..
 - [ ] Default shaders
 - [ ] Shader templates
 - [ ] Custom shaders
@@ -36,7 +37,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [ ] Audio loading
 - [ ] Audio playback
 - [ ] Scene system
-- [ ] Objects
+- [X] Objects
 - [ ] Items
 - [ ] Entities
 - [ ] Item manager
