@@ -3,7 +3,7 @@
 Clock::Clock(EngineObject* parent)
  : EngineObject{parent, "Clock"}
 {
-    update();
+    Clock::update();
 }
 
 void Clock::update()

@@ -9,7 +9,7 @@
 class EngineObject
 {
 public:
-    EngineObject(EngineObject* parent, const char* name, const std::vector<EngineObject*> children = {})
+    EngineObject(EngineObject* parent, const char* name, const std::vector<EngineObject*>& children = {})
      : m_parent{parent}, m_name{name}, m_children{children}
     {
         if (parent != nullptr)
@@ -24,7 +24,7 @@ public:
     {
         if (!m_freed)
         {
-            free();
+            EngineObject::free();
         }
     }
 
@@ -35,7 +35,7 @@ public:
             if (e != nullptr)
             {
                 e->free();
-                EngineObject* parent {e->getParent()};
+                const EngineObject* parent {e->getParent()};
                 std::cout << "Freed {" << e->getName() << "}, child of {" << (parent == nullptr ? "NULL" : parent->getName()) << "}\n";
                 delete e;
                 e = nullptr;
@@ -44,7 +44,7 @@ public:
         m_freed = true;
     }
 
-    virtual bool getFreed() const {return m_freed;}
+    [[nodiscard]] virtual bool getFreed() const {return m_freed;}
 
     template <typename T>
     T* getParent() const
@@ -52,7 +52,7 @@ public:
         return static_cast<T*>(m_parent);
     }
 
-    virtual EngineObject* getParent() const
+    [[nodiscard]] virtual EngineObject* getParent() const
     {
         return m_parent;
     }
@@ -60,7 +60,7 @@ public:
     virtual void clearParent() {m_parent = nullptr;}
     virtual void setParent(EngineObject* parent) {m_parent = parent;}
 
-    virtual std::vector<EngineObject*> getChildren() const
+    [[nodiscard]] virtual std::vector<EngineObject*> getChildren() const
     {
         return m_children;
     }
@@ -70,7 +70,7 @@ public:
         m_children.push_back(child);
     }
 
-    virtual std::string_view getName() const
+    [[nodiscard]] virtual std::string_view getName() const
     {
         return m_name;
     }

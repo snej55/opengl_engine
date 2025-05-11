@@ -2,7 +2,6 @@
 #define APP_H
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 #include "engine.h"
 #include "window.h"
@@ -12,22 +11,22 @@ class App : public EngineObject
 {
 public:
     App();
-    virtual ~App();
+    ~App() override;
 
-    virtual bool init(const int width, const int height, const char* title);
+    virtual bool init(int width, int height, const char* title);
     
-    virtual void free();
+    void free() override;
     
     virtual void update();
     
     // --- window functions ---
-    virtual bool createWindow(const int width, const int height, const char* title); // initializes window
+    virtual bool createWindow(int width, int height, const char* title); // initializes window
     [[nodiscard]] Window* getWindow() const {return m_window;}
 
     virtual bool createRenderer();
     [[nodiscard]] Renderer* getRenderer() const {return m_renderer;}
 
-    float getDeltaTime() const;
+    [[nodiscard]] float getDeltaTime() const;
 
 private:
     Window* m_window{nullptr};

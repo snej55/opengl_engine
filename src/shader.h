@@ -8,34 +8,34 @@
 
 #include "engine.h"
 
-class Shader : public EngineObject
+class Shader final : public EngineObject
 {
 public:
-    Shader(EngineObject* parent);
-    virtual ~Shader();
+    explicit Shader(EngineObject* parent);
+    ~Shader() override;
 
-    virtual void free();
+    void free() override;
 
-    virtual void loadFromFile(const char* fragPath, const char* vertPath);
+    void loadFromFile(const char* fragPath, const char* vertPath);
 
-    virtual void use() const;
+    void use() const;
 
     [[nodiscard]] unsigned int getID() const;
 
     // shader uniforms
-    void setBool(const std::string& name, const bool value) const;
-    void setInt(const std::string& name, const int value) const;
-    void setFloat(const std::string& name, const float value) const;
+    void setBool(const std::string& name, bool value) const;
+    void setInt(const std::string& name, int value) const;
+    void setFloat(const std::string& name, float value) const;
 
     // vectorz
     void setVec2(const std::string& name, const glm::vec2& value) const;
-    void setVec2(const std::string& name, const float x, const float y) const;
+    void setVec2(const std::string& name, float x, float y) const;
 
     void setVec3(const std::string& name, const glm::vec3& value) const;
-    void setVec3(const std::string& name, const float x, const float y, const float z) const;
+    void setVec3(const std::string& name, float x, float y, float z) const;
 
     void setVec4(const std::string& name, const glm::vec4& value) const;
-    void setVec4(const std::string& name, const float x, const float y, const float z, const float w) const;
+    void setVec4(const std::string& name, float x, float y, float z, float w) const;
 
     // matrices
     void setMat2(const std::string& name, const glm::mat2& value) const;
@@ -43,7 +43,7 @@ public:
     void setMat4(const std::string& name, const glm::mat4& value) const;
 
 protected:
-    unsigned int m_ID;
+    unsigned int m_ID{0};
 };
 
 #endif

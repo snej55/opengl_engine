@@ -9,12 +9,12 @@
 class Object : public EngineObject
 {
 public:
-    Object(EngineObject* parent);
-    virtual ~Object(); // destroy VAO, VBO
+    explicit Object(EngineObject* parent);
+    ~Object() override; // destroy VAO, VBO
 
     // load vertex array objects & vertex buffer objects
     virtual void init(const std::vector<float>& vertices);
-    virtual void free();
+    void free() override;
 
     // getters & setters
     [[nodiscard]] unsigned int getVAO() const {return m_VAO;}

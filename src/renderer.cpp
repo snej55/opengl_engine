@@ -14,7 +14,7 @@ Renderer::~Renderer()
 {
     if (!m_freed)
     {
-        free();
+        Renderer::free();
     }
 }
 
@@ -50,12 +50,11 @@ void Renderer::renderQueue()
     assert(m_renderQueue != nullptr);
 
     // object to render
-    std::pair<Shader*, Object*> item;
 
     // loop until all objects have been rendered from the stack
     do {
         // get item from top of the stack
-        item = m_renderQueue->getNext();
+        std::pair<Shader*, Object*> item {m_renderQueue->getNext()};
         // render the object
         drawObject(item.first, item.second);
 
@@ -67,10 +66,9 @@ void Renderer::renderQueue()
 // TODO: Implement this!
 void Renderer::drawObject(const Shader* shader, Object* object)
 {
-    return;
 }
 
 void Renderer::addObject(Shader* shader, Object* object)
 {
-    m_renderQueue->addObject(std::pair<Shader*, Object*>{shader, object});
+    m_renderQueue->addObject(std::pair{shader, object});
 }

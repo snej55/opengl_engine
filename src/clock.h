@@ -8,10 +8,10 @@
 class Clock : public EngineObject
 {
 public:
-    Clock(EngineObject* parent);
+    explicit Clock(EngineObject* parent);
 
     virtual void update();
-    float getDeltaTime() const;
+    [[nodiscard]] float getDeltaTime() const;
 
 private:
     float m_deltaTime{1.0f};

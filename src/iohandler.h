@@ -6,12 +6,12 @@
 class IOHandler : public EngineObject
 {
 public:
-    IOHandler(EngineObject* window);
+    explicit IOHandler(EngineObject* window);
 
     // check whether we need to quit
     virtual void update();
 
-    bool getPressed(int key) const;
+    [[nodiscard]] bool getPressed(int key) const;
     [[nodiscard]] bool getQuit() const {return m_quit;}
 
 private:

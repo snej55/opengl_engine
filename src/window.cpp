@@ -14,7 +14,7 @@ Window::~Window()
 {
     if (!m_freed)
     {
-        free();
+        Window::free();
     }
 }
 
@@ -126,7 +126,7 @@ void Window::tick()
 }
 
 // Get key state for GLFW key from IOHandler
-bool Window::getPressed(int key) const
+bool Window::getPressed(const int key) const
 {
     assert(m_iohandler != nullptr);
     return m_iohandler->getPressed(key);
@@ -140,7 +140,7 @@ float Window::getDeltaTime() const
 
 // CALLBACKS
 // window callbacks
-void Window::framebuffer_size_callback(int width, int height)
+void Window::framebuffer_size_callback(const int width, const int height)
 {
     setWidth(width);
     setHeight(height);
@@ -148,21 +148,21 @@ void Window::framebuffer_size_callback(int width, int height)
 }
 
 // gets called from glfw cursor pos callback
-void Window::mouse_callback(double xpos, double ypos)
+void Window::mouse_callback(const double xpos, const double ypos)
 {
     // pass
     return;
 }
 
 // gets called from glfw scroll callback
-void Window::scroll_callback(double xoffset, double yoffset)
+void Window::scroll_callback(const double xoffset, const double yoffset)
 {
     // pass
     return;
 }
 
 // glfw callbacks
-void Window::win_framebuffer_size_callback(GLFWwindow* window, int width, int height)
+void Window::win_framebuffer_size_callback(GLFWwindow* window, const int width, const int height)
 {
     if (Window* handler{static_cast<Window*>(glfwGetWindowUserPointer(window))})
     {
@@ -170,7 +170,7 @@ void Window::win_framebuffer_size_callback(GLFWwindow* window, int width, int he
     }
 }
 
-void Window::win_mouse_callback(GLFWwindow* window, double xpos, double ypos)
+void Window::win_mouse_callback(GLFWwindow* window, const double xpos, const double ypos)
 {
     if (Window* handler{static_cast<Window*>(glfwGetWindowUserPointer(window))})
     {
@@ -178,7 +178,7 @@ void Window::win_mouse_callback(GLFWwindow* window, double xpos, double ypos)
     }
 }
 
-void Window::win_scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+void Window::win_scroll_callback(GLFWwindow* window, const double xoffset, const double yoffset)
 {
     if (Window* handler{static_cast<Window*>(glfwGetWindowUserPointer(window))})
     {

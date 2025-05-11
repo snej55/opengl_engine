@@ -14,7 +14,7 @@ Shader::~Shader()
 {
     if (!m_freed)
     {
-        free();
+        Shader::free();
     }
 }
 
@@ -83,17 +83,20 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
     }
 
     // actually create the program
-    m_ID = glCreateProgram();
-    glAttachShader(m_ID, vertex);
-    glAttachShader(m_ID, fragment);
-    glLinkProgram(m_ID);
+    unsigned int id = glCreateProgram();
+    glAttachShader(id, vertex);
+    glAttachShader(id, fragment);
+    glLinkProgram(id);
     // get linking errors
-    glGetProgramiv(m_ID, GL_LINK_STATUS, &success);
+    glGetProgramiv(id, GL_LINK_STATUS, &success);
     if (!success)
     {
-        glGetProgramInfoLog(m_ID, 512, nullptr, infoLog);
+        glGetProgramInfoLog(id, 512, nullptr, infoLog);
         std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Shader linking failed." << std::endl << infoLog;
     }
+
+    // update m_ID
+    m_ID = id;
 
     // no longer needed
     glDeleteShader(vertex);

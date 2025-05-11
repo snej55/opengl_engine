@@ -10,12 +10,12 @@
 class Logger
 {
 public:
-    Logger(std::string_view dir, std::string_view name="")
+    explicit Logger(std::string_view dir, std::string_view name="")
      : m_dir{dir}, m_fileName{name}
     {
         std::stringstream fileName;
         // get current time
-        std::time_t time {std::time(0)};
+        std::time_t time {std::time(nullptr)};
         std::tm* now {std::localtime(&time)};
         // write date to stringstream
         fileName << now->tm_hour << ':' << (now->tm_min < 10 ? ("0" + std::to_string(now->tm_min)) : std::to_string(now->tm_min)) << ':' << (now->tm_sec < 10 ? ("0" + std::to_string(now->tm_sec)) : std::to_string(now->tm_sec))

@@ -106,7 +106,7 @@ int main()
     // main loop
     while (!window->getShouldClose())
     {
-        window->update(); // update deltatime and other stuff
+        window->update(); // update delta time and other stuff
         window->clear(); // clear buffers
 
         shader->use();

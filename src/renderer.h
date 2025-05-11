@@ -8,11 +8,11 @@
 class Renderer : public EngineObject
 {
 public:
-    Renderer(EngineObject* parent);
-    virtual ~Renderer();
+    explicit Renderer(EngineObject* parent);
+    ~Renderer() override;
 
     virtual bool init();
-    virtual void free();
+    void free() override;
 
     virtual bool createRenderQueue();
 

@@ -11,16 +11,16 @@
 class RenderQueue : EngineObject
 {
 public:
-    RenderQueue(EngineObject* parent);
+    explicit RenderQueue(EngineObject* parent);
 
     void addObject(const std::pair<Shader*, Object*>&& object);
-    const std::vector<std::pair<Shader*, Object*>>& getObjects() const;
+    [[nodiscard]] const std::vector<std::pair<Shader*, Object*>>& getObjects() const;
 
     // gets last element from the stack
-    std::pair<Shader*, Object*> getNext() const;
+    [[nodiscard]] std::pair<Shader*, Object*> getNext() const;
     void popBack();
 
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 
 private:
     std::vector<std::pair<Shader*, Object*>> m_objects{};

@@ -1,5 +1,7 @@
 #include "app.h"
 
+#include <GLFW/glfw3.h>
+
 #include <iostream>
 #include <cassert>
 
@@ -12,7 +14,7 @@ App::~App()
 {
     if (!m_freed)
     {
-        free();
+        App::free();
     }
 }
 
