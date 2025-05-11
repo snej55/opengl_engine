@@ -8,7 +8,8 @@
 
 int main()
 {
-    // Logger logger{".logs"};
+    // ../.logs for running from ./build, .logs for ./build/main
+    // Logger logger{"../.logs"};
     App app{};
     if (!app.init(640, 480, "OpenGL window"))
     {
@@ -18,7 +19,7 @@ int main()
     std::cout << "Initialized!\n";
     Window* window{app.getWindow()};
 
-    std::vector<float> cubeVertices {
+    const std::vector<float> cubeVertices {
         -0.5f, -0.5f, -0.5f,
         0.5f, -0.5f, -0.5f,
         0.5f, 0.5f, -0.5f,
