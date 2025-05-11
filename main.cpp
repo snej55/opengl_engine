@@ -110,7 +110,11 @@ int main()
         window->update(); // update delta time and other stuff
         window->clear(); // clear buffers
 
+        glm::mat4 model{1.0f};
+        model = glm::rotate(model, app.getTime(), {0.5, 0.7, 1.0});
+
         shader->use();
+        shader->setMat4("transform", model);
         glBindVertexArray(object->getVAO());
         glDrawArrays(GL_TRIANGLES, 0, 36);
 

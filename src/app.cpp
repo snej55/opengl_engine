@@ -117,7 +117,7 @@ bool App::createRenderer()
 
 // --- WINDOW FUNCTIONS --- //
 
-// get deltatime from window clock
+// get delta time from window clock
 float App::getDeltaTime() const
 {
     return m_window->getDeltaTime();

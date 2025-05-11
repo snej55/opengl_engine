@@ -28,10 +28,10 @@ void Object::init(const std::vector<float>& vertices)
     // load vertex array
     glBindVertexArray(vao);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), reinterpret_cast<void*>(0));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(vertices[0]), reinterpret_cast<void*>(0));
     glEnableVertexAttribArray(0);
 
-    std::cout << "Loaded vertex data: " << std::size(vertices) * sizeof(float) << " bytes\n";
+    std::cout << "Loaded vertex data: " << std::size(vertices) * sizeof(float) << " bytes, " << std::size(vertices) << " vertices\n";
 
     // update vao & vbo values
     m_VAO = vao;
