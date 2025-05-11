@@ -138,6 +138,13 @@ float Window::getDeltaTime() const
     return m_clock->getDeltaTime();
 }
 
+float Window::getTime() const
+{
+    assert(m_clock != nullptr);
+    return m_clock->getTime();
+}
+
+
 // CALLBACKS
 // window callbacks
 void Window::framebuffer_size_callback(const int width, const int height)

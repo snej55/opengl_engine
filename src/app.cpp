@@ -122,3 +122,8 @@ float App::getDeltaTime() const
 {
     return m_window->getDeltaTime();
 }
+
+float App::getTime() const
+{
+    return m_window->getTime();
+}

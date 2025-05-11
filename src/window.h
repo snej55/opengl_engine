@@ -12,14 +12,14 @@
 class Window : public EngineObject
 {
 public:
-    Window(EngineObject* parent); // initialize EngineObject
-    virtual ~Window(); // free
+    explicit Window(EngineObject* parent); // initialize EngineObject
+    ~Window() override; // free
 
     // initializes glfw window
-    virtual bool init(const int width, const int height, const char* title);
+    virtual bool init(int width, int height, const char* title);
     
     // free resources
-    virtual void free();
+    void free() override;
     
     // update objects
     virtual void update();
@@ -32,21 +32,22 @@ public:
 
     // --- Window management stuff ---
     // checks if window should close
-    bool getQuit() const;
-    bool getShouldClose() const;
+    [[nodiscard]] bool getQuit() const;
+    [[nodiscard]] bool getShouldClose() const;
     // clear screen
     virtual void clear() const;
     // swap buffers and calculate delta time
     virtual void tick();
 
     // io handler stuff
-    IOHandler* getIOHandler() const {return m_iohandler;}
+    [[nodiscard]] IOHandler* getIOHandler() const {return m_iohandler;}
     // get state of keyboard keys from iohandler
-    bool getPressed(int key) const;
+    [[nodiscard]] bool getPressed(int key) const;
 
     // clock stuff
-    Clock* getClock() const {return m_clock;}
-    float getDeltaTime() const;
+    [[nodiscard]] Clock* getClock() const {return m_clock;}
+    [[nodiscard]] float getDeltaTime() const;
+    [[nodiscard]] float getTime() const;
 
     // getters & setters
     [[nodiscard]] int getWidth() const {return m_width;}
@@ -61,7 +62,7 @@ public:
 
     // title setters
     void setTitle(const char* title) {m_title = title;}
-    void setTitle(std::string_view title) {m_title = title;}
+    void setTitle(const std::string_view title) {m_title = title;}
     void setTitle(const std::string& title) {m_title = title;}
 
     // returns pointer to GLFWWindow member

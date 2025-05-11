@@ -3,6 +3,12 @@
 
 #include <glad/glad.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include <GLFW/glfw3.h>
+
 #include "engine.h"
 #include "window.h"
 #include "renderer.h"
@@ -26,7 +32,9 @@ public:
     virtual bool createRenderer();
     [[nodiscard]] Renderer* getRenderer() const {return m_renderer;}
 
+    // get time info from Window::Clock
     [[nodiscard]] float getDeltaTime() const;
+    [[nodiscard]] float getTime() const;
 
 private:
     Window* m_window{nullptr};
