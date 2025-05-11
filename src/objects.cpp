@@ -23,6 +23,8 @@ void Object::init(const std::vector<float>& vertices)
 
     // buffer vertices
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    // float vertices[]; sizeof(vertices) returns actual size
+    // std::vector<float> vertices; std::size(vertices) returns num. elements
     glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(vertices.size() * sizeof(vertices[0])), vertices.data(), GL_STATIC_DRAW);
 
     // load vertex array
