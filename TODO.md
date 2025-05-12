@@ -16,10 +16,11 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Finish setting up main loop
 - [X] Set up renderer class
 - [X] Draw a cube
-- [ ] Add timers
+- [X] Add timers
 - [ ] Uniform buffer object for render matrices
 - [ ] Add camera ..
 - [X] Shader uniforms
+- [ ] Add line draw mode
 - [ ] Geometry shader option
 - [ ] Default shaders
 - [ ] Shader templates
