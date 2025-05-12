@@ -144,6 +144,27 @@ float Window::getTime() const
     return m_clock->getTime();
 }
 
+void Window::setTitle(const char* title)
+{
+    m_title = title;
+    glfwSetWindowTitle(m_window, title);
+}
+
+void Window::setTitle(const std::string_view title)
+{
+    m_title = title;
+    // convert to c-string for glfw
+    const char* titleChr = m_title.c_str();
+    glfwSetWindowTitle(m_window, titleChr);
+}
+
+void Window::setTitle(const std::string& title)
+{
+    m_title = title;
+    // convert to c-string for glfw
+    const char* titleChr = m_title.c_str();
+    glfwSetWindowTitle(m_window, titleChr);
+}
 
 // CALLBACKS
 // window callbacks

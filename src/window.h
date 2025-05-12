@@ -61,9 +61,9 @@ public:
     void setHeight(const int&& val) {m_height = val;}
 
     // title setters
-    void setTitle(const char* title) {m_title = title;}
-    void setTitle(const std::string_view title) {m_title = title;}
-    void setTitle(const std::string& title) {m_title = title;}
+    void setTitle(const char* title);
+    void setTitle(const std::string_view title);
+    void setTitle(const std::string& title);
 
     // returns pointer to GLFWWindow member
     [[nodiscard]] GLFWwindow* getWindow() const {return m_window;}
