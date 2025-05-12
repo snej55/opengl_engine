@@ -11,7 +11,7 @@ int main()
     // ../.logs for running from ./build, .logs for ./build/main
     // Logger logger{"../.logs"};
     App app{};
-    if (!app.init(640, 480, "OpenGL window"))
+    if (!app.init(640, 640, "OpenGL window"))
     {
         std::cout << "Failed to initialize!" << std::endl;
         return 1;
@@ -104,6 +104,8 @@ int main()
     Shader* shader {new Shader{object}};
     shader->loadFromFile("shaders/cube.frag", "shaders/cube.vert");
 
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
     // main loop
     while (!window->getShouldClose())
     {
@@ -111,7 +113,7 @@ int main()
         window->clear(); // clear buffers
 
         glm::mat4 model{1.0f};
-        model = glm::rotate(model, app.getTime(), {0.5, 0.7, 1.0});
+        model = glm::rotate(model, app.getTime(), {1.0, 1.0, 0.0});
 
         shader->use();
         shader->setMat4("transform", model);
