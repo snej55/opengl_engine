@@ -34,7 +34,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [ ] Postprocessing (framebuffer system)
 - [ ] Shadows
 - [ ] PBR
-- [ ] Model animations
+- [ ] Model animations (Bones system)
 - [ ] Physics system
 - [ ] Physics mesh generation
 - [ ] Texture loading
@@ -58,3 +58,6 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [ ] 2D mode
 - [ ] Loading assets splash screen
 - [ ] Proper fullscreen
+- [ ] Add README
+- [ ] Add README to media
+- [ ] Add vfx demos + screenshots
