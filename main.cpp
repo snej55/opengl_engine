@@ -113,7 +113,7 @@ int main()
         window->clear(); // clear buffers
 
         glm::mat4 model{1.0f};
-        model = glm::rotate(model, app.getTime(), {1.0, 1.0, 0.0});
+        model = glm::rotate(model, app.getTime(), {1.0, 0.7, 0.5});
 
         shader->use();
         shader->setMat4("transform", model);
