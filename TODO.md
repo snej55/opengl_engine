@@ -4,6 +4,34 @@ Make a game engine that can handle world loading, model loading, render basic ob
 
 ## TODO:
 
+### v2
+- [X] Set up engine object type
+- [X] Set up engine manager
+- [ ] Window management
+- [ ] Clock
+- [ ] IOHandler
+- [ ] Set up arena
+- [ ] Set up renderer class
+- [ ] Set up render queue
+- [ ] Config file loading
+- [ ] README
+- [ ] Font rendering
+- [ ] Shaders
+- [ ] Geometry shader
+- [ ] Texture loading and rendering
+- [ ] Screen coordinate rendering
+- [ ] Rect rendering
+- [ ] Draw a cube
+- [ ] Add timers
+- [ ] Default shaders
+- [ ] Post processor with framebuffers
+- [ ] Blinn-phong lighting
+- [ ] Ambient lighting (SSAO)
+- [ ] PBR lighting
+- [ ] Model loading
+
+
+### v1
 - [X] Set up engine objects
 - [X] Add app component
 - [X] Add window component
@@ -17,6 +45,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Set up renderer class
 - [X] Draw a cube
 - [X] Add timers
+- [ ]
 - [ ] REFACTOR!
 - [ ] Memory arena
 - [ ] Uniform buffer object for render matrices
