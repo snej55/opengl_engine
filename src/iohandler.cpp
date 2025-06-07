@@ -19,7 +19,6 @@ bool IOHandler::getPressed(const int key) const
     if (glfwGetKey(getParent<Window>()->getWindow(), key) == GLFW_PRESS)
     {
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
