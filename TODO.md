@@ -18,8 +18,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Draw a cube
 - [X] Add timers
 - [ ] REFACTOR!
-- [ ] Memory pool
-- [ ] Make memory pool threadsafe
+- [ ] Memory arena
 - [ ] Uniform buffer object for render matrices
 - [ ] Add camera ..
 - [X] Shader uniforms
