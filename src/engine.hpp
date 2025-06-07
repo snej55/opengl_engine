@@ -6,7 +6,7 @@
 #include "engine_types.hpp"
 #include "window.hpp"
 
-class Engine : EngineObject
+class Engine : public EngineObject
 {
 public:
     Engine();

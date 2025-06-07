@@ -7,7 +7,7 @@
 
 #include "engine_types.hpp"
 
-class Window : EngineObject
+class Window : public EngineObject
 {
 
 };

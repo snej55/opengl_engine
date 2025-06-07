@@ -5,7 +5,7 @@
 
 #include "engine_types.hpp"
 
-class Arena : EngineObject
+class Arena : public EngineObject
 {
 };
 
