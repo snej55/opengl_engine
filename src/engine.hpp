@@ -4,13 +4,14 @@
 #include <string>
 
 #include "engine_types.hpp"
+#include "window.hpp"
 
-class Engine
+class Engine : EngineObject
 {
 public:
-    Engine(int width, int height, const std::string& title);
+    Engine();
 
-    bool init();
+    bool init(int width, int height, const char* title);
 };
 
 #endif

@@ -5,9 +5,11 @@
 
 #include <string>
 
-class Window
+#include "engine_types.hpp"
+
+class Window : EngineObject
 {
-    
+
 };
 
 #endif
