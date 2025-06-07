@@ -1,7 +1,7 @@
-#include "src/app.h"
-#include "src/logging.h"
-#include "src/objects.h"
-#include "src/shader.h"
+#include "src/v1/app.h"
+#include "src/v1/logging.h"
+#include "src/v1/objects.h"
+#include "src/v1/shader.h"
 
 #include <iostream>
 #include <vector>
