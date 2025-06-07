@@ -2,6 +2,7 @@
 #define ENGINE_TYPES
 
 #include <string>
+#include <iostream>
 
 class EngineObject
 {
@@ -10,6 +11,13 @@ public:
      : m_name{name}, m_parent{parent}
     {
     }
+
+    virtual ~EngineObject()
+    {
+        std::cout << "Freed {" << m_name << "}, child of {" << (
+            m_parent == nullptr ? "NONE" : m_parent->getName()
+        ) << std::endl;
+    };
 
     const char* getName() const {return m_name.c_str();}
     EngineObject* getParent() const {return m_parent;}
