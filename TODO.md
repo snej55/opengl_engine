@@ -47,6 +47,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [ ] Entities
 - [ ] Item manager
 - [ ] Entity manager
+- [ ] Level editor
 - [ ] Level loading
 - [ ] World data object
 - [ ] Octrees for world map physics data
