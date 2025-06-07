@@ -22,6 +22,9 @@
         <mxCell id="my7_cBCObxHFk0cWhPBb-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="my7_cBCObxHFk0cWhPBb-1" target="my7_cBCObxHFk0cWhPBb-15" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="QZp8M_Qck0eet74uFJcQ-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="my7_cBCObxHFk0cWhPBb-1" target="QZp8M_Qck0eet74uFJcQ-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="my7_cBCObxHFk0cWhPBb-1" value="Engine" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="320" y="80" width="120" height="60" as="geometry" />
         </mxCell>
@@ -187,6 +190,9 @@
         </mxCell>
         <mxCell id="my7_cBCObxHFk0cWhPBb-75" value="ModelMat" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-120" y="760" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QZp8M_Qck0eet74uFJcQ-2" value="GFXManager" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="240" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
