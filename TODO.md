@@ -45,7 +45,6 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Set up renderer class
 - [X] Draw a cube
 - [X] Add timers
-- [ ]
 - [ ] REFACTOR!
 - [ ] Memory arena
 - [ ] Uniform buffer object for render matrices
