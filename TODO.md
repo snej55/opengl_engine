@@ -7,9 +7,10 @@ Make a game engine that can handle world loading, model loading, render basic ob
 ### v2
 - [X] Set up engine object type
 - [X] Set up engine manager
-- [ ] Window management
-- [ ] Clock
+- [X] Window management
 - [ ] IOHandler
+- [ ] Main loop
+- [ ] Clock
 - [ ] Set up arena
 - [ ] Set up renderer class
 - [ ] Set up render queue
