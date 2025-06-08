@@ -17,4 +17,6 @@ bool Engine::init(const int width, const int height, const char* title)
     #ifdef __APPLE__
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     #endif
+
+    return true;
 }

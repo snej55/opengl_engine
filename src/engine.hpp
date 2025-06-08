@@ -9,7 +9,7 @@
 #include "window.hpp"
 #include "arena.hpp"
 
-class Engine : public EngineObject
+class Engine final : public EngineObject
 {
 public:
     Engine();

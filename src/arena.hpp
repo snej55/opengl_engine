@@ -22,7 +22,7 @@ public:
     // set up arena
     explicit Arena(EngineObject* engine);
 
-    ~Arena();
+    ~Arena() override;
     void free();
 
     // allocate raw memory for new object

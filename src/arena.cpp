@@ -33,7 +33,7 @@ void Arena::addObject(EngineObject*& object)
     m_objects.emplace_back(object);
 }
 
-void Arena::removeObject(unsigned int id)
+void Arena::removeObject(const unsigned int id)
 {
     // move object to back
     std::swap(m_objects[id], m_objects.back());

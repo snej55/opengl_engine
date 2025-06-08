@@ -10,7 +10,7 @@
 class Window : public EngineObject {
 public:
     explicit Window(EngineObject* parent); // initialize EngineObject
-    virtual ~Window(); // free
+    ~Window() override; // free
 
     // initializes glfw window
     bool init(int width, int height, const char* title);
