@@ -13,7 +13,16 @@ int main()
     }
     std::cout << "Initialized engine!\n";
 
-    
+    while (!engine.getQuit())
+    {
+        // clear screen
+        engine.clear();
+
+        // do rendering...
+
+        // update engine
+        engine.update();
+    }
 
     return 0;
 }

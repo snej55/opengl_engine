@@ -79,6 +79,7 @@ void Window::clear() const
 void Window::tick() const
 {
     glfwSwapBuffers(m_window);
+    glfwPollEvents();
 }
 
 // set glfw window title from c-str

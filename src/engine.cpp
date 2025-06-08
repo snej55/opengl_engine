@@ -3,9 +3,11 @@
 Engine::Engine()
  : EngineObject{"Engine"}
 {
+    // memory manager
     m_arena = new Arena{this};
 }
 
+// free components
 Engine::~Engine()
 {
     // free memory
@@ -15,6 +17,7 @@ Engine::~Engine()
     std::cout << "ENGINE::FREE: Terminated OpenGL context!" << std::endl;
 }
 
+// initialize components
 bool Engine::init(const int width, const int height, const char* title)
 {
     // initialize opengl context
@@ -66,6 +69,18 @@ bool Engine::init(const int width, const int height, const char* title)
     return true;
 }
 
+// update components
+void Engine::update()
+{
+    // check for esc
+    m_iohandler->update();
+    m_window->setQuit(m_iohandler->getQuit());
+    // swap buffers
+    m_window->tick();
+}
+
+// ------ Window ------ //
+
 // create window object
 bool Engine::createWindow(const int width, const int height, const char* title)
 {
@@ -82,6 +97,14 @@ bool Engine::createWindow(const int width, const int height, const char* title)
     // initialize window
     return m_window->init(width, height, title);
 }
+
+// clear gl buffers
+void Engine::clear()
+{
+    m_window->clear();
+}
+
+// ------ IOHandler ------ //
 
 // create iohandler for keyboard input
 bool Engine::createIOHandler()
@@ -101,6 +124,13 @@ bool Engine::createIOHandler()
     m_arena->addObject(m_iohandler);
     return true; // success!
 }
+
+bool Engine::getQuit() const
+{
+    return m_window->getShouldClose();
+}
+
+// ------ Arena ------ //
 
 void Engine::addObject(EngineObject*& object) const
 {
