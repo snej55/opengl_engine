@@ -8,13 +8,14 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Set up engine object type
 - [X] Set up engine manager
 - [X] Window management
-- [ ] IOHandler
+- [X] IOHandler
 - [ ] Main loop
 - [ ] Clock
 - [ ] Set up arena
 - [ ] Set up renderer class
 - [ ] Set up render queue
 - [ ] Config file loading
+- [ ] Asset manager
 - [ ] README
 - [ ] Font rendering
 - [ ] Shaders

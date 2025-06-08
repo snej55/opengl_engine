@@ -1,5 +1,7 @@
 #include "arena.hpp"
 
+#include <iostream>
+
 Arena::Arena(EngineObject* engine)
  : EngineObject{"Arena", engine}
 {
@@ -27,6 +29,11 @@ void Arena::addObject(EngineObject* object)
 
 void Arena::removeObject(const unsigned int id)
 {
+    if (id > m_objects.size() - 1)
+    {
+        std::cout << "ARENA::REMOVE_OBJECT::ERROR: Index out of range!\n";
+        return;
+    }
     // move object to back
     std::swap(m_objects[id], m_objects.back());
     // update id of other moved object
