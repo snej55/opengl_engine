@@ -16,7 +16,7 @@ public:
     {
         std::cout << "Freed {" << m_name << "}, child of {" << (
             m_parent == nullptr ? "NONE" : m_parent->getName()
-        ) << std::endl;
+        ) << "}" << std::endl;
     };
 
     [[nodiscard]] const char* getName() const { return m_name.c_str(); }

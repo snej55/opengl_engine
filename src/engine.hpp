@@ -13,17 +13,14 @@ class Engine final : public EngineObject
 {
 public:
     Engine();
-    ~Engine();
+    ~Engine() override;
 
     bool init(int width, int height, const char* title);
 
     // create window object
-    bool createWindow();
+    bool createWindow(int width, int height, const char* title);
 
     // Arena operations
-    // returns object != nullptr
-    template <typename T>
-    bool alloc(T*& object) const;
     // add object to arena and update object ID
     void addObject(EngineObject*& object) const;
     // remove object from arena

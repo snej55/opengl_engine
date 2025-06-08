@@ -19,7 +19,7 @@ elseif (CMAKE_SYSTEM MATCHES Linux)
     set(GL_LIBS GL GLU glfw3 assimp)
 endif()
 
-set(SOURCES main.cpp src/extern/glad.c src/engine.hpp src/engine_types.hpp src/arena.hpp src/window.hpp src/window.cpp
+set(SOURCES main.cpp src/extern/glad.c src/engine.hpp src/engine.cpp src/engine_types.hpp src/arena.hpp src/window.hpp src/window.cpp
         src/arena.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})

@@ -10,6 +10,9 @@ Engine::~Engine()
 {
     // free memory
     delete m_arena;
+    // quit glfw
+    glfwTerminate();
+    std::cout << "ENGINE::FREE: Terminated OpenGL context!" << std::endl;
 }
 
 bool Engine::init(const int width, const int height, const char* title)
@@ -25,25 +28,47 @@ bool Engine::init(const int width, const int height, const char* title)
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     #endif
 
-    return true;
-}
-
-bool Engine::createWindow()
-{
-    if (!m_arena->alloc(m_window))
+    if (!createWindow(width, height, title))
     {
-        std::cout << "ENGINE::CREATE_WINDOW::ERROR: Failed to allocate memory for window!" << std::endl;
+        std::cout << "ENGINE::INIT::ERROR: Failed to create window!" << std::endl;
+        glfwTerminate();
         return false;
     }
-    *m_window = Window{this};
-    m_arena->addObject(m_window);
+
+    std::cout << "ENGINE::INIT: Successfully initialized GLFW!\n";
+
+    // initialize glad
+    if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
+    {
+        std::cout << "ENGINE::INIT::ERROR: Failed to initialize GLAD!" << std::endl;
+        return false;
+    }
+
+    std::cout << "ENGINE::INIT: Successfully initialized GLAD!\n";
+
+    // create view port
+    m_window->createViewPort();
+
+    // configure global opengl state
+    glEnable(GL_DEPTH_TEST);
+
     return true;
 }
 
-template <typename T>
-bool Engine::alloc(T*& object) const
+bool Engine::createWindow(const int width, const int height, const char* title)
 {
-    return m_arena->alloc<T>(object);
+    // check if window already exists
+    if (m_window != nullptr)
+    {
+        std::cout << "ENGINE::CREATE_WINDOW::ERROR: Window already exists at `" << m_window << "`!" << '\n';
+        return false;
+    }
+    // allocate memory for window
+    m_window = new Window{this};
+    // add window to arena
+    m_arena->addObject(m_window);
+    // initialize window
+    return m_window->init(width, height, title);
 }
 
 void Engine::addObject(EngineObject*& object) const

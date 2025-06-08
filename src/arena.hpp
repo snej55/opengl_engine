@@ -3,9 +3,7 @@
  * Process:
  * EngineObject* object;
  * // allocate memory for object
- * arena.alloc(object);
- * // setup object
- * *object = EngineObject{"foo", nullptr};
+ * EngineObject* object = new EngineObject{"foo", nullptr};
  * arena.addObject(object);
  */
 
@@ -24,11 +22,6 @@ public:
 
     ~Arena() override;
     void free();
-
-    // allocate raw memory for new object
-    // returns object != nullptr
-    template <typename T>
-    bool alloc(T*& object) const;
     // add object to arena and update object ID
     void addObject(EngineObject* object);
     // remove object from arena

@@ -19,16 +19,6 @@ void Arena::free()
     m_objects.clear();
 }
 
-
-template <typename T>
-bool Arena::alloc(T*& object) const
-{
-    std::allocator<EngineObject> allocator;
-    void* ptr {allocator.allocate(1)};
-    object = static_cast<EngineObject*>(ptr);
-    return object != nullptr;
-}
-
 void Arena::addObject(EngineObject* object)
 {
     object->setID(m_objects.size());
