@@ -31,7 +31,7 @@ public:
     // clear screen
     void clear() const;
     // swap buffers
-    void tick();
+    void tick() const;
 
     // getters & setters
     [[nodiscard]] int getWidth() const { return m_width; }

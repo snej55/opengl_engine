@@ -3,7 +3,7 @@
  * Process:
  * EngineObject* object;
  * // allocate memory for object
- * arena.getObject(object);
+ * arena.alloc(object);
  * // setup object
  * *object = EngineObject{"foo", nullptr};
  * arena.addObject(object);
@@ -21,10 +21,12 @@ class Arena : public EngineObject
 public:
     // set up arena
     explicit Arena(EngineObject* engine);
+
     ~Arena();
+    void free();
 
     // allocate raw memory for new object
-    void getObject(EngineObject*& object) const;
+    void alloc(EngineObject*& object) const;
     // add object to arena and update object ID
     void addObject(EngineObject*& object);
     // remove object from arena

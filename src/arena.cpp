@@ -5,7 +5,22 @@ Arena::Arena(EngineObject* engine)
 {
 }
 
-void Arena::getObject(EngineObject*& object) const
+Arena::~Arena()
+{
+    free();
+}
+
+void Arena::free()
+{
+    for (std::size_t i{0}; i < m_objects.size(); ++i)
+    {
+        delete m_objects[i];
+    }
+    m_objects.clear();
+}
+
+
+void Arena::alloc(EngineObject*& object) const
 {
     std::allocator<EngineObject> allocator;
     void* ptr {allocator.allocate(1)};

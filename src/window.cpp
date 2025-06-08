@@ -76,7 +76,7 @@ void Window::clear() const
 }
 
 // swap buffers
-void Window::tick()
+void Window::tick() const
 {
     glfwSwapBuffers(m_window);
 }
@@ -119,14 +119,12 @@ void Window::framebuffer_size_callback(const int width, const int height)
 void Window::mouse_callback(const double xpos, const double ypos)
 {
     // pass
-    return;
-}
+    }
 
 void Window::scroll_callback(const double xoffset, const double yoffset)
 {
     // pass
-    return;
-}
+    }
 
 // glfw callbacks
 void Window::win_framebuffer_size_callback(GLFWwindow* window, const int width, const int height)
