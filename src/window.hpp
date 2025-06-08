@@ -13,7 +13,7 @@ public:
     ~Window() override; // free
 
     // initializes glfw window
-    bool init(int width, int height, const char* title);
+    bool init(unsigned int width, unsigned int height, const char* title);
 
     // free resources
     void free();
@@ -34,15 +34,15 @@ public:
     void tick() const;
 
     // getters & setters
-    [[nodiscard]] int getWidth() const { return m_width; }
-    [[nodiscard]] int getHeight() const { return m_height; }
+    [[nodiscard]] unsigned int getWidth() const { return m_width; }
+    [[nodiscard]] unsigned int getHeight() const { return m_height; }
     [[nodiscard]] std::string_view getTitle() const { return m_title; };
 
     // width & height setters
-    void setWidth(const int& val) { m_width = val; }
-    void setWidth(const int&& val) { m_width = val; }
-    void setHeight(const int& val) { m_height = val; }
-    void setHeight(const int&& val) { m_height = val; }
+    void setWidth(const unsigned int& val) { m_width = val; }
+    void setWidth(const unsigned int&& val) { m_width = val; }
+    void setHeight(const unsigned int& val) { m_height = val; }
+    void setHeight(const unsigned int&& val) { m_height = val; }
 
     // title setters
     void setTitle(const char* title);
@@ -58,8 +58,8 @@ public:
     void scroll_callback(double xoffset, double yoffset);
 
 private:
-    int m_width { 0 };
-    int m_height { 0 };
+    unsigned int m_width { 0 };
+    unsigned int m_height { 0 };
     std::string m_title {};
 
     // quit flag

@@ -18,7 +18,7 @@ Engine::~Engine()
 }
 
 // initialize components
-bool Engine::init(const int width, const int height, const char* title)
+bool Engine::init(const unsigned int width, const unsigned int height, const char* title)
 {
     // initialize opengl context
     glfwInit();

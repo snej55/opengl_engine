@@ -15,7 +15,7 @@ Window::~Window()
 }
 
 // create glfw window
-bool Window::init(const int width, const int height, const char* title)
+bool Window::init(const unsigned int width, const unsigned int height, const char* title)
 {
     // create glfw window
     m_window = glfwCreateWindow(width, height, title, nullptr, nullptr);

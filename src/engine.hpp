@@ -19,7 +19,7 @@ public:
     ~Engine() override;
 
     // initialize components
-    bool init(int width, int height, const char* title);
+    bool init(unsigned int width, unsigned int height, const char* title);
     // update components
     void update();
 

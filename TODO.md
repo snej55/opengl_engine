@@ -12,13 +12,13 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Main loop
 - [X] Clock
 - [X] Set up arena
+- [ ] Shaders
+- [ ] Asset manager
 - [ ] Set up renderer class
 - [ ] Set up render queue
 - [ ] Config file loading
-- [ ] Asset manager
 - [ ] README
 - [ ] Font rendering
-- [ ] Shaders
 - [ ] Geometry shader
 - [ ] Texture loading and rendering
 - [ ] Screen coordinate rendering
