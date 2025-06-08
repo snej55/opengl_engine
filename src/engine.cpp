@@ -64,7 +64,15 @@ bool Engine::init(const int width, const int height, const char* title)
         return false;
     }
     
-    std::cout << "ENGINE::INIT: Successfully created IOHandler!\n";
+    
+    // create clock
+    if (!createClock())
+    {
+        std::cout << "ENGINE::INIT::ERROR: Failed to create Clock!" << std::endl;
+        return false;
+    }
+
+    std::cout << "ENGINE::INIT: Successfully created components!\n";
 
     return true;
 }
@@ -72,6 +80,8 @@ bool Engine::init(const int width, const int height, const char* title)
 // update components
 void Engine::update()
 {
+    // update deltatime
+    m_clock->update();
     // check for esc
     m_iohandler->update();
     m_window->setQuit(m_iohandler->getQuit());
@@ -128,6 +138,35 @@ bool Engine::createIOHandler()
 bool Engine::getQuit() const
 {
     return m_window->getShouldClose();
+}
+
+// ------ Clock ------ //
+
+// create clock
+bool Engine::createClock()
+{
+    if (m_clock != nullptr)
+    {
+        std::cout << "ENGINE::CREATE_CLOCK::ERROR: Clock already exists at `" << m_iohandler << "`!\n";
+        return false;
+    }
+    // allocate memory for clock
+    m_clock = new Clock{this};
+    // add clock to arena
+    m_arena->addObject(m_clock);
+    return true;
+}
+
+// get deltatime from clock
+float Engine::getDeltaTime() const
+{
+    return m_clock->getDeltaTime();
+}
+
+// get time from clock
+float Engine::getTime() const
+{
+    return m_clock->getTime();
 }
 
 // ------ Arena ------ //

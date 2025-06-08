@@ -9,6 +9,7 @@
 #include "window.hpp"
 #include "arena.hpp"
 #include "iohandler.hpp"
+#include "clock.hpp"
 
 class Engine final : public EngineObject
 {
@@ -40,6 +41,17 @@ public:
     // check if ESC has been pressed from IOHandler
     bool getQuit() const;
 
+    // ------ Clock ------ //
+
+    // create clock
+    bool createClock();
+    [[nodiscard]] Clock* getClock() {return m_clock;}
+
+    // get deltatime from clock
+    [[nodiscard]] float getDeltaTime() const;
+    // get time since start from clock in milliseconds
+    [[nodiscard]] float getTime() const;
+
     // ------ Arena ------ //
 
     // Arena operations
@@ -51,9 +63,12 @@ public:
     void removeObjectID(unsigned int id) const;
 
 private:
+    // memory manager
     Arena* m_arena {nullptr};
+    // engine components
     Window* m_window {nullptr};
     IOHandler* m_iohandler {nullptr};
+    Clock* m_clock {nullptr};
 };
 
 #endif
