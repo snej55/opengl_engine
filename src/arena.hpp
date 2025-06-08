@@ -27,9 +27,10 @@ public:
 
     // allocate raw memory for new object
     // returns object != nullptr
-    bool alloc(EngineObject*& object) const;
+    template <typename T>
+    bool alloc(T*& object) const;
     // add object to arena and update object ID
-    void addObject(EngineObject*& object);
+    void addObject(EngineObject* object);
     // remove object from arena
     void removeObject(unsigned int id);
 

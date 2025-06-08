@@ -22,7 +22,8 @@ public:
 
     // Arena operations
     // returns object != nullptr
-    bool alloc(EngineObject*& object) const;
+    template <typename T>
+    bool alloc(T*& object) const;
     // add object to arena and update object ID
     void addObject(EngineObject*& object) const;
     // remove object from arena

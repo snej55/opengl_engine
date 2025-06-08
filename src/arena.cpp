@@ -20,7 +20,8 @@ void Arena::free()
 }
 
 
-bool Arena::alloc(EngineObject*& object) const
+template <typename T>
+bool Arena::alloc(T*& object) const
 {
     std::allocator<EngineObject> allocator;
     void* ptr {allocator.allocate(1)};
@@ -28,7 +29,7 @@ bool Arena::alloc(EngineObject*& object) const
     return object != nullptr;
 }
 
-void Arena::addObject(EngineObject*& object)
+void Arena::addObject(EngineObject* object)
 {
     object->setID(m_objects.size());
     m_objects.emplace_back(object);

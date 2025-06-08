@@ -30,12 +30,20 @@ bool Engine::init(const int width, const int height, const char* title)
 
 bool Engine::createWindow()
 {
-    
+    if (!m_arena->alloc(m_window))
+    {
+        std::cout << "ENGINE::CREATE_WINDOW::ERROR: Failed to allocate memory for window!" << std::endl;
+        return false;
+    }
+    *m_window = Window{this};
+    m_arena->addObject(m_window);
+    return true;
 }
 
-bool Engine::alloc(EngineObject*& object) const
+template <typename T>
+bool Engine::alloc(T*& object) const
 {
-    return m_arena->alloc(object);
+    return m_arena->alloc<T>(object);
 }
 
 void Engine::addObject(EngineObject*& object) const
