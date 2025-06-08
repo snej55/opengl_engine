@@ -4,6 +4,7 @@
 
 int main()
 {
+    // initialize engine
     Engine engine{};
     if (!engine.init(640, 480, "OpenGL Window"))
     {
@@ -11,5 +12,8 @@ int main()
         return 1;
     }
     std::cout << "Initialized engine!\n";
+
+    
+
     return 0;
 }

@@ -17,7 +17,7 @@ public:
         std::cout << "Freed {" << m_name << "}, child of {" << (
             m_parent == nullptr ? "NONE" : m_parent->getName()
         ) << "}" << std::endl;
-    };
+    }
 
     [[nodiscard]] const char* getName() const { return m_name.c_str(); }
     [[nodiscard]] EngineObject* getParent() const { return m_parent; }
