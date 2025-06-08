@@ -20,11 +20,12 @@ void Arena::free()
 }
 
 
-void Arena::alloc(EngineObject*& object) const
+bool Arena::alloc(EngineObject*& object) const
 {
     std::allocator<EngineObject> allocator;
     void* ptr {allocator.allocate(1)};
     object = static_cast<EngineObject*>(ptr);
+    return object != nullptr;
 }
 
 void Arena::addObject(EngineObject*& object)

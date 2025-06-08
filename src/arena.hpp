@@ -26,7 +26,8 @@ public:
     void free();
 
     // allocate raw memory for new object
-    void alloc(EngineObject*& object) const;
+    // returns object != nullptr
+    bool alloc(EngineObject*& object) const;
     // add object to arena and update object ID
     void addObject(EngineObject*& object);
     // remove object from arena
