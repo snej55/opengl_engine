@@ -1,3 +1,7 @@
+#include <glad/glad.h>
+
+#include <GLFW/glfw3.h>
+
 #include "engine.hpp"
 
 Engine::Engine()
@@ -64,11 +68,17 @@ bool Engine::init(const unsigned int width, const unsigned int height, const cha
         return false;
     }
     
-    
     // create clock
     if (!createClock())
     {
         std::cout << "ENGINE::INIT::ERROR: Failed to create Clock!" << std::endl;
+        return false;
+    }
+
+    // create shader manager
+    if (!createShaderManager())
+    {
+        std::cout << "ENGINE::INIT::ERROR: Failed to create ShaderManager!" << std::endl;
         return false;
     }
 
@@ -92,7 +102,7 @@ void Engine::update()
 // ------ Window ------ //
 
 // create window object
-bool Engine::createWindow(const int width, const int height, const char* title)
+bool Engine::createWindow(const unsigned int width, const unsigned int height, const char* title)
 {
     // check if window already exists
     if (m_window != nullptr)
@@ -157,7 +167,7 @@ bool Engine::createClock()
     return true;
 }
 
-// get deltatime from clock
+// get delta time from clock
 float Engine::getDeltaTime() const
 {
     return m_clock->getDeltaTime();
@@ -167,6 +177,41 @@ float Engine::getDeltaTime() const
 float Engine::getTime() const
 {
     return m_clock->getTime();
+}
+
+// ------ Shader Manager ------ //
+bool Engine::createShaderManager()
+{
+    if (m_shaderManager != nullptr)
+    {
+        std::cout << "ENGINE::CREATE_SHADER_MANAGER::ERROR: Shader manager already exists at `" << m_shaderManager << "`!\n";
+        return false;
+    }
+    // allocate memory for shader manager
+    m_shaderManager = new ShaderManager{this};
+    // add shader manager to arena
+    m_arena->addObject(m_shaderManager);
+    return true;
+}
+
+void Engine::addShader(const std::string& name, const char* fragPath, const char* vertPath) const
+{
+    m_shaderManager->addShader(name, fragPath, vertPath);
+}
+
+Shader* Engine::getShader(const std::string& name) const
+{
+    return m_shaderManager->getShader(name);
+}
+
+void Engine::useShader(const std::string& name) const
+{
+    m_shaderManager->useShader(name);
+}
+
+bool Engine::shaderExists(const std::string& name) const
+{
+    return m_shaderManager->shaderExists(name);
 }
 
 // ------ Arena ------ //

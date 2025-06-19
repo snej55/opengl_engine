@@ -1,10 +1,6 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include <glad/glad.h>
-
-#include <GLFW/glfw3.h>
-
 #include "engine_types.hpp"
 #include "window.hpp"
 #include "arena.hpp"
@@ -27,8 +23,8 @@ public:
     // ------ Window ------ //
 
     // create window object
-    bool createWindow(int width, int height, const char* title);
-    [[nodiscard]] Window* getWindow() {return m_window;}
+    bool createWindow(unsigned int width, unsigned int height, const char* title);
+    [[nodiscard]] Window* getWindow() const {return m_window;}
     
     // clear screen
     void clear();
@@ -37,23 +33,33 @@ public:
 
     // create iohandler for keyboard input
     bool createIOHandler();
-    [[nodiscard]] IOHandler* getIOHandler() {return m_iohandler;}
+    [[nodiscard]] IOHandler* getIOHandler() const {return m_iohandler;}
 
     // check if ESC has been pressed from IOHandler
-    bool getQuit() const;
+    [[nodiscard]] bool getQuit() const;
 
     // ------ Clock ------ //
 
     // create clock
     bool createClock();
-    [[nodiscard]] Clock* getClock() {return m_clock;}
+    [[nodiscard]] Clock* getClock() const {return m_clock;}
 
-    // get deltatime from clock
+    // get delta time from clock
     [[nodiscard]] float getDeltaTime() const;
     // get time since start from clock in milliseconds
     [[nodiscard]] float getTime() const;
 
     // ------ Shaders ------ //
+
+    // create shader manager
+    bool createShaderManager();
+    [[nodiscard]] ShaderManager* getShaderManager() const {return m_shaderManager;}
+
+    // shader manager methods
+    void addShader(const std::string& name, const char* fragPath, const char* vertPath) const;
+    [[nodiscard]] Shader* getShader(const std::string& name) const;
+    void useShader(const std::string& name) const;
+    [[nodiscard]] bool shaderExists(const std::string& name) const;
 
     // ------ Arena ------ //
 
@@ -72,6 +78,7 @@ private:
     Window* m_window {nullptr};
     IOHandler* m_iohandler {nullptr};
     Clock* m_clock {nullptr};
+    ShaderManager* m_shaderManager {nullptr};
 };
 
 #endif
