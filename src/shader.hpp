@@ -5,8 +5,18 @@
 #include <glm/glm.hpp>
 
 #include <string>
+#include <map>
 
 #include "engine_types.hpp"
+
+class ShaderManager final : public EngineObject
+{
+public:
+    ShaderManager(EngineObject* parent);
+
+    void addShader(const Shader& shader);
+    Shader& getShader(const std::string& name) const;
+};
 
 class Shader final : public EngineObject
 {

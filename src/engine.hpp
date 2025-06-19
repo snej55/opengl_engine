@@ -10,6 +10,7 @@
 #include "arena.hpp"
 #include "iohandler.hpp"
 #include "clock.hpp"
+#include "shader.hpp"
 
 class Engine final : public EngineObject
 {
@@ -51,6 +52,8 @@ public:
     [[nodiscard]] float getDeltaTime() const;
     // get time since start from clock in milliseconds
     [[nodiscard]] float getTime() const;
+
+    // ------ Shaders ------ //
 
     // ------ Arena ------ //
 
