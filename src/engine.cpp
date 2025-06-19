@@ -90,7 +90,7 @@ bool Engine::init(const unsigned int width, const unsigned int height, const cha
 // update components
 void Engine::update()
 {
-    // update deltatime
+    // update delta time
     m_clock->update();
     // check for esc
     m_iohandler->update();
