@@ -1,9 +1,12 @@
+#include <glad/glad.h>
+
 #include "shader.hpp"
 
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
 
 Shader::Shader(const std::string& name)
 : EngineObject{("Shader-" + name).c_str()}
@@ -97,7 +100,7 @@ void Shader::use() const
     glUseProgram(m_ID);
 }
 
-unsigned int Shader::getID() const
+unsigned int Shader::getShaderID() const
 {
     return m_ID;
 }
@@ -172,4 +175,43 @@ void Shader::setMat3(const std::string& name, const glm::mat3& value) const
 void Shader::setMat4(const std::string& name, const glm::mat4& value) const
 {
     glUniformMatrix4fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, &value[0][0]);
+}
+
+// ------ Shader manager ------
+ShaderManager::ShaderManager(EngineObject* parent)
+ : EngineObject{"ShaderManager", parent}
+{
+}
+
+// load new shader
+void ShaderManager::addShader(const std::string& name, const char* fragPath, const char* vertPath)
+{
+    m_shaders.insert(std::pair(name, Shader{name}));
+    getShader(name)->loadFromFile(fragPath, vertPath);
+}
+
+Shader* ShaderManager::getShader(const std::string& name)
+{
+    if (shaderExists(name))
+    {
+        return &m_shaders.find(name)->second;
+    }
+    std::cout << "SHADER_MANAGER::GET_SHADER::ERROR: Shader `" << name << "` does not exist!\n";
+    return nullptr;
+}
+
+void ShaderManager::useShader(const std::string& name)
+{
+    if (shaderExists(name))
+    {
+        getShader(name)->use();
+    } else
+    {
+        std::cout << "SHADER_MANAGER::USE_SHADER::ERROR: Shader `" << name << "` does not exist!\n";
+    }
+}
+
+bool ShaderManager::shaderExists(const std::string& name) const
+{
+    return m_shaders.find(name) != m_shaders.end();
 }

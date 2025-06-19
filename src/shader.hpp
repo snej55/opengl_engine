@@ -1,7 +1,6 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <glad/glad.h>
 #include <glm/glm.hpp>
 
 #include <string>
@@ -9,28 +8,16 @@
 
 #include "engine_types.hpp"
 
-class ShaderManager final : public EngineObject
-{
-public:
-    ShaderManager(EngineObject* parent);
-
-    void addShader(const Shader& shader);
-    Shader& getShader(const std::string& name) const;
-
-private:
-    std::map<std::string, Shader> m_shaders{};
-};
-
 class Shader final : public EngineObject
 {
 public:
-    Shader(const std::string& name);
+    explicit Shader(const std::string& name);
 
     void loadFromFile(const char* fragPath, const char* vertPath);
 
     void use() const;
 
-    [[nodiscard]] unsigned int getID() const;
+    [[nodiscard]] unsigned int getShaderID() const;
 
     // shader uniforms
     void setBool(const std::string& name, bool value) const;
@@ -54,6 +41,23 @@ public:
 
 protected:
     unsigned int m_ID{0};
+};
+
+class ShaderManager final : public EngineObject
+{
+public:
+    explicit ShaderManager(EngineObject* parent);
+
+    // load new shader
+    void addShader(const std::string& name, const char* fragPath, const char* vertPath);
+    [[nodiscard]] Shader* getShader(const std::string& name);
+
+    void useShader(const std::string& name);
+
+    [[nodiscard]] bool shaderExists(const std::string& name) const;
+
+private:
+    std::map<std::string, Shader> m_shaders{};
 };
 
 #endif
