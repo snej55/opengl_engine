@@ -16,6 +16,9 @@ public:
 
     void addShader(const Shader& shader);
     Shader& getShader(const std::string& name) const;
+
+private:
+    std::map<std::string, Shader> m_shaders{};
 };
 
 class Shader final : public EngineObject
