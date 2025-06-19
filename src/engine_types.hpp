@@ -2,6 +2,7 @@
 #define ENGINE_TYPES
 
 #include <string>
+#include <sstream>
 #include <iostream>
 
 class EngineObject

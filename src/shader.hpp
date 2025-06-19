@@ -11,7 +11,7 @@
 class Shader final : public EngineObject
 {
 public:
-    explicit Shader(const std::string& name);
+    explicit Shader(const std::string& name, EngineObject* parent = nullptr);
 
     void loadFromFile(const char* fragPath, const char* vertPath);
 

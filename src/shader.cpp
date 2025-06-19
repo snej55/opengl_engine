@@ -8,8 +8,8 @@
 #include <sstream>
 
 
-Shader::Shader(const std::string& name)
-: EngineObject{("Shader-" + name).c_str()}
+Shader::Shader(const std::string& name, EngineObject* parent)
+: EngineObject{("SHADER_" + name).c_str(), parent}
 {
 }
 
@@ -186,7 +186,7 @@ ShaderManager::ShaderManager(EngineObject* parent)
 // load new shader
 void ShaderManager::addShader(const std::string& name, const char* fragPath, const char* vertPath)
 {
-    m_shaders.insert(std::pair(name, Shader{name}));
+    m_shaders.insert(std::pair(name, Shader{name, this}));
     getShader(name)->loadFromFile(fragPath, vertPath);
 }
 

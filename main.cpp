@@ -13,6 +13,8 @@ int main()
     }
     std::cout << "Initialized engine!\n";
 
+    engine.addShader("cube", "shaders/cube.frag", "shaders/cube.vert");
+
     while (!engine.getQuit())
     {
         // clear screen
