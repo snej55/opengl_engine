@@ -1,4 +1,5 @@
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include <STB/stb_image.h>
 
 #include "texture.hpp"
+

@@ -21,14 +21,16 @@ public:
     explicit Arena(EngineObject* engine);
 
     ~Arena() override;
-    void free();
     // add object to arena and update object ID
     void addObject(EngineObject* object);
     // remove object from arena
     void removeObject(unsigned int id);
-
+    
 private:
     std::vector<EngineObject*> m_objects{};
+
+    // free function should only be called from destructor
+    void free();
 };
 
 #endif
