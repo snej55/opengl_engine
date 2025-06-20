@@ -27,7 +27,7 @@ public:
     [[nodiscard]] Window* getWindow() const {return m_window;}
     
     // clear screen
-    void clear();
+    void clear() const;
 
     // ------ IOHandler ------ //
 

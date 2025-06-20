@@ -119,7 +119,7 @@ bool Engine::createWindow(const unsigned int width, const unsigned int height, c
 }
 
 // clear gl buffers
-void Engine::clear()
+void Engine::clear() const
 {
     m_window->clear();
 }
@@ -196,7 +196,7 @@ bool Engine::createShaderManager()
 
 void Engine::addShader(const std::string& name, const char* fragPath, const char* vertPath) const
 {
-    m_shaderManager->addShader(name, fragPath, vertPath);
+    m_shaderManager->addShader(name, fragPath, vertPath, m_arena);
 }
 
 Shader* Engine::getShader(const std::string& name) const

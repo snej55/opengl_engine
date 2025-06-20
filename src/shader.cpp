@@ -184,23 +184,25 @@ ShaderManager::ShaderManager(EngineObject* parent)
 }
 
 // load new shader
-void ShaderManager::addShader(const std::string& name, const char* fragPath, const char* vertPath)
+void ShaderManager::addShader(const std::string& name, const char* fragPath, const char* vertPath, Arena* arena)
 {
-    m_shaders.insert(std::pair(name, Shader{name, this}));
+    Shader* shader {new Shader{name, this}};
+    arena->addObject(shader);
+    m_shaders.insert(std::pair(name, shader));
     getShader(name)->loadFromFile(fragPath, vertPath);
 }
 
-Shader* ShaderManager::getShader(const std::string& name)
+Shader* ShaderManager::getShader(const std::string& name) const
 {
     if (shaderExists(name))
     {
-        return &m_shaders.find(name)->second;
+        return m_shaders.find(name)->second;
     }
     std::cout << "SHADER_MANAGER::GET_SHADER::ERROR: Shader `" << name << "` does not exist!\n";
     return nullptr;
 }
 
-void ShaderManager::useShader(const std::string& name)
+void ShaderManager::useShader(const std::string& name) const
 {
     if (shaderExists(name))
     {

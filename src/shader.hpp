@@ -7,6 +7,7 @@
 #include <map>
 
 #include "engine_types.hpp"
+#include "arena.hpp"
 
 class Shader final : public EngineObject
 {
@@ -49,15 +50,16 @@ public:
     explicit ShaderManager(EngineObject* parent);
 
     // load new shader
-    void addShader(const std::string& name, const char* fragPath, const char* vertPath);
-    [[nodiscard]] Shader* getShader(const std::string& name);
+    void addShader(const std::string& name, const char* fragPath, const char* vertPath, Arena* arena);
 
-    void useShader(const std::string& name);
+    [[nodiscard]] Shader* getShader(const std::string& name) const;
+
+    void useShader(const std::string& name) const;
 
     [[nodiscard]] bool shaderExists(const std::string& name) const;
 
 private:
-    std::map<std::string, Shader> m_shaders{};
+    std::map<std::string, Shader*> m_shaders{};
 };
 
 #endif
