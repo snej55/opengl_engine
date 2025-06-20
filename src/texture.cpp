@@ -65,3 +65,46 @@ void Texture::activate(const int slot) const
     // activate texture
     glBindTexture(GL_TEXTURE_2D, m_TEX);
 }
+
+// ------- Texture Manager ------- //
+TextureManager::TextureManager(EngineObject* parent)
+    : EngineObject{"TextureManager", parent}
+{
+}
+
+// load new texture
+void TextureManager::addTexture(const char* path, const char* name, Arena* arena)
+{
+    // create new texture and add to arena
+    Texture* texture {new Texture{name, this}};
+    arena->addObject(texture);
+    m_textures.insert(std::pair{std::string{name}, texture});
+    // load actual texture
+    getTexture(std::string{name})->loadFromFile(path);
+}
+
+Texture* TextureManager::getTexture(const std::string& name) const
+{
+    if (textureExists(name))
+    {
+        return m_textures.find(name)->second;
+    }
+    std::cout << "TEXTURE_MANAGER::GET_TEXTURE::ERROR: Texture `" << name << "' does not exist!\n";
+    return nullptr;
+}
+
+void TextureManager::activateTexture(const std::string& name, int slot) const
+{
+    if (textureExists(name))
+    {
+        getTexture(name)->activate(slot);
+    } else
+    {
+        std::cout << "TEXTURE_MANAGER::ACTIVATE_TEXTURE::ERROR: Texture `" << name << "' does not exist!\n";
+    }
+}
+
+bool TextureManager::textureExists(const std::string& name) const
+{
+    return m_textures.find(name) != m_textures.end();
+}

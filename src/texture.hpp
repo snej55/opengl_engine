@@ -1,11 +1,13 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include "engine_types.hpp"
-
 #include <string>
+#include <map>
 
-class Texture final : EngineObject
+#include "engine_types.hpp"
+#include "arena.hpp"
+
+class Texture final : public EngineObject
 {
 public:
     explicit Texture(const std::string& name, EngineObject* manager = nullptr);
@@ -27,6 +29,24 @@ private:
     int m_width{0};
     int m_height{0};
     int m_numChannels{0};
+};
+
+class TextureManager final : public EngineObject
+{
+public:
+    explicit TextureManager(EngineObject* parent);
+
+    // load new texture
+    void addTexture(const char* path, const char* name, Arena* arena);
+
+    [[nodiscard]] Texture* getTexture(const std::string& name) const;
+
+    void activateTexture(const std::string& name, int slot) const;
+
+    [[nodiscard]] bool textureExists(const std::string& name) const;
+
+private:
+    std::map<std::string, Texture*> m_textures{};
 };
 
 #endif

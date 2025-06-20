@@ -186,9 +186,11 @@ ShaderManager::ShaderManager(EngineObject* parent)
 // load new shader
 void ShaderManager::addShader(const std::string& name, const char* fragPath, const char* vertPath, Arena* arena)
 {
+    // create new shader and add it to arena
     Shader* shader {new Shader{name, this}};
     arena->addObject(shader);
-    m_shaders.insert(std::pair(name, shader));
+    m_shaders.insert(std::pair{name, shader});
+    // load shader file
     getShader(name)->loadFromFile(fragPath, vertPath);
 }
 
