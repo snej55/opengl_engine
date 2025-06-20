@@ -5,7 +5,7 @@
 
 #include <string>
 
-class Texture : EngineObject
+class Texture final : EngineObject
 {
 public:
     explicit Texture(const std::string& name, EngineObject* manager = nullptr);
