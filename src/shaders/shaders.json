@@ -3,6 +3,7 @@
         {"name": "rect", "shader": {"frag": "rect.frag", "vert": "rect.vert"}}
     ],
     "custom": [
-        {"name": "cube", "shader": {"frag": "cube.frag", "vert": "cube.vert"}}
+        {"name": "cube", "shader": {"frag": "cube.frag", "vert": "cube.vert"}},
+        {"name": "triangle", "shader": {"frag": "triangle.frag", "vert": "triangle.vert"}}
     ]
 }

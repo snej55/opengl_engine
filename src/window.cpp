@@ -18,7 +18,7 @@ Window::~Window()
 bool Window::init(const unsigned int width, const unsigned int height, const char* title)
 {
     // create glfw window
-    m_window = glfwCreateWindow(width, height, title, nullptr, nullptr);
+    m_window = glfwCreateWindow(static_cast<int>(width), static_cast<int>(height), title, nullptr, nullptr);
 
     // validate window
     if (m_window == nullptr)
@@ -51,7 +51,7 @@ void Window::free()
 // create view port and setup glfw callbacks
 void Window::createViewPort()
 {
-    glViewport(0, 0, m_width, m_height);
+    glViewport(0, 0, static_cast<int>(m_width), static_cast<int>(m_height));
 
     glfwSetWindowUserPointer(m_window, this);
 

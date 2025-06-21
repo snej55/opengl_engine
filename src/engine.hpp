@@ -1,6 +1,8 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
+#include <glad/glad.h>
+
 #include "engine_types.hpp"
 #include "window.hpp"
 #include "arena.hpp"
