@@ -14,6 +14,7 @@ int main()
     std::cout << "Initialized engine!\n";
 
     engine.addShader("cube", "shaders/cube.frag", "shaders/cube.vert");
+    engine.addTexture("tomato", "data/images/tomato.png");
 
     while (!engine.getQuit())
     {

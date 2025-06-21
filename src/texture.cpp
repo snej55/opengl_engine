@@ -50,6 +50,7 @@ void Texture::loadFromFile(const char* path)
         }
         // load opengl texture
         glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(format), m_width, m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        std::cout << "Successfully loaded texture from `" << path << "`\n";
     }
     // free image data
     stbi_image_free(data);
