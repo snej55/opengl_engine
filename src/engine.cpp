@@ -82,6 +82,13 @@ bool Engine::init(const unsigned int width, const unsigned int height, const cha
         return false;
     }
 
+    // create texture manager
+    if (!createTextureManager())
+    {
+        std::cout << "ENGINE::INIT::ERROR: Failed to create TextureManager!" << std::endl;
+        return false;
+    }
+
     std::cout << "ENGINE::INIT: Successfully created components!\n";
 
     return true;
@@ -213,6 +220,43 @@ bool Engine::shaderExists(const std::string& name) const
 {
     return m_shaderManager->shaderExists(name);
 }
+
+// ------ Texture Manager ------ //
+bool Engine::createTextureManager()
+{
+    if (m_textureManager != nullptr)
+    {
+        std::cout << "ENGINE::CREATE_TEXTURE_MANAGER::ERROR: Texture manager already exists at `" << m_textureManager << "`!\n";
+        return false;
+    }
+    // allocate memory for texture manager
+    m_textureManager = new TextureManager{this};
+    // add texture manager to arena
+    m_arena->addObject(m_textureManager);
+    return true;
+}
+
+// load new texture
+void Engine::addTexture(const std::string& name, const char* path) const
+{
+    m_textureManager->addTexture(path, name.c_str(), m_arena);
+}
+
+Texture* Engine::getTexture(const std::string& name) const
+{
+    return m_textureManager->getTexture(name);
+}
+
+void Engine::activateTexture(const std::string& name, const int slot) const
+{
+    m_textureManager->activateTexture(name, slot);
+}
+
+bool Engine::textureExists(const std::string& name) const
+{
+    return m_textureManager->textureExists(name);
+}
+
 
 // ------ Arena ------ //
 

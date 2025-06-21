@@ -7,6 +7,7 @@
 #include "iohandler.hpp"
 #include "clock.hpp"
 #include "shader.hpp"
+#include "texture.hpp"
 
 class Engine final : public EngineObject
 {
@@ -61,6 +62,16 @@ public:
     void useShader(const std::string& name) const;
     [[nodiscard]] bool shaderExists(const std::string& name) const;
 
+    // ------ Textures ------ //
+    bool createTextureManager();
+    [[nodiscard]] TextureManager* getTextureManager() const {return m_textureManager;}
+
+    // texture manager methods
+    void addTexture(const std::string& name, const char* path) const;
+    [[nodiscard]] Texture* getTexture(const std::string& name) const;
+    void activateTexture(const std::string& name, int slot) const;
+    [[nodiscard]] bool textureExists(const std::string& name) const;
+
     // ------ Arena ------ //
 
     // Arena operations
@@ -74,11 +85,14 @@ public:
 private:
     // memory manager
     Arena* m_arena {nullptr};
-    // engine components
+    // ----- Engine components ----- //
+    // core components
     Window* m_window {nullptr};
     IOHandler* m_iohandler {nullptr};
     Clock* m_clock {nullptr};
+    // managers
     ShaderManager* m_shaderManager {nullptr};
+    TextureManager* m_textureManager {nullptr};
 };
 
 #endif
