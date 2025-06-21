@@ -20,7 +20,8 @@ elseif (CMAKE_SYSTEM MATCHES Linux)
 endif()
 
 set(SOURCES main.cpp src/extern/glad.c src/engine.hpp src/engine.cpp src/engine_types.hpp src/arena.hpp src/window.hpp src/window.cpp
-        src/arena.cpp src/iohandler.hpp src/iohandler.cpp src/clock.hpp src/clock.cpp src/shader.cpp src/shader.hpp src/texture.hpp src/texture.cpp)
+        src/arena.cpp src/iohandler.hpp src/iohandler.cpp src/clock.hpp src/clock.cpp src/shader.cpp src/shader.hpp src/texture.hpp src/texture.cpp
+        src/util.hpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
