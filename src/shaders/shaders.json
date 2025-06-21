@@ -1,0 +1,8 @@
+{
+    "builtin": [
+        {"rect": {"frag": "rect.frag", "vert": "rect.vert"}}
+    ],
+    "custom": [
+        {"cube": {"frag": "cube.frag", "vert": "cube.vert"}}
+    ]
+}
