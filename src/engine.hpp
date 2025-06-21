@@ -62,6 +62,10 @@ public:
     void useShader(const std::string& name) const;
     [[nodiscard]] bool shaderExists(const std::string& name) const;
 
+    // check builtin shaders
+    [[nodiscard]] bool checkShaders() const;
+    void loadBuiltinShaders();
+
     // ------ Textures ------ //
     bool createTextureManager();
     [[nodiscard]] TextureManager* getTextureManager() const {return m_textureManager;}
@@ -93,6 +97,9 @@ private:
     // managers
     ShaderManager* m_shaderManager {nullptr};
     TextureManager* m_textureManager {nullptr};
+
+    // flags
+    bool m_loadedBuiltins{false}; // builtin shaders loaded
 };
 
 #endif
