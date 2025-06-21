@@ -1,8 +1,16 @@
+// gl libaries
 #include <glad/glad.h>
-
 #include <GLFW/glfw3.h>
 
+// json libary
+#include <JSON/json.hpp>
+using json = nlohmann::json;
+
+#include <iostream>
+#include <fstream>
+
 #include "engine.hpp"
+#include "util.hpp"
 
 Engine::Engine()
  : EngineObject{"Engine"}
@@ -81,6 +89,14 @@ bool Engine::init(const unsigned int width, const unsigned int height, const cha
         std::cout << "ENGINE::INIT::ERROR: Failed to create ShaderManager!" << std::endl;
         return false;
     }
+
+    // check shaders
+    if (!checkShaders())
+    {
+        std::cout << "ENGINE::INIT::ERROR: Failed to check all shaders!" << std::endl;
+        return false;
+    }
+    loadShaders(); // load verified shaders
 
     // create texture manager
     if (!createTextureManager())
@@ -220,6 +236,111 @@ bool Engine::shaderExists(const std::string& name) const
 {
     return m_shaderManager->shaderExists(name);
 }
+
+// check builtin shaders
+bool Engine::checkShaders()
+{
+    // check if config file exists
+    if (!Util::fileExists("shaders/shaders.json"))
+    {
+        std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find `shaders.json` at `shaders/shaders.json`!";
+        return false;
+    }
+
+    // load json
+    std::ifstream file {"shaders/shaders.json"};
+    json data = json::parse(file); // NOTE: brace initialization doesn't work
+
+    // check builtin shaders
+    for (const auto& shader : data["builtin"])
+    {
+        std::string name {shader["name"]};
+        std::string vertPath {"shaders/builtin/" + std::string(shader["shader"]["vert"])};
+        std::string fragPath {"shaders/builtin/" + std::string(shader["shader"]["frag"])};
+
+        // check if vertex shader exists
+        if (!Util::fileExists(vertPath))
+        {
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find vertex shader for *" << name << "* at: `" << vertPath << "`!\n";
+            file.close();
+            return false;
+        }
+
+        // same for fragment shader
+        if (!Util::fileExists(fragPath))
+        {
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find fragment shader for *" << name << "* at: `" << fragPath << "`!\n";
+            file.close();
+            return false;
+        }
+
+        std::cout << "Found builtin shader *" << name << "* at {vert: " << vertPath << ", frag: " << fragPath << "}\n";
+    }
+
+    // repeat for custom
+    for (const auto& shader : data["custom"])
+    {
+        std::string name {shader["name"]};
+        std::string vertPath {"shaders/" + std::string(shader["shader"]["vert"])};
+        std::string fragPath {"shaders/" + std::string(shader["shader"]["frag"])};
+
+        // check if vertex shader exists
+        if (!Util::fileExists(vertPath))
+        {
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find vertex shader for *" << name << "* at: `" << vertPath << "`!\n";
+            file.close();
+            return false;
+        }
+
+        // same for fragment shader
+        if (!Util::fileExists(fragPath))
+        {
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find fragment shader for *" << name << "* at: `" << fragPath << "`!\n";
+            file.close();
+            return false;
+        }
+
+        std::cout << "Found custom shader *" << name << "* at {vert: " << vertPath << ", frag: " << fragPath << "}\n";
+    }
+
+    // close fstream
+    file.close();
+    // set flag
+    m_checkedShaders = true;
+    return true;
+}
+
+// load shaders from shaders.json
+void Engine::loadShaders()
+{
+    if (!m_checkedShaders)
+    {
+        std::cout << "ENGINE::LOAD_SHADERS::ERROR: Cannot load shaders: shader files have not been verified!\n";
+        return;
+    }
+
+    std::ifstream file {"shaders/shaders.json"};
+    json data = json::parse(file);
+    // load builtin shaders
+    for (const auto& shader : data["builtin"])
+    {
+        std::string name {shader["name"]};
+        std::string vertPath {"shaders/builtin/" + std::string(shader["shader"]["vert"])};
+        std::string fragPath {"shaders/builtin/" + std::string(shader["shader"]["frag"])};
+        addShader(name, fragPath.c_str(), vertPath.c_str());
+    }
+    // repeat for custom shaders
+    for (const auto& shader : data["custom"])
+    {
+        std::string name {shader["name"]};
+        std::string vertPath {"shaders/" + std::string(shader["shader"]["vert"])};
+        std::string fragPath {"shaders/" + std::string(shader["shader"]["frag"])};
+        addShader(name, fragPath.c_str(), vertPath.c_str());
+    }
+
+    m_loadedShaders = true;
+}
+
 
 // ------ Texture Manager ------ //
 bool Engine::createTextureManager()

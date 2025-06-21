@@ -1,8 +1,8 @@
 {
     "builtin": [
-        {"rect": {"frag": "rect.frag", "vert": "rect.vert"}}
+        {"name": "rect", "shader": {"frag": "rect.frag", "vert": "rect.vert"}}
     ],
     "custom": [
-        {"cube": {"frag": "cube.frag", "vert": "cube.vert"}}
+        {"name": "cube", "shader": {"frag": "cube.frag", "vert": "cube.vert"}}
     ]
 }
