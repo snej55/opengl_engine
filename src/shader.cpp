@@ -9,7 +9,7 @@
 
 
 Shader::Shader(const std::string& name, EngineObject* parent)
-: EngineObject{("SHADER_" + name).c_str(), parent}
+: EngineObject{("SHADER_" + name).c_str(), parent}, m_shaderName{name}
 {
 }
 
@@ -92,7 +92,7 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
     glDeleteShader(vertex);
     glDeleteShader(fragment);
 
-    std::cout << "Loaded shader from files: `" << vertPath << "` `" << fragPath << "`\n";
+    std::cout << "Loaded *" << m_shaderName << "* shader from files: `" << vertPath << "` `" << fragPath << "`\n";
 }
 
 void Shader::use() const

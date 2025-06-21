@@ -40,8 +40,11 @@ public:
     void setMat3(const std::string& name, const glm::mat3& value) const;
     void setMat4(const std::string& name, const glm::mat4& value) const;
 
+    [[nodiscard]] std::string_view getShaderName() const {return m_shaderName;}
+
 protected:
     unsigned int m_ID{0};
+    std::string m_shaderName;
 };
 
 class ShaderManager final : public EngineObject
