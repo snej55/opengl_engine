@@ -33,6 +33,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [ ] Ambient lighting (SSAO)
 - [ ] PBR lighting
 - [ ] Model loading
+- [ ] Colour functions (lerp, different blending functions)
 
 
 ### v1
