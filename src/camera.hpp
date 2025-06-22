@@ -9,6 +9,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_transform.hpp>
 
+#include "engine_types.hpp"
+
 namespace CameraN
 {
     enum class CameraMotion
@@ -27,10 +29,11 @@ namespace CameraN
     constexpr float ZOOM{45.0f};
 }
 
-class Camera
+class Camera final : public EngineObject
 {
 public:
-    Camera()
+    explicit Camera(EngineObject* engine)
+        : EngineObject{"Camera", engine}
     {
         m_position = glm::vec3(0.0f, 0.0f, 3.0f);
         m_front = glm::vec3(0.0f, 0.0f, -1.0f);

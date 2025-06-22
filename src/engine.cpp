@@ -4,6 +4,8 @@
 
 // json libary
 #include <JSON/json.hpp>
+
+#include "glm/ext/matrix_clip_space.hpp"
 using json = nlohmann::json;
 
 #include <iostream>
@@ -402,6 +404,42 @@ bool Engine::createShapeManager()
 void Engine::drawRect(const FRect& rect, const Color& color) const
 {
     m_shapeManager->drawRect<float>(rect, color, m_shaderManager);
+}
+
+// ------ Camera ------ //
+
+bool Engine::createCamera()
+{
+    if (m_camera != nullptr)
+    {
+        std::cout << "ENGINE::CREATE_CAMERA::ERROR: Camera already exists at `" << m_camera << "`!\n";
+        return false;
+    }
+    // create new camera
+    m_camera = new Camera{this};
+    m_arena->addObject(m_camera);
+    return true;
+}
+
+glm::mat4 Engine::getViewMatrix() const
+{
+    return m_camera->getViewMatrix();
+}
+
+glm::mat4 Engine::getProjectionMatrix() const
+{
+    return glm::perspective(glm::radians(m_camera->getZoom()),
+                            static_cast<float>(getWidth()) / static_cast<float>(getHeight()), 0.1f, 100000.0f);
+}
+
+glm::vec3 Engine::getCameraPosition() const
+{
+    return m_camera->getPosition();
+}
+
+glm::mat4 Engine::getNormalMatrix(const glm::mat4& model) const
+{
+    return glm::transpose(glm::inverse(model));
 }
 
 

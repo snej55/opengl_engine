@@ -11,6 +11,7 @@
 #include "shader.hpp"
 #include "texture.hpp"
 #include "shapes.hpp"
+#include "camera.hpp"
 
 class Engine final : public EngineObject
 {
@@ -77,6 +78,7 @@ public:
     [[nodiscard]] bool getShadersLoaded() const {return m_loadedShaders;}
 
     // ------ Textures ------ //
+
     bool createTextureManager();
     [[nodiscard]] TextureManager* getTextureManager() const {return m_textureManager;}
 
@@ -87,10 +89,24 @@ public:
     [[nodiscard]] bool textureExists(const std::string& name) const;
 
     // ------ Shapes ------ //
+
     bool createShapeManager();
     [[nodiscard]] ShapeManager* getShapeManager() const {return m_shapeManager;}
 
     void drawRect(const FRect& rect, const Color& color) const;
+
+    // ------ Camera ------ //
+
+    bool createCamera();
+    [[nodiscard]] Camera* getCamera() const {return m_camera;}
+
+    // view & perspective matrices getters
+    [[nodiscard]] glm::mat4 getViewMatrix() const;
+    [[nodiscard]] glm::mat4 getProjectionMatrix() const;
+    [[nodiscard]] glm::vec3 getCameraPosition() const;
+
+    // get normal mat from model mat
+    [[nodiscard]] glm::mat4 getNormalMatrix(const glm::mat4& model) const;
 
     // ------ Arena ------ //
 
@@ -110,6 +126,7 @@ private:
     Window* m_window {nullptr};
     IOHandler* m_iohandler {nullptr};
     Clock* m_clock {nullptr};
+    Camera* m_camera {nullptr};
     // managers
     ShaderManager* m_shaderManager {nullptr};
     TextureManager* m_textureManager {nullptr};
