@@ -13,7 +13,7 @@ ShapeManager::ShapeManager(EngineObject* parent)
 {
 }
 
-ShapeManager::~ShapeManager() override
+ShapeManager::~ShapeManager()
 {
     glDeleteVertexArrays(1, &m_rectVAO);
     glDeleteBuffers(1, &m_rectVBO);
