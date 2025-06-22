@@ -11,6 +11,8 @@
 ShapeManager::ShapeManager(EngineObject* parent)
     : EngineObject{"ShapeManager", parent}
 {
+    // generate vertex arrays
+    init();
 }
 
 ShapeManager::~ShapeManager()
@@ -50,7 +52,7 @@ void ShapeManager::drawRect(const Rect<T>& rect, const Color& color, ShaderManag
     // get rect position and dimensions
     glm::mat4 model {1.0f};
     model = glm::translate(model, glm::vec3(rect.x, rect.y, 0.0f));
-    model = glm::scale(model, glm::vec3(rect.width, rect.height, 1.0f));
+    model = glm::scale(model, glm::vec3(rect.w, rect.h, 1.0f));
 
     // get shader from shader manager
     const Shader* rectShader {shaderManager->getShader("rect")};
@@ -67,6 +69,16 @@ void ShapeManager::drawRect(const Rect<T>& rect, const Color& color, ShaderManag
     // render rect
     glBindVertexArray(m_rectVAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+}
+
+void ShapeManager::drawRect(const FRect& rect, const Color& color, ShaderManager* shaderManager) const
+{
+    drawRect<float>(rect, color, shaderManager);
+}
+
+void ShapeManager::drawRect(const IRect& rect, const Color& color, ShaderManager* shaderManager) const
+{
+    drawRect<int>(rect, color, shaderManager);
 }
 
 

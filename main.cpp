@@ -46,6 +46,8 @@ int main()
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
+        engine.drawRect({0.0f, 0.0f, 1.0f, 1.0f}, {255, 0, 0});
+
         // update engine
         engine.update();
     }

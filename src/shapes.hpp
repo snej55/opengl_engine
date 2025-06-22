@@ -57,8 +57,9 @@ public:
     // draw a rect
     template <typename T>
     void drawRect(const Rect<T>& rect, const Color& color, ShaderManager* shaderManager) const;
-    // void drawRect(const FRect& rect, const Color& color, ShaderManager* shader) const;
-    // void drawRect(const IRect& rect, const Color& color, ShaderManager* shader) const;
+    void drawRect(const FRect& rect, const Color& color, ShaderManager* shader) const;
+    // in case you want to draw an IRect for some reason
+    void drawRect(const IRect& rect, const Color& color, ShaderManager* shader) const;
 
     [[nodiscard]] static glm::vec3 color2vec3(const Color& color);
     [[nodiscard]] static glm::vec4 color2vec4(const Color& color);

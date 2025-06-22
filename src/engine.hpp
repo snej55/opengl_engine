@@ -10,6 +10,7 @@
 #include "clock.hpp"
 #include "shader.hpp"
 #include "texture.hpp"
+#include "shapes.hpp"
 
 class Engine final : public EngineObject
 {
@@ -19,15 +20,18 @@ public:
     ~Engine() override;
 
     // initialize components
-    bool init(unsigned int width, unsigned int height, const char* title);
+    bool init(int width, int height, const char* title);
     // update components
     void update();
 
     // ------ Window ------ //
 
     // create window object
-    bool createWindow(unsigned int width, unsigned int height, const char* title);
+    bool createWindow(int width, int height, const char* title);
+    // window getters
     [[nodiscard]] Window* getWindow() const {return m_window;}
+    [[nodiscard]] int getWidth() const {return m_window->getWidth();}
+    [[nodiscard]] int getHeight() const {return m_window->getHeight();}
     
     // clear screen
     void clear() const;
@@ -82,6 +86,12 @@ public:
     void activateTexture(const std::string& name, int slot) const;
     [[nodiscard]] bool textureExists(const std::string& name) const;
 
+    // ------ Shapes ------ //
+    bool createShapeManager();
+    [[nodiscard]] ShapeManager* getShapeManager() const {return m_shapeManager;}
+
+    void drawRect(const FRect& rect, const Color& color) const;
+
     // ------ Arena ------ //
 
     // Arena operations
@@ -103,6 +113,7 @@ private:
     // managers
     ShaderManager* m_shaderManager {nullptr};
     TextureManager* m_textureManager {nullptr};
+    ShapeManager* m_shapeManager {nullptr};
 
     // flags
     bool m_checkedShaders {false}; // shaders.json checked

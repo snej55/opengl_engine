@@ -30,7 +30,7 @@ Engine::~Engine()
 }
 
 // initialize components
-bool Engine::init(const unsigned int width, const unsigned int height, const char* title)
+bool Engine::init(const int width, const int height, const char* title)
 {
     // initialize opengl context
     glfwInit();
@@ -105,6 +105,12 @@ bool Engine::init(const unsigned int width, const unsigned int height, const cha
         return false;
     }
 
+    if (!createShapeManager())
+    {
+        std::cout << "ENGINE::INIT::ERROR: Failed to create ShapeManager!" << std::endl;
+        return false;
+    }
+
     std::cout << "ENGINE::INIT: Successfully created components!\n";
 
     return true;
@@ -125,7 +131,7 @@ void Engine::update()
 // ------ Window ------ //
 
 // create window object
-bool Engine::createWindow(const unsigned int width, const unsigned int height, const char* title)
+bool Engine::createWindow(const int width, const int height, const char* title)
 {
     // check if window already exists
     if (m_window != nullptr)
@@ -376,6 +382,26 @@ void Engine::activateTexture(const std::string& name, const int slot) const
 bool Engine::textureExists(const std::string& name) const
 {
     return m_textureManager->textureExists(name);
+}
+
+// ------ Shape Manager ------ //
+bool Engine::createShapeManager()
+{
+    if (m_shapeManager != nullptr)
+    {
+        std::cout << "ENGINE::CREATE_SHAPE_MANAGER::ERROR: Shape manager already exists at `" << m_shapeManager << "`!\n";
+        return false;
+    }
+    // create new shape manager
+    m_shapeManager = new ShapeManager{this};
+    // add manager to arena
+    m_arena->addObject(m_shapeManager);
+    return true;
+}
+
+void Engine::drawRect(const FRect& rect, const Color& color) const
+{
+    m_shapeManager->drawRect<float>(rect, color, m_shaderManager);
 }
 
 
