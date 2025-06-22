@@ -14,6 +14,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Set up arena
 - [X] Shaders
 - [X] Shader manager
+- [ ] Camera
 - [ ] Asset manager
 - [ ] Set up renderer class
 - [ ] Set up render queue
