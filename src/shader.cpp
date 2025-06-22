@@ -13,6 +13,11 @@ Shader::Shader(const std::string& name, EngineObject* parent)
 {
 }
 
+Shader::~Shader()
+{
+    glDeleteProgram(m_ID);
+}
+
 void Shader::loadFromFile(const char* fragPath, const char* vertPath)
 {
     std::string vertCode;

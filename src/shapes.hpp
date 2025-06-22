@@ -3,24 +3,8 @@
 
 #include <glm/glm.hpp>
 
-// use FRect most of the time
-// integer rect
-struct IRect
-{
-    int x{0};
-    int y{0};
-    int w{0};
-    int h{0};
-};
-
-// floating point rect
-struct FRect
-{
-    float x{0.f};
-    float y{0.f};
-    float w{0.f};
-    float h{0.f};
-};
+#include "engine_types.hpp"
+#include "shader.hpp"
 
 // Generic rect template
 template <typename T>
@@ -32,6 +16,12 @@ struct Rect
     T h{};
 };
 
+// use FRect most of the time
+// floating point rect
+typedef Rect<float> FRect;
+// integer rect
+typedef Rect<int> IRect;
+
 struct Color
 {
     int r{0};
@@ -40,19 +30,41 @@ struct Color
     int a{255};
 };
 
-inline glm::vec3 color2vec3(const Color color)
+namespace Shapes
 {
-    return {
-        static_cast<float>(color.r) / 255.0f, static_cast<float>(color.g) / 255.0f, static_cast<float>(color.b) / 255.0f
+    inline float RectVertices[] {
+        1.0f, 0.0f, 0.0f, // top right
+        1.0f, -1.0f, 0.0f, // bottom right
+        0.0f, -1.0f, 0.0f, // bottom left
+        0.0f, 0.0f, 0.0f // top left
+    };
+
+    inline unsigned int RectIndices[] {
+        0, 1, 3, // first Triangle
+        1, 2, 3 // second Triangle
     };
 }
 
-inline glm::vec4 color2vec4(const Color color)
+class ShapeManager final : public EngineObject
 {
-    return {
-        static_cast<float>(color.r) / 255.0f, static_cast<float>(color.g) / 255.0f, static_cast<float>(color.b) / 255.0f,
-        static_cast<float>(color.a) / 255.0f
-    };
-}
+public:
+    explicit ShapeManager(EngineObject* parent);
+    ~ShapeManager() override;
+
+    // setup vertex buffers and stuff
+    void init();
+
+    // draw a rect
+    template <typename T>
+    void drawRect(const Rect<T>& rect, const Color& color, ShaderManager* shaderManager) const;
+    // void drawRect(const FRect& rect, const Color& color, ShaderManager* shader) const;
+    // void drawRect(const IRect& rect, const Color& color, ShaderManager* shader) const;
+
+    [[nodiscard]] static glm::vec3 color2vec3(const Color& color);
+    [[nodiscard]] static glm::vec4 color2vec4(const Color& color);
+
+private:
+    unsigned int m_rectVAO{}, m_rectVBO{}, m_rectEBO{};
+};
 
 #endif

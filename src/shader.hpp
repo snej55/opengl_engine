@@ -13,6 +13,7 @@ class Shader final : public EngineObject
 {
 public:
     explicit Shader(const std::string& name, EngineObject* parent = nullptr);
+    ~Shader() override;
 
     void loadFromFile(const char* fragPath, const char* vertPath);
 
