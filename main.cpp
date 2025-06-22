@@ -14,7 +14,7 @@ int main()
     std::cout << "Initialized engine!\n";
 
     // quad vertices
-    float vertices[] = {
+    constexpr float vertices[] = {
         -0.5f, -0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
         0.0f,  0.5f, 0.0f

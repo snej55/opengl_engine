@@ -15,10 +15,10 @@ Window::~Window()
 }
 
 // create glfw window
-bool Window::init(const unsigned int width, const unsigned int height, const char* title)
+bool Window::init(const int width, const int height, const char* title)
 {
     // create glfw window
-    m_window = glfwCreateWindow(static_cast<int>(width), static_cast<int>(height), title, nullptr, nullptr);
+    m_window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 
     // validate window
     if (m_window == nullptr)
@@ -120,12 +120,12 @@ void Window::framebuffer_size_callback(const int width, const int height)
 void Window::mouse_callback(const double xpos, const double ypos)
 {
     // pass
-    }
+}
 
 void Window::scroll_callback(const double xoffset, const double yoffset)
 {
     // pass
-    }
+}
 
 // glfw callbacks
 void Window::win_framebuffer_size_callback(GLFWwindow* window, const int width, const int height)

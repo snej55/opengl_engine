@@ -13,7 +13,7 @@ public:
     ~Window() override; // free
 
     // initializes glfw window
-    bool init(unsigned int width, unsigned int height, const char* title);
+    bool init(int width, int height, const char* title);
 
     // free resources
     void free();
@@ -23,7 +23,7 @@ public:
 
     // --- Window management stuff ---
     // tell window whether to quit or not
-    void setQuit(bool val) {m_quit = val;};
+    void setQuit(const bool val) {m_quit = val;};
     // check whether window has been told to quit
     [[nodiscard]] bool getQuit() const {return m_quit;}
     // checks if window should close
@@ -34,19 +34,19 @@ public:
     void tick() const;
 
     // getters & setters
-    [[nodiscard]] unsigned int getWidth() const { return m_width; }
-    [[nodiscard]] unsigned int getHeight() const { return m_height; }
+    [[nodiscard]] int getWidth() const { return m_width; }
+    [[nodiscard]] int getHeight() const { return m_height; }
     [[nodiscard]] std::string_view getTitle() const { return m_title; };
 
     // width & height setters
-    void setWidth(const unsigned int& val) { m_width = val; }
-    void setWidth(const unsigned int&& val) { m_width = val; }
-    void setHeight(const unsigned int& val) { m_height = val; }
-    void setHeight(const unsigned int&& val) { m_height = val; }
+    void setWidth(const int& val) { m_width = val; }
+    void setWidth(const int&& val) { m_width = val; }
+    void setHeight(const int& val) { m_height = val; }
+    void setHeight(const int&& val) { m_height = val; }
 
     // title setters
     void setTitle(const char* title);
-    void setTitle(const std::string_view title);
+    void setTitle(std::string_view title);
     void setTitle(const std::string& title);
 
     // returns pointer to GLFWWindow member
@@ -58,12 +58,12 @@ public:
     void scroll_callback(double xoffset, double yoffset);
 
 private:
-    unsigned int m_width { 0 };
-    unsigned int m_height { 0 };
+    int m_width { 0 };
+    int m_height { 0 };
     std::string m_title {};
 
-    // quit flag
-    bool m_quit{false};
+    // flags
+    bool m_quit{false}; // quit
 
     GLFWwindow* m_window { nullptr };
 
