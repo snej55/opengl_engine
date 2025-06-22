@@ -4,7 +4,7 @@ module libassimp {
     header "GltfMaterial.h"
     header "ObjMaterial.h"
     header "anim.h"
-    header "camera.h"
+    header "camera.hpp"
     header "cexport.h"
     header "cfileio.h"
     header "cimport.h"

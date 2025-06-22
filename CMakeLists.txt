@@ -23,7 +23,8 @@ set(SOURCES main.cpp src/extern/glad.c src/engine.hpp src/engine.cpp src/engine_
         src/arena.cpp src/iohandler.hpp src/iohandler.cpp src/clock.hpp src/clock.cpp src/shader.cpp src/shader.hpp src/texture.hpp src/texture.cpp
         src/util.hpp
         src/shapes.hpp
-        src/shapes.cpp)
+        src/shapes.cpp
+        src/camera.hpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
