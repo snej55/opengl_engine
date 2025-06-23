@@ -462,3 +462,30 @@ void Engine::removeObjectID(const unsigned int id) const
 {
     m_arena->removeObject(id);
 }
+
+// ---- Window callbacks ---- //
+void Engine::mouse_callback(const double xPosIn, const double yPosIn)
+{
+    const float xPos {static_cast<float>(xPosIn)};
+    const float yPos {static_cast<float>(yPosIn)};
+
+    if (m_camFirstMouse)
+    {
+        m_camLastX = xPos;
+        m_camLastY = yPos;
+        m_camFirstMouse = false;
+    }
+
+    const float xOffset {xPos - m_camLastX};
+    const float yOffset {m_camLastY - yPos}; // remember to reverse because of reversed coordinates
+
+    m_camLastX = xPos;
+    m_camLastY = yPos;
+
+    m_camera->processMouseMovement(xOffset, yOffset);
+}
+
+void Engine::scroll_callback(const double yOffset) const
+{
+    m_camera->processMouseScroll(static_cast<float>(yOffset));
+}

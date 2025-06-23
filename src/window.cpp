@@ -1,3 +1,4 @@
+#include "engine.hpp"
 #include "window.hpp"
 
 #include <iostream>
@@ -117,14 +118,14 @@ void Window::framebuffer_size_callback(const int width, const int height)
 }
 
 // gets called from glfw cursor pos callback
-void Window::mouse_callback(const double xpos, const double ypos)
+void Window::mouse_callback(const double xpos, const double ypos) const
 {
-    // pass
+    dynamic_cast<Engine*>(m_parent)->mouse_callback(xpos, ypos);
 }
 
-void Window::scroll_callback(const double xoffset, const double yoffset)
+void Window::scroll_callback(const double yoffset) const
 {
-    // pass
+    dynamic_cast<Engine*>(m_parent)->scroll_callback(yoffset);
 }
 
 // glfw callbacks
@@ -148,6 +149,6 @@ void Window::win_scroll_callback(GLFWwindow* window, const double xoffset, const
 {
     if (Window* handler{static_cast<Window*>(glfwGetWindowUserPointer(window))})
     {
-        handler->scroll_callback(xoffset, yoffset);
+        handler->scroll_callback(yoffset);
     }
 }

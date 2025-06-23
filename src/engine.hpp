@@ -118,6 +118,10 @@ public:
     // remove object at index from arena
     void removeObjectID(unsigned int id) const;
 
+    // window callbacks
+    void mouse_callback(double xPosIn, double yPosIn);
+    void scroll_callback(double yOffset) const;
+
 private:
     // memory manager
     Arena* m_arena {nullptr};
@@ -126,15 +130,18 @@ private:
     Window* m_window {nullptr};
     IOHandler* m_iohandler {nullptr};
     Clock* m_clock {nullptr};
-    Camera* m_camera {nullptr};
     // managers
     ShaderManager* m_shaderManager {nullptr};
     TextureManager* m_textureManager {nullptr};
     ShapeManager* m_shapeManager {nullptr};
-
+    // camera stuff
+    Camera* m_camera {nullptr};
+    float m_camLastX {};
+    float m_camLastY {};
     // flags
     bool m_checkedShaders {false}; // shaders.json checked
     bool m_loadedShaders {false}; // shaders loaded
+    bool m_camFirstMouse {true}; // first mouse movement
 };
 
 #endif

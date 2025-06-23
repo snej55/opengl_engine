@@ -27,7 +27,7 @@ public:
     [[nodiscard]] unsigned int getID() const { return m_ID; }
     void setID(const unsigned int idx) { m_ID = idx; }
 
-private:
+protected:
     std::string m_name;
     EngineObject* m_parent;
     unsigned int m_ID{};

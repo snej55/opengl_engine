@@ -54,8 +54,8 @@ public:
 
     // window callbacks
     void framebuffer_size_callback(int width, int height);
-    void mouse_callback(double xpos, double ypos);
-    void scroll_callback(double xoffset, double yoffset);
+    void mouse_callback(double xpos, double ypos) const;
+    void scroll_callback(double yoffset) const;
 
 private:
     int m_width { 0 };
