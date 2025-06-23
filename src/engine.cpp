@@ -113,6 +113,12 @@ bool Engine::init(const int width, const int height, const char* title)
         return false;
     }
 
+    if (!createCamera())
+    {
+        std::cout << "ENGINE::INIT::ERROR: Failed to create Camera!" << std::endl;
+        return false;
+    }
+
     std::cout << "ENGINE::INIT: Successfully created components!\n";
 
     return true;
