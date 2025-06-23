@@ -2,7 +2,7 @@
 #define MESH_H
 
 #include "engine_types.hpp"
-#include "shader.h"
+#include "shader.hpp"
 
 #include <vector>
 
