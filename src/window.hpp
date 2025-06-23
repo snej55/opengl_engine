@@ -7,7 +7,7 @@
 
 #include "engine_types.hpp"
 
-class Window : public EngineObject {
+class Window final : public EngineObject {
 public:
     explicit Window(EngineObject* parent); // initialize EngineObject
     ~Window() override; // free
