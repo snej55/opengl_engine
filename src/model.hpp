@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 class Model final : public EngineObject
 {
@@ -26,7 +27,25 @@ private:
     std::string m_modelName;
 
     void processNode(const aiNode* node, const aiScene* scene);
-    Mesh processMesh(aiMesh* mesh, const aiScene* scene);
+    Mesh processMesh(const aiMesh* mesh, const aiScene* scene);
+};
+
+class ModelManager final : public EngineObject
+{
+public:
+    explicit ModelManager(EngineObject* parent);
+
+    // load new model
+    void addModel(const std::string& name, const std::string& path, Arena* arena);
+
+    [[nodiscard]] Model* getModel(const std::string& name) const;
+
+    void renderModel(const Shader* shader, const std::string& name) const;
+
+    [[nodiscard]] bool modelExists(const std::string& name) const;
+
+private:
+    std::map<std::string, Model*> m_models{};
 };
 
 #endif

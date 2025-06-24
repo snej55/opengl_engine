@@ -44,7 +44,7 @@ void Model::processNode(const aiNode* node, const aiScene* scene)
     for (std::size_t i {0}; i < node->mNumMeshes; ++i)
     {
         // node->mMeshes is a list of indices for scene->mMeshes
-        aiMesh* mesh{scene->mMeshes[node->mMeshes[i]]};
+        const aiMesh* mesh{scene->mMeshes[node->mMeshes[i]]};
 
         m_meshes.push_back(processMesh(mesh, scene));
     }
@@ -56,7 +56,7 @@ void Model::processNode(const aiNode* node, const aiScene* scene)
     }
 }
 
-Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
+Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
 {
     std::vector<MeshN::Vertex> vertices{};
     std::vector<unsigned int> indices{};
@@ -85,5 +85,47 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
         vertex.normal = normal;
     }
 
-    return Mesh{vertices, indices, this};
+    return Mesh{vertices, indices};
+}
+
+ModelManager::ModelManager(EngineObject* parent)
+    : EngineObject{"ModelManager", parent}
+{
+}
+
+// load new model
+void ModelManager::addModel(const std::string& name, const std::string& path, Arena* arena)
+{
+    // create new model and add it to arena
+    Model* model {new Model{name, this}};
+    arena->addObject(model);
+    m_models.insert(std::pair{name, model});
+    // load model
+    getModel(name)->loadModel(path);
+}
+
+Model* ModelManager::getModel(const std::string& name) const
+{
+    if (modelExists(name))
+    {
+        return m_models.find(name)->second;
+    }
+    std::cout << "MODEL_MANAGER::GET_MODEL::ERROR: Model `" << name << "` does not exist!\n";
+    return nullptr;
+}
+
+void ModelManager::renderModel(const Shader* shader, const std::string& name) const
+{
+    if (modelExists(name))
+    {
+        getModel(name)->render(shader);
+    } else
+    {
+        std::cout << "MODEL_MANAGER::GET_MODEL::ERROR: Model `" << name << "` does not exist!\n";
+    }
+}
+
+bool ModelManager::modelExists(const std::string& name) const
+{
+    return m_models.find(name) != m_models.end();
 }
