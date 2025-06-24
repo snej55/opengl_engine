@@ -35,6 +35,7 @@ int main()
     glBindVertexArray(0);
 
     engine.addTexture("tomato", "data/images/tomato.png");
+    engine.addModel("cube", "data/models/cube.obj");
 
     while (!engine.getQuit())
     {

@@ -41,9 +41,9 @@ bool Engine::init(const int width, const int height, const char* title)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    #ifdef __APPLE__
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    #endif
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
 
     if (!createWindow(width, height, title))
     {
@@ -116,6 +116,12 @@ bool Engine::init(const int width, const int height, const char* title)
     if (!createCamera())
     {
         std::cout << "ENGINE::INIT::ERROR: Failed to create Camera!" << std::endl;
+        return false;
+    }
+
+    if (!createModelManager())
+    {
+        std::cout << "ENGINE::INIT::ERROR: Failed to create ModelManager!" << std::endl;
         return false;
     }
 
@@ -446,6 +452,41 @@ glm::vec3 Engine::getCameraPosition() const
 glm::mat4 Engine::getNormalMatrix(const glm::mat4& model) const
 {
     return glm::transpose(glm::inverse(model));
+}
+
+// ------ Models ------ //
+
+bool Engine::createModelManager()
+{
+    if (m_modelManager != nullptr)
+    {
+        std::cout << "ENGINE::CREATE_MODEL_MANAGER::ERROR: Model manager already exists at `" << m_modelManager << "`!\n";
+        return false;
+    }
+
+    m_modelManager = new ModelManager{this};
+    m_arena->addObject(m_modelManager);
+    return true;
+}
+
+void Engine::addModel(const std::string& name, const std::string& path) const
+{
+    m_modelManager->addModel(name, path, m_arena);
+}
+
+Model* Engine::getModel(const std::string& name) const
+{
+    return m_modelManager->getModel(name);
+}
+
+void Engine::renderModel(const std::string& name, const Shader* shader) const
+{
+    m_modelManager->renderModel(shader, name);
+}
+
+bool Engine::modelExists(const std::string& name) const
+{
+    return m_modelManager->modelExists(name);
 }
 
 

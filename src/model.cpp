@@ -37,6 +37,7 @@ void Model::loadModel(const std::string& path)
 
     directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
+    std::cout << "Loaded model at `" << path << "`" << std::endl;
 }
 
 void Model::processNode(const aiNode* node, const aiScene* scene)

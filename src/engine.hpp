@@ -12,6 +12,7 @@
 #include "texture.hpp"
 #include "shapes.hpp"
 #include "camera.hpp"
+#include "model.hpp"
 
 class Engine final : public EngineObject
 {
@@ -108,6 +109,16 @@ public:
     // get normal mat from model mat
     [[nodiscard]] glm::mat4 getNormalMatrix(const glm::mat4& model) const;
 
+    // ------ Models ------ //
+
+    bool createModelManager();
+    [[nodiscard]] ModelManager* getModelManager() const {return m_modelManager;}
+
+    void addModel(const std::string& name, const std::string& path) const;
+    [[nodiscard]] Model* getModel(const std::string& name) const;
+    void renderModel(const std::string& name, const Shader* shader) const;
+    [[nodiscard]] bool modelExists(const std::string& name) const;
+
     // ------ Arena ------ //
 
     // Arena operations
@@ -125,19 +136,25 @@ public:
 private:
     // memory manager
     Arena* m_arena {nullptr};
+
     // ----- Engine components ----- //
+
     // core components
     Window* m_window {nullptr};
     IOHandler* m_iohandler {nullptr};
     Clock* m_clock {nullptr};
+
     // managers
     ShaderManager* m_shaderManager {nullptr};
     TextureManager* m_textureManager {nullptr};
     ShapeManager* m_shapeManager {nullptr};
+    ModelManager* m_modelManager {nullptr};
+
     // camera stuff
     Camera* m_camera {nullptr};
     float m_camLastX {};
     float m_camLastY {};
+
     // flags
     bool m_checkedShaders {false}; // shaders.json checked
     bool m_loadedShaders {false}; // shaders loaded
