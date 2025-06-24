@@ -1,16 +1,23 @@
 #include <glad/glad.h>
 #include "mesh.hpp"
 
-Mesh::Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices, EngineObject* parent)
- : EngineObject{"Mesh"}, m_vertices{vertices}, m_indices{indices}
+Mesh::Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices)
+ : m_vertices{vertices}, m_indices{indices}
 {
+}
+
+Mesh::~Mesh()
+{
+    glDeleteVertexArrays(1, &m_VAO);
+    glDeleteBuffers(1, &m_VBO);
+    glDeleteBuffers(1, &m_EBO);
 }
 
 void Mesh::render(const Shader* shader) const
 {
     shader->use();
     glBindVertexArray(m_VAO);
-    glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
 }
 

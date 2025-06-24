@@ -18,10 +18,11 @@ namespace MeshN
     };
 }
 
-class Mesh final : public EngineObject
+class Mesh
 {
 public:
-    Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices, EngineObject* parent);
+    Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices);
+    ~Mesh();
 
     void render(const Shader* shader) const;
 
