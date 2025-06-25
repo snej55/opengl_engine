@@ -1,4 +1,4 @@
-// gl libaries
+// gl libraries
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
