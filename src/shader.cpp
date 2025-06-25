@@ -90,12 +90,22 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
         std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Shader linking failed." << std::endl << infoLog;
     }
 
+    // validate program
+    glValidateProgram(id);
+    glGetProgramiv(id, GL_VALIDATE_STATUS, &success);
+    if (!success)
+    {
+        glGetProgramInfoLog(id, 512, nullptr, infoLog);
+        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Shader validation failed." << std::endl << infoLog;
+    }
+
     // update m_ID
     m_ID = id;
 
     // no longer needed
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+
 
     std::cout << "Loaded *" << m_shaderName << "* shader from files: `" << vertPath << "` `" << fragPath << "`\n";
 }

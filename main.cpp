@@ -13,9 +13,9 @@ int main()
     }
     std::cout << "Initialized engine!\n";
 
-    // capture mouse
+    // // capture mouse
     engine.setCameraEnabled(true);
-
+    //
     engine.addTexture("tomato", "data/images/tomato.png");
     engine.addModel("cube", "data/models/cube.obj");
 

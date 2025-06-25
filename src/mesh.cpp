@@ -18,8 +18,9 @@ void Mesh::render(const Shader* shader) const
 {
     shader->use();
     glBindVertexArray(m_VAO);
-    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, nullptr);
-    glBindVertexArray(0);
+    glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(m_indices.size()), GL_UNSIGNED_INT, nullptr);
+    // glBindVertexArray(0);
+    std::cout << glGetError() << std::endl;
 }
 
 void Mesh::setupMesh()
