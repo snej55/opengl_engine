@@ -69,6 +69,8 @@ bool Engine::init(const int width, const int height, const char* title)
     // configure global opengl state
     glEnable(GL_DEPTH_TEST);
 
+    std::cout << "ENGINE::INIT: Initialized global OpenGL state!\n";
+
     // ----- create objects ----- //
 
     // create IOHandler
@@ -359,6 +361,116 @@ void Engine::loadShaders()
     }
 
     m_loadedShaders = true;
+}
+
+void Engine::setBool(const std::string& name, const bool value, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setBool(name, value);
+    }
+}
+
+void Engine::setInt(const std::string& name, const int value, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setInt(name, value);
+    }
+}
+
+void Engine::setFloat(const std::string& name, const float value, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setFloat(name, value);
+    }
+}
+
+// vectors
+void Engine::setVec2(const std::string& name, const glm::vec2& value, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setVec2(name, value);
+    }
+}
+
+void Engine::setVec2(const std::string& name, const float x, const float y, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setVec2(name, x, y);
+    }
+}
+
+void Engine::setVec3(const std::string& name, const glm::vec3& value, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setVec3(name, value);
+    }
+}
+
+void Engine::setVec3(const std::string& name, const float x, const float y, const float z, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setVec3(name, x, y, z);
+    }
+}
+
+void Engine::setVec4(const std::string& name, const glm::vec4& value, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setVec4(name, value);
+    }
+}
+
+void Engine::setVec4(const std::string& name, const float x, const float y, const float z, const float w, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setVec4(name, x, y, z, w);
+    }
+}
+
+// matrices
+void Engine::setMat2(const std::string& name, const glm::mat2& value, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setMat2(name, value);
+    }
+}
+
+void Engine::setMat3(const std::string& name, const glm::mat3& value, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setMat3(name, value);
+    }
+}
+
+void Engine::setMat4(const std::string& name, const glm::mat4& value, const std::string& shaderName) const
+{
+    const Shader* shader {getShader(shaderName)};
+    if (shader != nullptr)
+    {
+        shader->setMat4(name, value);
+    }
 }
 
 

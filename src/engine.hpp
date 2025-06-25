@@ -78,6 +78,27 @@ public:
     [[nodiscard]] bool getShadersChecked() const {return m_checkedShaders;}
     [[nodiscard]] bool getShadersLoaded() const {return m_loadedShaders;}
 
+    // shader uniform setters
+    // shader uniforms
+    void setBool(const std::string& name, bool value, const std::string& shaderName) const;
+    void setInt(const std::string& name, int value, const std::string& shaderName) const;
+    void setFloat(const std::string& name, float value, const std::string& shaderName) const;
+
+    // vectors
+    void setVec2(const std::string& name, const glm::vec2& value, const std::string& shaderName) const;
+    void setVec2(const std::string& name, float x, float y, const std::string& shaderName) const;
+
+    void setVec3(const std::string& name, const glm::vec3& value, const std::string& shaderName) const;
+    void setVec3(const std::string& name, float x, float y, float z, const std::string& shaderName) const;
+
+    void setVec4(const std::string& name, const glm::vec4& value, const std::string& shaderName) const;
+    void setVec4(const std::string& name, float x, float y, float z, float w, const std::string& shaderName) const;
+
+    // matrices
+    void setMat2(const std::string& name, const glm::mat2& value, const std::string& shaderName) const;
+    void setMat3(const std::string& name, const glm::mat3& value, const std::string& shaderName) const;
+    void setMat4(const std::string& name, const glm::mat4& value, const std::string& shaderName) const;
+
     // ------ Textures ------ //
 
     bool createTextureManager();
