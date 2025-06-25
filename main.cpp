@@ -21,6 +21,8 @@ int main()
 
     const Model* cube {engine.getModel("cube")};
 
+    engine.enableWireframe();
+
     while (!engine.getQuit())
     {
         // clear screen

@@ -38,6 +38,11 @@ public:
     // clear screen
     void clear() const;
 
+    // enable wireframe rendering
+    void enableWireframe() const;
+
+    void disableWireframe() const;
+
     // ------ IOHandler ------ //
 
     // create iohandler for keyboard input

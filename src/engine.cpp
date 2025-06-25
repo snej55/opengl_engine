@@ -169,6 +169,17 @@ void Engine::clear() const
     m_window->clear();
 }
 
+// enable wireframe rendering
+void Engine::enableWireframe() const
+{
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+}
+
+void Engine::disableWireframe() const
+{
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
 // ------ IOHandler ------ //
 
 // create iohandler for keyboard input
