@@ -6,6 +6,9 @@
 
 #include <assimp/postprocess.h>
 
+#include <string>
+#include <sstream>
+
 Model::Model(const std::string& name, EngineObject* parent)
     : EngineObject{("MODEL_" + name).c_str(), parent}, m_modelName{name}
 {
@@ -37,7 +40,31 @@ void Model::loadModel(const std::string& path)
 
     directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
-    std::cout << "Loaded model at `" << path << "`" << std::endl;
+
+    // overkill log
+    int numVertices{};
+    for (const Mesh& mesh : m_meshes)
+    {
+        numVertices += mesh.getVertices().size();
+    }
+
+    unsigned long vertSize {sizeof(MeshN::Vertex) * numVertices};
+    std::stringstream ss{};
+    if (vertSize > 1000 * 1000)
+    {
+        vertSize = vertSize / 1000 / 1000;
+        ss << vertSize << " MB";
+    } else if (vertSize > 1000)
+    {
+        vertSize = vertSize / 1000;
+        ss << vertSize << " KB";
+    } else
+    {
+        ss << vertSize << " B";
+    }
+
+    const std::string size = ss.str();
+    std::cout << "Loaded model at `" << path << "`, " << numVertices << " vertices (" << size << ")" << std::endl;
 }
 
 void Model::processNode(const aiNode* node, const aiScene* scene)
