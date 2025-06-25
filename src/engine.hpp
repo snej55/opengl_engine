@@ -109,6 +109,10 @@ public:
     // get normal mat from model mat
     [[nodiscard]] glm::mat4 getNormalMatrix(const glm::mat4& model) const;
 
+    // enable or disable window mouse capture
+    void setCameraEnabled(bool value);
+    [[nodiscard]] bool getCameraEnabled() const {return m_cameraEnabled;};
+
     // ------ Models ------ //
 
     bool createModelManager();
@@ -159,6 +163,7 @@ private:
     bool m_checkedShaders {false}; // shaders.json checked
     bool m_loadedShaders {false}; // shaders loaded
     bool m_camFirstMouse {true}; // first mouse movement
+    bool m_cameraEnabled {false}; // camera enabled
 };
 
 #endif

@@ -454,6 +454,12 @@ glm::mat4 Engine::getNormalMatrix(const glm::mat4& model) const
     return glm::transpose(glm::inverse(model));
 }
 
+void Engine::setCameraEnabled(const bool value)
+{
+    m_cameraEnabled = value;
+    glfwSetInputMode(m_window->getWindow(), GLFW_CURSOR, value ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+}
+
 // ------ Models ------ //
 
 bool Engine::createModelManager()
