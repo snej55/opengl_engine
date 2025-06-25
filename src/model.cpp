@@ -45,7 +45,7 @@ void Model::loadModel(const std::string& path)
     int numVertices{};
     for (const Mesh& mesh : m_meshes)
     {
-        numVertices += mesh.getVertices().size();
+        numVertices += static_cast<int>(mesh.getVertices().size());
     }
 
     unsigned long vertSize {sizeof(MeshN::Vertex) * numVertices};
@@ -74,7 +74,7 @@ void Model::processNode(const aiNode* node, const aiScene* scene)
         // node->mMeshes is a list of indices for scene->mMeshes
         const aiMesh* mesh{scene->mMeshes[node->mMeshes[i]]};
 
-        m_meshes.push_back(processMesh(mesh, scene));
+        m_meshes.emplace_back(processMesh(mesh, scene));
     }
 
     // repeat recursively for all children

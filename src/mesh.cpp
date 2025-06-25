@@ -7,20 +7,18 @@ Mesh::Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigne
     setupMesh();
 }
 
-Mesh::~Mesh()
-{
-    glDeleteVertexArrays(1, &m_VAO);
-    glDeleteBuffers(1, &m_VBO);
-    glDeleteBuffers(1, &m_EBO);
-}
-
 void Mesh::render(const Shader* shader) const
 {
     shader->use();
     glBindVertexArray(m_VAO);
-    glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(m_indices.size()), GL_UNSIGNED_INT, nullptr);
-    // glBindVertexArray(0);
-    std::cout << glGetError() << std::endl;
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, nullptr);
+}
+
+void Mesh::free() const
+{
+    glDeleteVertexArrays(1, &m_VAO);
+    glDeleteBuffers(1, &m_VBO);
+    glDeleteBuffers(1, &m_EBO);
 }
 
 void Mesh::setupMesh()
@@ -31,7 +29,7 @@ void Mesh::setupMesh()
     glGenBuffers(1, &meshEBO);
 
     glBindVertexArray(meshVAO);
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, meshVBO);
     glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(m_vertices.size() * sizeof(MeshN::Vertex)), m_vertices.data(), GL_STATIC_DRAW);
 
@@ -45,9 +43,10 @@ void Mesh::setupMesh()
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(MeshN::Vertex), reinterpret_cast<void*>(offsetof(MeshN::Vertex, texCoords)));
     glEnableVertexAttribArray(2);
 
+    // not really necessary but just in case
     glBindVertexArray(0);
 
-    // set actual values
+    // set actual VAO, VBO & EBO values
     m_VAO = meshVAO;
     m_VBO = meshVBO;
     m_EBO = meshEBO;

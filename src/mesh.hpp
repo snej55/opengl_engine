@@ -22,9 +22,10 @@ class Mesh
 {
 public:
     Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices);
-    ~Mesh();
 
     void render(const Shader* shader) const;
+
+    void free() const;
 
     [[nodiscard]] const std::vector<MeshN::Vertex>& getVertices() const {return m_vertices;}
     [[nodiscard]] const std::vector<unsigned int>& getIncides() const {return m_indices;}
