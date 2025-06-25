@@ -84,6 +84,18 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
         }
         vertex.position = pos;
         vertex.normal = normal;
+        vertices.push_back(vertex);
+    }
+
+    // indices
+    for (unsigned int i{0}; i < mesh->mNumFaces; ++i)
+    {
+        const aiFace& face{mesh->mFaces[i]};
+        // each face usually has like 3 indices or something
+        for (unsigned int j{0}; j < face.mNumIndices; ++j)
+        {
+            indices.push_back(face.mIndices[j]);
+        }
     }
 
     return Mesh{vertices, indices};

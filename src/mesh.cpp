@@ -4,6 +4,7 @@
 Mesh::Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices)
  : m_vertices{vertices}, m_indices{indices}
 {
+    setupMesh();
 }
 
 Mesh::~Mesh()
@@ -49,4 +50,6 @@ void Mesh::setupMesh()
     m_VAO = meshVAO;
     m_VBO = meshVBO;
     m_EBO = meshEBO;
+
+    std::cout << "Loaded mesh: " << m_vertices.size() << " vertices, " << m_indices.size() << " indices" << std::endl;
 }
