@@ -142,6 +142,27 @@ void Engine::update()
     m_window->setQuit(m_iohandler->getQuit());
     // swap buffers
     m_window->tick();
+
+    // update camera
+    if (m_cameraEnabled)
+    {
+        if (getPressed(GLFW_KEY_W))
+        {
+            m_camera->processInput(CameraN::CameraMotion::FORWARD, getDeltaTime());
+        }
+        if (getPressed(GLFW_KEY_S))
+        {
+            m_camera->processInput(CameraN::CameraMotion::BACKWARD, getDeltaTime());
+        }
+        if (getPressed(GLFW_KEY_A))
+        {
+            m_camera->processInput(CameraN::CameraMotion::LEFT, getDeltaTime());
+        }
+        if (getPressed(GLFW_KEY_D))
+        {
+            m_camera->processInput(CameraN::CameraMotion::RIGHT, getDeltaTime());
+        }
+    }
 }
 
 // ------ Window ------ //
@@ -189,7 +210,8 @@ bool Engine::createIOHandler()
     {
         std::cout << "ENGINE::CREATE_IOHANDLER::ERROR: IOHandler already exists at `" << m_iohandler << "`!\n";
         return false;
-    } else if (m_window == nullptr)
+    }
+    if (m_window == nullptr)
     {
         std::cout << "ENGINE::CREATE_IOHANDLER::ERROR: Window is required to be created before IOHandler!\n";
         return false;
@@ -205,6 +227,12 @@ bool Engine::getQuit() const
 {
     return m_window->getShouldClose();
 }
+
+bool Engine::getPressed(const int key) const
+{
+    return m_iohandler->getPressed(key);
+}
+
 
 // ------ Clock ------ //
 

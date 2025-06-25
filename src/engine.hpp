@@ -51,6 +51,7 @@ public:
 
     // check if ESC has been pressed from IOHandler
     [[nodiscard]] bool getQuit() const;
+    [[nodiscard]] bool getPressed(int key) const;
 
     // ------ Clock ------ //
 
