@@ -44,6 +44,8 @@ public:
     void setHeight(const int& val) { m_height = val; }
     void setHeight(const int&& val) { m_height = val; }
 
+    void updateDimensions();
+
     // title setters
     void setTitle(const char* title);
     void setTitle(std::string_view title);

@@ -108,6 +108,13 @@ void Window::setTitle(const std::string& title)
     glfwSetWindowTitle(m_window, titleChr);
 }
 
+// update framebuffer dimensions
+void Window::updateDimensions()
+{
+    glfwGetFramebufferSize(m_window, &m_width, &m_height);
+    glViewport(0, 0, m_width, m_height);
+}
+
 // -------- CALLBACKS -------- //
 // window callbacks
 void Window::framebuffer_size_callback(const int width, const int height)

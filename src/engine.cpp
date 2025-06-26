@@ -127,6 +127,8 @@ bool Engine::init(const int width, const int height, const char* title)
         return false;
     }
 
+    m_window->updateDimensions();
+
     std::cout << "ENGINE::INIT: Successfully created components!\n";
 
     return true;
