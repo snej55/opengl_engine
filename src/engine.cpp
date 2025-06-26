@@ -65,6 +65,8 @@ bool Engine::init(const int width, const int height, const char* title)
 
     // create view port
     m_window->createViewPort();
+    // fix framebuffer scaling issue
+    m_window->updateDimensions();
 
     // configure global opengl state
     glEnable(GL_DEPTH_TEST);
@@ -79,7 +81,7 @@ bool Engine::init(const int width, const int height, const char* title)
         std::cout << "ENGINE::INIT::ERROR: Failed to create IOHandler!" << std::endl;
         return false;
     }
-    
+
     // create clock
     if (!createClock())
     {
@@ -127,7 +129,6 @@ bool Engine::init(const int width, const int height, const char* title)
         return false;
     }
 
-    m_window->updateDimensions();
 
     std::cout << "ENGINE::INIT: Successfully created components!\n";
 
