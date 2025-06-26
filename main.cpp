@@ -2,6 +2,8 @@
 
 #include "src/engine.hpp"
 
+constexpr glm::vec3 lightPos {0.0f, 5.0f, 30.f};
+
 int main()
 {
     // initialize engine
@@ -13,16 +15,15 @@ int main()
     }
     std::cout << "Initialized engine!\n";
 
-    // // capture mouse
     engine.setCameraEnabled(true);
-    //
+
     engine.addTexture("tomato", "data/images/tomato.png");
     engine.addTexture("floor", "data/images/floor.png");
     engine.addModel("cube", "data/models/monkey.glb");
-
-    // engine.enableWireframe();
+    engine.addModel("light", "data/models/cube.obj");
 
     const Model* cube {engine.getModel("cube")};
+    const Model* light {engine.getModel("light")};
 
     while (!engine.getQuit())
     {
@@ -37,8 +38,14 @@ int main()
         engine.setMat4("projection", engine.getProjectionMatrix(), "cube");
         engine.setMat3("normalMat", engine.getNormalMatrix(model), "cube");
         engine.setVec3("albedo", glm::vec3{1.0f, 0.5f, 1.0f}, "cube");
-        engine.setVec3("viewPos", engine.getCameraPosition(), "cube");
+        engine.setVec3("viewPos", lightPos, "cube");
         cube->render(engine.getShader("cube"));
+        model = glm::scale(model, glm::vec3{0.2f});
+        model = glm::translate(model, lightPos);
+        engine.setMat4("model", model, "cube");
+        engine.setVec3("viewPos", engine.getCameraPosition(), "cube");
+        engine.setVec3("albedo", glm::vec3{1.0f}, "cube");
+        light->render(engine.getShader("cube"));
 
         // update engine
         engine.update();

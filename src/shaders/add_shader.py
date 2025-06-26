@@ -1,0 +1,59 @@
+import json
+
+vert = """#version 410 core
+layout (location = 0) in vec3 aPos;
+
+void main()
+{
+    gl_Position = vec4(aPos, 1.0);
+}
+"""
+
+frag = """#version 410 core
+out vec4 FragColor;
+
+void main()
+{
+    FragColor = vec4(1.0);
+}
+"""
+
+def save(shader_name: str) -> None:
+    # load shaders.json and check if shader exists
+    shaders = {}
+    with open("shaders.json", "r") as f:
+        shaders = json.load(f)
+        for shader in shaders["custom"]:
+            if shader["name"].lower() == shader_name.lower():
+                print(f"ERROR: Custom shader `{shader_name}` already exists:")
+                print(shader)
+                return
+
+    # save vertex shader
+    vert_path = shader_name + ".vert"
+    frag_path = shader_name + ".frag"
+    with open(vert_path, "w") as f:
+        f.write(vert)
+    # same for fragment shader
+    with open(frag_path, "w") as f:
+        f.write(frag)
+
+    print(f"Created shader files: `{vert_path}` `{frag_path}`")
+
+
+    with open("shaders.json", "w") as f:
+        shaders["custom"].append({
+            "name": shader_name,
+            "shader": {
+                "vert": vert_path,
+                "frag": frag_path
+            }
+        })
+        json.dump(shaders, f, indent=4, sort_keys=True)
+
+    print(f"Added shader `{shader_name}` to shaders.json")
+
+if __name__ == "__main__":
+    name = input("Enter shader name: ")
+    if name != '':
+        save(name)
