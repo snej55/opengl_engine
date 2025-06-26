@@ -19,7 +19,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [ ] Set up renderer class
 - [ ] Set up render queue
 - [ ] Config file loading
-- [ ] README
+- [X] README
 - [ ] Font rendering
 - [ ] Geometry shader
 - [X] Texture loading and rendering
