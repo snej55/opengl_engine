@@ -24,10 +24,10 @@
             }
         },
         {
-            "name": "light",
+            "name": "lightPBR",
             "shader": {
-                "frag": "light.frag",
-                "vert": "light.vert"
+                "frag": "lightPBR.frag",
+                "vert": "lightPBR.vert"
             }
         }
     ]
