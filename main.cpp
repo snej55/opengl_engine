@@ -27,7 +27,7 @@ int main()
         engine.clear();
 
         engine.useShader("cube");
-        auto model = glm::mat4(1.0f);
+        glm::mat4 model {1.0f};
         model = glm::rotate(model, glm::radians(static_cast<float>(glfwGetTime() * 100.f)), glm::vec3(1.0f, 0.5f, 0.2f));
         engine.setMat4("model", model, "cube");
         engine.setMat4("view", engine.getViewMatrix(), "cube");

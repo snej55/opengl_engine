@@ -14,7 +14,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [X] Set up arena
 - [X] Shaders
 - [X] Shader manager
-- [ ] Camera
+- [X] Camera
 - [ ] Asset manager
 - [ ] Set up renderer class
 - [ ] Set up render queue
@@ -22,18 +22,18 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [ ] README
 - [ ] Font rendering
 - [ ] Geometry shader
-- [ ] Texture loading and rendering
+- [X] Texture loading and rendering
 - [ ] Screen coordinate rendering
-- [ ] Rect rendering
-- [ ] Draw a cube
+- [X] Rect rendering
+- [X] Draw a cube
 - [ ] Add timers
 - [ ] Add fps counter
-- [ ] Default shaders
+- [X] Default shaders
 - [ ] Post processor with framebuffers
 - [ ] Blinn-phong lighting
 - [ ] Ambient lighting (SSAO)
 - [ ] PBR lighting
-- [ ] Model loading
+- [X] Model loading
 - [ ] Colour functions (lerp, different blending functions)
 
 
