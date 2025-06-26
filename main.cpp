@@ -24,32 +24,6 @@ int main()
 
     const Model* cube {engine.getModel("cube")};
 
-    constexpr float planeVertices[] = {
-        5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
-       -5.0f, -0.5f,  5.0f,  0.0f, 0.0f,
-       -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
-
-        5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
-       -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
-        5.0f, -0.5f, -5.0f,  2.0f, 2.0f
-    };
-
-    unsigned int planeVAO, planeVBO;
-    glGenVertexArrays(1, &planeVAO);
-    glGenBuffers(1, &planeVBO);
-
-    glBindVertexArray(planeVAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, planeVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices), planeVertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), reinterpret_cast<void*>(0));
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glBindVertexArray(0);
-
     while (!engine.getQuit())
     {
         // clear screen
@@ -57,7 +31,7 @@ int main()
 
         engine.useShader("cube");
         glm::mat4 model {1.0f};
-        model = glm::rotate(model, glm::radians(static_cast<float>(glfwGetTime() * 20.f)), glm::vec3(0.7f, 1.0f, 0.2f));
+        // model = glm::rotate(model, glm::radians(static_cast<float>(glfwGetTime() * 20.f)), glm::vec3(0.7f, 1.0f, 0.2f));
         engine.setMat4("model", model, "cube");
         engine.setMat4("view", engine.getViewMatrix(), "cube");
         engine.setMat4("projection", engine.getProjectionMatrix(), "cube");
