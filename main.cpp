@@ -20,6 +20,8 @@ int main()
     engine.addTexture("floor", "data/images/floor.png");
     engine.addModel("cube", "data/models/monkey.glb");
 
+    // engine.enableWireframe();
+
     const Model* cube {engine.getModel("cube")};
 
     constexpr float planeVertices[] = {
@@ -55,7 +57,7 @@ int main()
 
         engine.useShader("cube");
         glm::mat4 model {1.0f};
-        model = glm::rotate(model, glm::radians(static_cast<float>(glfwGetTime() * 20.f)), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(static_cast<float>(glfwGetTime() * 20.f)), glm::vec3(0.7f, 1.0f, 0.2f));
         engine.setMat4("model", model, "cube");
         engine.setMat4("view", engine.getViewMatrix(), "cube");
         engine.setMat4("projection", engine.getProjectionMatrix(), "cube");
