@@ -10,10 +10,16 @@ uniform vec3 viewPos;
 
 uniform vec3 albedo;
 
+const float ambientStrength = 0.1;
+
 void main()
 {
     vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(viewPos - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
-    FragColor = vec4(albedo * diff, 1.0);
+
+    vec3 diffuse = albedo * diff;
+    vec3 ambient = albedo * ambientStrength;
+
+    FragColor = vec4(diffuse + ambient, 1.0);
 }

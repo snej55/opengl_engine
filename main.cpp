@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include "src/engine.hpp"
 
@@ -25,28 +26,46 @@ int main()
     const Model* cube {engine.getModel("cube")};
     const Model* light {engine.getModel("light")};
 
+    // engine.enableWireframe();
+    const std::vector<glm::vec3> spheres = {
+        {10.f, 4.f, 2.f},
+        {5.f, 10.f, -10.f},
+        {-2.f, 5.f, 4.f},
+        {-4.f, -3.f, 10.f}
+    };
+
     while (!engine.getQuit())
     {
         engine.enablePostProcessing();
         // clear screen
         engine.clear();
 
-        engine.useShader("cube");
+        engine.useShader("lightPBR");
         glm::mat4 model {1.0f};
         // model = glm::rotate(model, glm::radians(static_cast<float>(glfwGetTime() * 20.f)), glm::vec3(0.7f, 1.0f, 0.2f));
         engine.setMat4("model", model, "lightPBR");
         engine.setMat4("view", engine.getViewMatrix(), "lightPBR");
         engine.setMat4("projection", engine.getProjectionMatrix(), "lightPBR");
         engine.setMat3("normalMat", engine.getNormalMatrix(model), "lightPBR");
-        engine.setVec3("albedo", glm::vec3{1.0f, 0.5f, 1.0f}, "lightPBR");
+        engine.setVec3("albedo", glm::vec3{1.0f, 0.2f, 0.0f}, "lightPBR");
         engine.setVec3("viewPos", lightPos, "lightPBR");
-        cube->render(engine.getShader("cube"));
+        cube->render(engine.getShader("lightPBR"));
         model = glm::scale(model, glm::vec3{0.2f});
         model = glm::translate(model, lightPos);
         engine.setMat4("model", model, "lightPBR");
         engine.setVec3("viewPos", engine.getCameraPosition(), "lightPBR");
-        engine.setVec3("albedo", glm::vec3{1.0f}, "lightPBR");
-        light->render(engine.getShader("cube"));
+        engine.setVec3("albedo", glm::vec3{1.0f, 1.0f, 1.0f}, "lightPBR");
+        light->render(engine.getShader("lightPBR"));
+
+        engine.setVec3("viewPos", lightPos, "lightPBR");
+        for (std::size_t i{0}; i < spheres.size(); ++i)
+        {
+            model = glm::mat4{1.0f};
+            model = glm::scale(model, glm::vec3(0.2f));
+            model = glm::translate(model, spheres[i]);
+            engine.setMat4("model", model, "lightPBR");
+            light->render(engine.getShader("lightPBR"));
+        }
 
         engine.disablePostProcessing();
         engine.renderPostProcessing();

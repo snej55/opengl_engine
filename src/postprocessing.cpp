@@ -74,6 +74,7 @@ void PostProcessor::render(const Shader* screenShader) const
     screenShader->setInt("screenTexture", 0);
 
     glBindVertexArray(m_VAO);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_TEX);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
