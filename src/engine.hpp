@@ -156,10 +156,15 @@ public:
     bool createPostProcessor();
     [[nodiscard]] PostProcessor* getPostProcessor() const {return m_postProcessor;}
 
+    // enable and disable rendering to post processor
     void enablePostProcessing() const;
     void disablePostProcessing() const;
 
+    // render post processor with screen shader
     void renderPostProcessing() const;
+
+    // update framebuffer
+    void updatePostProcessor(int width, int height) const;
 
     // ------ Arena ------ //
 

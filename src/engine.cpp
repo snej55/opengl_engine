@@ -686,6 +686,11 @@ void Engine::renderPostProcessing() const
     m_postProcessor->render(getShader("screenShader"));
 }
 
+void Engine::updatePostProcessor(const int width, const int height) const
+{
+    m_postProcessor->generate(width, height);
+}
+
 
 // ------ Arena ------ //
 
