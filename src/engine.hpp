@@ -13,6 +13,7 @@
 #include "shapes.hpp"
 #include "camera.hpp"
 #include "model.hpp"
+#include "postprocessing.hpp"
 
 class Engine final : public EngineObject
 {
@@ -150,6 +151,16 @@ public:
     void renderModel(const std::string& name, const Shader* shader) const;
     [[nodiscard]] bool modelExists(const std::string& name) const;
 
+    // ------ Post Processor ------ //
+
+    bool createPostProcessor();
+    [[nodiscard]] PostProcessor* getPostProcessor() const {return m_postProcessor;}
+
+    void enablePostProcessing() const;
+    void disablePostProcessing() const;
+
+    void renderPostProcessing() const;
+
     // ------ Arena ------ //
 
     // Arena operations
@@ -180,6 +191,9 @@ private:
     TextureManager* m_textureManager {nullptr};
     ShapeManager* m_shapeManager {nullptr};
     ModelManager* m_modelManager {nullptr};
+
+    // other components
+    PostProcessor* m_postProcessor {nullptr};
 
     // camera stuff
     Camera* m_camera {nullptr};

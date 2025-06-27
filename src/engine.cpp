@@ -649,6 +649,30 @@ bool Engine::modelExists(const std::string& name) const
     return m_modelManager->modelExists(name);
 }
 
+// ------ Post Processor ------ //
+
+bool Engine::createPostProcessor()
+{
+    if (m_postProcessor != nullptr)
+    {
+        std::cout << "ENGINE::CREATE_POST_PROCESSOR::ERROR: Post processor already exists at `" << m_postProcessor << "`!\n";
+        return false;
+    }
+
+    m_postProcessor = new PostProcessor{this};
+    m_arena->addObject(m_postProcessor);
+    return true;
+}
+
+void Engine::enablePostProcessing() const
+{
+    m_postProcessor->enable();
+}
+
+void Engine::disablePostProcessing() const
+{
+    m_postProcessor->disable();
+}
 
 // ------ Arena ------ //
 

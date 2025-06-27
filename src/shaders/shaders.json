@@ -29,6 +29,13 @@
                 "frag": "lightPBR.frag",
                 "vert": "lightPBR.vert"
             }
+        },
+        {
+            "name": "screenShader",
+            "shader": {
+                "frag": "screenShader.frag",
+                "vert": "screenShader.vert"
+            }
         }
     ]
 }
