@@ -28,7 +28,9 @@ set(SOURCES main.cpp src/extern/glad.c src/engine.hpp src/engine.cpp src/engine_
         src/mesh.cpp
         src/mesh.hpp
         src/model.hpp
-        src/model.cpp)
+        src/model.cpp
+        src/postprocessing.cpp
+        src/postprocessing.hpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
