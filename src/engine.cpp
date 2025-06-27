@@ -129,6 +129,13 @@ bool Engine::init(const int width, const int height, const char* title)
         return false;
     }
 
+    if (!createPostProcessor())
+    {
+        std::cout << "ENGINE::INIT::ERROR: Failed to create PostProcessor!" << std::endl;
+        return false;
+    }
+    m_postProcessor->init(getWidth(), getHeight());
+
 
     std::cout << "ENGINE::INIT: Successfully created components!\n";
 
@@ -673,6 +680,12 @@ void Engine::disablePostProcessing() const
 {
     m_postProcessor->disable();
 }
+
+void Engine::renderPostProcessing() const
+{
+    m_postProcessor->render(getShader("screenShader"));
+}
+
 
 // ------ Arena ------ //
 

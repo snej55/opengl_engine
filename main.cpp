@@ -27,6 +27,7 @@ int main()
 
     while (!engine.getQuit())
     {
+        engine.enablePostProcessing();
         // clear screen
         engine.clear();
 
@@ -46,6 +47,9 @@ int main()
         engine.setVec3("viewPos", engine.getCameraPosition(), "lightPBR");
         engine.setVec3("albedo", glm::vec3{1.0f}, "lightPBR");
         light->render(engine.getShader("cube"));
+
+        engine.disablePostProcessing();
+        engine.renderPostProcessing();
 
         // update engine
         engine.update();
