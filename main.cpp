@@ -60,8 +60,8 @@ int main()
 
         cube->render(engine.getShader("lightPBR"));
 
-        engine.setFloat("metallic", 0.0f, "lightPBR");
-        engine.setFloat("roughness", 0.7f, "lightPBR");
+        engine.setFloat("metallic", 1.0f, "lightPBR");
+        engine.setFloat("roughness", 0.2, "lightPBR");
         engine.setVec3("albedo", glm::vec3{0.5, 0.1f, 0.7f}, "lightPBR");
         for (std::size_t i{0}; i < spheres.size(); ++i)
         {
@@ -73,6 +73,8 @@ int main()
             light->render(engine.getShader("lightPBR"));
         }
 
+        engine.setFloat("metallic", 0.0f, "lightPBR");
+        engine.setFloat("roughness", 1.0, "lightPBR");
         model = glm::mat4{1.0f};
         model = glm::scale(model, glm::vec3{0.2f});
         model = glm::translate(model, lightPos);
