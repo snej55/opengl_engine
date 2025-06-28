@@ -1,6 +1,7 @@
 ## Target:
 
-Make a game engine that can handle world loading, model loading, render basic objects, and lighting (Blinn-Phong (for specular), SSAO, PBR)
+Make a game engine that can handle world loading, model loading, render basic objects, and lighting (Blinn-Phong (for specular), SSAO, PBR), as well as
+other basic engine functionality (e.g. audio loading, physics systems, particle vfx etc.).
 
 ## TODO:
 
