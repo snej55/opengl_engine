@@ -29,7 +29,7 @@ Make a game engine that can handle world loading, model loading, render basic ob
 - [ ] Add timers
 - [ ] Add fps counter
 - [X] Default shaders
-- [ ] Post processor with framebuffers
+- [X] Post processor with framebuffers
 - [ ] Blinn-phong lighting
 - [ ] Ambient lighting (SSAO)
 - [ ] PBR lighting

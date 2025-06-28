@@ -10,7 +10,7 @@ uniform vec3 viewPos;
 
 uniform vec3 albedo;
 
-const float ambientStrength = 0.1;
+const float ambientStrength = 0.05;
 
 void main()
 {
