@@ -52,20 +52,35 @@ int main()
         engine.setMat4("view", engine.getViewMatrix(), "lightPBR");
         engine.setMat4("projection", engine.getProjectionMatrix(), "lightPBR");
         engine.setMat3("normalMat", engine.getNormalMatrix(model), "lightPBR");
-        engine.setFloat("metallic", 0.5f, "lightPBR");
-        engine.setFloat("roughness", 0.5f, "lightPBR");
+        engine.setFloat("metallic", 0.6f, "lightPBR");
+        engine.setFloat("roughness", 0.3f, "lightPBR");
         engine.setVec3("lightPos", lightPos, "lightPBR");
         engine.setVec3("lightColor", glm::vec3{1.0f}, "lightPBR");
+        engine.setVec3("albedo", glm::vec3{0.5, 0.0f, 0.0f}, "lightPBR");
 
         cube->render(engine.getShader("lightPBR"));
 
-        // cube->render(engine.getShader("lightPBR"));
-        // model = glm::scale(model, glm::vec3{0.2f});
-        // model = glm::translate(model, lightPos);
-        // engine.setMat4("model", model, "lightPBR");
-        // engine.setMat3("normalMat", engine.getNormalMatrix(model), "lightPBR");
-        // engine.setVec3("albedo", glm::vec3{1.0f, 1.0f, 1.0f}, "lightPBR");
-        // light->render(engine.getShader("lightPBR"));
+        engine.setFloat("metallic", 0.0f, "lightPBR");
+        engine.setFloat("roughness", 0.7f, "lightPBR");
+        engine.setVec3("albedo", glm::vec3{0.5, 0.1f, 0.7f}, "lightPBR");
+        for (std::size_t i{0}; i < spheres.size(); ++i)
+        {
+            model = glm::mat4{1.0f};
+            model = glm::scale(model, glm::vec3(0.2f));
+            model = glm::translate(model, spheres[i]);
+            engine.setMat4("model", model, "lightPBR");
+            engine.setMat3("normalMat", engine.getNormalMatrix(model), "lightPBR");
+            light->render(engine.getShader("lightPBR"));
+        }
+
+        model = glm::mat4{1.0f};
+        model = glm::scale(model, glm::vec3{0.2f});
+        model = glm::translate(model, lightPos);
+        engine.setMat4("model", model, "lightPBR");
+        engine.setMat3("normalMat", engine.getNormalMatrix(model), "lightPBR");
+        engine.setVec3("albedo", glm::vec3{1.0f, 1.0f, 1.0f}, "lightPBR");
+        engine.setVec3("lightPos", engine.getCameraPosition(), "lightPBR");
+        light->render(engine.getShader("lightPBR"));
         //
         // for (std::size_t i{0}; i < spheres.size(); ++i)
         // {
