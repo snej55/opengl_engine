@@ -43,7 +43,9 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} ${GL_LIBS})
 
 add_custom_target(copy_assets
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_LIST_DIR}/data ${CMAKE_CURRENT_BINARY_DIR}/data
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_LIST_DIR}/data
+        ${CMAKE_CURRENT_BINARY_DIR}/data
 )
 add_dependencies(${PROJECT_NAME} copy_assets)
 
