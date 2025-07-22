@@ -52,4 +52,5 @@ add_custom_target(copy_shaders
         ${CMAKE_CURRENT_LIST_DIR}/src/shaders
         ${CMAKE_CURRENT_BINARY_DIR}/shaders
 )
+add_dependencies(${PROJECT_NAME} copy_assets)
 add_dependencies(${PROJECT_NAME} copy_shaders)
