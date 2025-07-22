@@ -1,8 +1,12 @@
+/*
+ * Base class for all engine types, which can be managed through the Arena.
+ * It also supports a basic parent-child tree structure.
+ */
+
 #ifndef ENGINE_TYPES
 #define ENGINE_TYPES
 
 #include <string>
-#include <sstream>
 #include <iostream>
 
 class EngineObject

@@ -1,6 +1,7 @@
 //
 // Created by Jens Kromdijk on 08/06/25.
 //
+// Handles IO input
 
 #ifndef IOHANDLER_H
 #define IOHANDLER_H
@@ -17,7 +18,9 @@ public:
     // check whether we need to quit
     void update();
 
+    // check if key has been pressed
     [[nodiscard]] bool getPressed(int key) const;
+    // check if ESC has been pressed
     [[nodiscard]] bool getQuit() const {return m_quit;}
 
 private:
@@ -25,7 +28,6 @@ private:
     GLFWwindow* m_window;
 
     bool m_quit{false};
-
 };
 
 #endif

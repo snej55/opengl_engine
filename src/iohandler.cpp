@@ -1,5 +1,4 @@
 #include "iohandler.hpp"
-#include "window.hpp"
 
 IOHandler::IOHandler(EngineObject* engine, GLFWwindow* window)
  : EngineObject{"IOHandler", engine}, m_window{window}

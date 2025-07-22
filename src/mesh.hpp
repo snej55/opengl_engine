@@ -1,7 +1,6 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include "engine_types.hpp"
 #include "shader.hpp"
 
 #include <vector>
