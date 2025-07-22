@@ -1,5 +1,8 @@
+# Created by Jens Kromdijk
+# Simple script to create default shader files and add them to shaders.json
 import json
 
+# vertex shader
 vert = """#version 410 core
 layout (location = 0) in vec3 aPos;
 
@@ -9,6 +12,7 @@ void main()
 }
 """
 
+# fragment shader
 frag = """#version 410 core
 out vec4 FragColor;
 
@@ -18,6 +22,7 @@ void main()
 }
 """
 
+# save shader files and add shader to shaders.json
 def save(shader_name: str) -> None:
     # load shaders.json and check if shader exists
     shaders = {}
@@ -40,7 +45,7 @@ def save(shader_name: str) -> None:
 
     print(f"Created shader files: `{vert_path}` `{frag_path}`")
 
-
+    # add shader to shaders.json
     with open("shaders.json", "w") as f:
         shaders["custom"].append({
             "name": shader_name,
@@ -53,6 +58,7 @@ def save(shader_name: str) -> None:
 
     print(f"Added shader `{shader_name}` to shaders.json")
 
+# input shader
 if __name__ == "__main__":
     name = input("Enter shader name: ")
     if name != '':

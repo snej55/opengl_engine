@@ -10,6 +10,7 @@ uniform vec3 viewPos;
 
 uniform vec3 albedo;
 
+// basic phong lighting
 void main()
 {
     vec3 norm = normalize(Normal);

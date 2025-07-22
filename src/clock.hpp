@@ -10,6 +10,7 @@ class Clock : public EngineObject
 public:
     explicit Clock(EngineObject* engine);
 
+    // update deltatime and last time
     void update();
     [[nodiscard]] float getDeltaTime() const;
     [[nodiscard]] float getTime();

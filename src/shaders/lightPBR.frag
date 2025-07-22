@@ -10,6 +10,7 @@ uniform vec3 viewPos;
 uniform vec3 lightPos;
 uniform vec3 lightColor;
 
+// textures
 uniform vec3 albedo;
 uniform float metallic;
 uniform float roughness;

@@ -3,6 +3,7 @@
 Clock::Clock(EngineObject* engine)
  : EngineObject{"Clock", engine}
 {
+    // initialize deltatime and starting time
     update();
 }
 
