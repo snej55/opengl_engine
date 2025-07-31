@@ -1,6 +1,7 @@
 #include "postprocessing.hpp"
 
 #include "engine.hpp"
+#include "util.hpp"
 
 PostProcessor::PostProcessor(EngineObject* parent)
     : EngineObject{"PostProcessor", parent}
@@ -29,7 +30,9 @@ bool PostProcessor::check() const
     // check framebuffer status
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
-        std::cout << "POST_PROCESSOR::CHECK::ERROR: Framebuffer is not complete!" << std::endl;
+        Util::beginError();
+        std::cout << "POST_PROCESSOR::CHECK::ERROR: Framebuffer is not complete!";
+        Util::endError();
         success = false;
     } else
     {
@@ -55,7 +58,9 @@ void PostProcessor::init(const int width, const int height)
     // check framebuffer
     if (!check())
     {
-        std::cout << "POST_PROCESSOR::INIT::ERROR: Error checking framebuffer!" << std::endl;
+        Util::beginError();
+        std::cout << "POST_PROCESSOR::INIT::ERROR: Error checking framebuffer!";
+        Util::endError();
     }
 
     // create quad

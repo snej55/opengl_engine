@@ -1,5 +1,6 @@
 #include "engine.hpp"
 #include "window.hpp"
+#include "util.hpp"
 
 #include <iostream>
 
@@ -24,7 +25,9 @@ bool Window::init(const int width, const int height, const char* title)
     // validate window
     if (m_window == nullptr)
     {
-        std::cout << "WINDOW::INIT::ERROR: Failed to create GLFW window!" << std::endl;
+        Util::beginError();
+        std::cout << "WINDOW::INIT::ERROR: Failed to create GLFW window!";
+        Util::endError();
         return false;
     }
 

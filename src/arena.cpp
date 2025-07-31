@@ -1,4 +1,5 @@
 #include "arena.hpp"
+#include "util.hpp"
 
 #include <iostream>
 
@@ -34,7 +35,9 @@ void Arena::removeObject(const unsigned int id)
 {
     if (id > m_objects.size() - 1)
     {
-        std::cout << "ARENA::REMOVE_OBJECT::ERROR: Index out of range!\n";
+        Util::beginError();
+        std::cout << "ARENA::REMOVE_OBJECT::ERROR: Index out of range!";
+        Util::endError();
         return;
     }
     // move object to back

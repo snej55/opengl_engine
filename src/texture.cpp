@@ -112,7 +112,10 @@ Texture* TextureManager::getTexture(const std::string& name) const
     {
         return m_textures.find(name)->second;
     }
-    std::cout << "TEXTURE_MANAGER::GET_TEXTURE::ERROR: Texture `" << name << "' does not exist!\n";
+
+    Util::beginError();
+    std::cout << "TEXTURE_MANAGER::GET_TEXTURE::ERROR: Texture `" << name << "' does not exist!";
+    Util::endError();
     return nullptr;
 }
 
@@ -123,7 +126,9 @@ void TextureManager::activateTexture(const std::string& name, int slot) const
         getTexture(name)->activate(slot);
     } else
     {
-        std::cout << "TEXTURE_MANAGER::ACTIVATE_TEXTURE::ERROR: Texture `" << name << "' does not exist!\n";
+        Util::beginError();
+        std::cout << "TEXTURE_MANAGER::ACTIVATE_TEXTURE::ERROR: Texture `" << name << "' does not exist!";
+        Util::endError();
     }
 }
 

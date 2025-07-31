@@ -7,6 +7,7 @@
 #include <glm/ext/matrix_transform.hpp>
 
 #include "shapes.hpp"
+#include "util.hpp"
 
 ShapeManager::ShapeManager(EngineObject* parent)
     : EngineObject{"ShapeManager", parent}
@@ -58,7 +59,9 @@ void ShapeManager::drawRect(const Rect<T>& rect, const Color& color, ShaderManag
     const Shader* rectShader {shaderManager->getShader("rect")};
     if (rectShader == nullptr)
     {
-        std::cout << "SHAPE_MANAGER::DRAW_RECT::ERROR: Could not find shader *rect*!" << std::endl;
+        Util::beginError();
+        std::cout << "SHAPE_MANAGER::DRAW_RECT::ERROR: Could not find shader *rect*!";
+        Util::endError();
         return;
     }
 
