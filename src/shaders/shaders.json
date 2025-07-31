@@ -6,6 +6,13 @@
                 "frag": "rect.frag",
                 "vert": "rect.vert"
             }
+        },
+        {
+            "name": "texture",
+            "shader": {
+                "frag": "texture.frag",
+                "vert": "texture.vert"
+            }
         }
     ],
     "custom": [

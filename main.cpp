@@ -14,7 +14,6 @@ int main()
         return 1;
     }
     std::cout << "Initialized engine!\n";
-
     engine.setCameraEnabled(true);
 
     engine.addTexture("tomato", "data/images/tomato.png");
@@ -61,6 +60,7 @@ int main()
         engine.setFloat("metallic", 1.0f, "lightPBR");
         engine.setFloat("roughness", 0.2, "lightPBR");
         engine.setVec3("albedo", glm::vec3 { 0.5, 0.1f, 0.7f }, "lightPBR");
+
         for (std::size_t i { 0 }; i < spheres.size(); ++i) {
             model = glm::mat4 { 1.0f };
             model = glm::scale(model, glm::vec3(0.2f));
@@ -80,16 +80,6 @@ int main()
         engine.setVec3("albedo", glm::vec3 { 1.0f, 1.0f, 1.0f }, "lightPBR");
         engine.setVec3("lightPos", engine.getCameraPosition(), "lightPBR");
         light->render(engine.getShader("lightPBR"));
-        //
-        // for (std::size_t i{0}; i < spheres.size(); ++i)
-        // {
-        //     model = glm::mat4{1.0f};
-        //     model = glm::scale(model, glm::vec3(0.2f));
-        //     model = glm::translate(model, spheres[i]);
-        //     engine.setMat4("model", model, "lightPBR");
-        //     engine.setMat3("normalMat", engine.getNormalMatrix(model), "lightPBR");
-        //     light->render(engine.getShader("lightPBR"));
-        // }
 
         engine.disablePostProcessing();
         engine.renderPostProcessing();

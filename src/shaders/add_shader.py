@@ -23,12 +23,15 @@ void main()
 """
 
 # save shader files and add shader to shaders.json
-def save(shader_name: str) -> None:
+def save(shader_name: str, builtin: bool = False) -> None:
     # load shaders.json and check if shader exists
+    shader_type = "custom"
+    if builtin:
+        shader_type = "builtin"
     shaders = {}
     with open("shaders.json", "r") as f:
         shaders = json.load(f)
-        for shader in shaders["custom"]:
+        for shader in shaders[shader_type]:
             if shader["name"].lower() == shader_name.lower():
                 print(f"ERROR: Custom shader `{shader_name}` already exists:")
                 print(shader)
@@ -37,6 +40,11 @@ def save(shader_name: str) -> None:
     # save vertex shader
     vert_path = shader_name + ".vert"
     frag_path = shader_name + ".frag"
+
+    if builtin:
+        vert_path = "builtin/" + vert_path
+        frag_path = "builtin/" + frag_path
+
     with open(vert_path, "w") as f:
         f.write(vert)
     # same for fragment shader
@@ -47,7 +55,7 @@ def save(shader_name: str) -> None:
 
     # add shader to shaders.json
     with open("shaders.json", "w") as f:
-        shaders["custom"].append({
+        shaders[shader_type].append({
             "name": shader_name,
             "shader": {
                 "vert": vert_path,
