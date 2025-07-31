@@ -17,8 +17,8 @@ class Model final : public EngineObject
 public:
     explicit Model(const std::string& name, EngineObject* parent);
 
-    void loadModel(const std::string& path);
-    
+    bool loadModel(const std::string& path);
+
     void render(const Shader* shader) const;
 
 private:

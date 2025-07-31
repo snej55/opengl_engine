@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 
 #include "shader.hpp"
+#include "util.hpp"
 
 #include <string>
 #include <iostream>
@@ -9,7 +10,7 @@
 
 
 Shader::Shader(const std::string& name, EngineObject* parent)
-: EngineObject{("SHADER_" + name).c_str(), parent}, m_shaderName{name}
+: EngineObject{("SHADER " + name).c_str(), parent}, m_shaderName{name}
 {
 }
 
@@ -18,8 +19,25 @@ Shader::~Shader()
     glDeleteProgram(m_ID);
 }
 
-void Shader::loadFromFile(const char* fragPath, const char* vertPath)
+bool Shader::loadFromFile(const char* fragPath, const char* vertPath)
 {
+    bool shaderSuccess {true};
+
+    // check if shader files exist
+    if (!Util::fileExists(fragPath))
+    {
+        Util::beginError();
+        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Failed to read fragment shader from `" << fragPath << "` - file does not exist!";
+        Util::endError();
+        return false;
+    } else if (!Util::fileExists(vertPath))
+    {
+        Util::beginError();
+        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Failed to read vertex shader from `" << vertPath << "` - file does not exist!";
+        Util::endError();
+        return false;
+    }
+
     std::string vertCode;
     std::string fragCode;
     std::ifstream vertFile;
@@ -45,8 +63,10 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
         fragCode = fragStream.str();
     } catch ([[maybe_unused]] std::ifstream::failure& e)
     {
-        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Could not read source files: {vert: `" << vertPath << "`, frag: `" << fragPath << "`}" << std::endl;
-        return;
+        Util::beginError();
+        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Could not read source files: {vert: `" << vertPath << "`, frag: `" << fragPath << "`}";
+        Util::endError();
+        return false;
     }
 
     const char* vShaderCode {vertCode.c_str()};
@@ -63,8 +83,11 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
     glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
     if (!success)
     {
+        Util::beginError();
         glGetShaderInfoLog(vertex, 512, nullptr, infoLog);
         std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Vertex shader compilation failed." << std::endl << infoLog;
+        Util::endError();
+        shaderSuccess = false;
     }
 
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
@@ -73,8 +96,11 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
     glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
     if (!success)
     {
+        Util::beginError();
         glGetShaderInfoLog(fragment, 512, nullptr, infoLog);
         std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Fragment shader compilation failed." << std::endl << infoLog;
+        Util::endError();
+        shaderSuccess = false;
     }
 
     // actually create the program
@@ -86,8 +112,11 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
     glGetProgramiv(id, GL_LINK_STATUS, &success);
     if (!success)
     {
+        Util::beginError();
         glGetProgramInfoLog(id, 512, nullptr, infoLog);
         std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Shader linking failed." << std::endl << infoLog;
+        Util::endError();
+        shaderSuccess = false;
     }
 
     // validate program
@@ -95,8 +124,11 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
     glGetProgramiv(id, GL_VALIDATE_STATUS, &success);
     if (!success)
     {
+        Util::beginError();
         glGetProgramInfoLog(id, 512, nullptr, infoLog);
         std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Shader validation failed." << std::endl << infoLog;
+        Util::endError();
+        shaderSuccess = false;
     }
 
     // update m_ID
@@ -108,6 +140,8 @@ void Shader::loadFromFile(const char* fragPath, const char* vertPath)
 
 
     std::cout << "Loaded *" << m_shaderName << "* shader from files: `" << vertPath << "` `" << fragPath << "`\n";
+
+    return shaderSuccess;
 }
 
 void Shader::use() const
@@ -204,7 +238,15 @@ void ShaderManager::addShader(const std::string& name, const char* fragPath, con
     // create new shader and add it to arena
     Shader* shader {new Shader{name, this}};
     arena->addObject(shader);
-    m_shaders.insert(std::pair{name, shader});
+    if (!shader->loadFromFile(fragPath, vertPath))
+    {
+        Util::beginError();
+        std::cout << "SHADER_MANAGER::ADD_SHADER::ERROR: Failed to add shader `" << name << "`";
+        Util::endError();
+    } else {
+        m_shaders.insert(std::pair{name, shader});
+    }
+
     // load shader file
     getShader(name)->loadFromFile(fragPath, vertPath);
 }
@@ -215,7 +257,9 @@ Shader* ShaderManager::getShader(const std::string& name) const
     {
         return m_shaders.find(name)->second;
     }
-    std::cout << "SHADER_MANAGER::GET_SHADER::ERROR: Shader `" << name << "` does not exist!\n";
+    Util::beginError();
+    std::cout << "SHADER_MANAGER::GET_SHADER::ERROR: Shader `" << name << "` does not exist!";
+    Util::endError();
     return nullptr;
 }
 
@@ -226,7 +270,9 @@ void ShaderManager::useShader(const std::string& name) const
         getShader(name)->use();
     } else
     {
-        std::cout << "SHADER_MANAGER::USE_SHADER::ERROR: Shader `" << name << "` does not exist!\n";
+        Util::beginError();
+        std::cout << "SHADER_MANAGER::USE_SHADER::ERROR: Shader `" << name << "` does not exist!";
+        Util::endError();
     }
 }
 

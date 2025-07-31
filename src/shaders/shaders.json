@@ -1,48 +1,48 @@
 {
-    "builtin": [
-        {
-            "name": "rect",
-            "shader": {
-                "frag": "rect.frag",
-                "vert": "rect.vert"
-            }
-        },
-        {
-            "name": "texture",
-            "shader": {
-                "frag": "texture.frag",
-                "vert": "texture.vert"
-            }
-        }
-    ],
-    "custom": [
-        {
-            "name": "cube",
-            "shader": {
-                "frag": "cube.frag",
-                "vert": "cube.vert"
-            }
-        },
-        {
-            "name": "triangle",
-            "shader": {
-                "frag": "triangle.frag",
-                "vert": "triangle.vert"
-            }
-        },
-        {
-            "name": "lightPBR",
-            "shader": {
-                "frag": "lightPBR.frag",
-                "vert": "lightPBR.vert"
-            }
-        },
-        {
-            "name": "screenShader",
-            "shader": {
-                "frag": "screenShader.frag",
-                "vert": "screenShader.vert"
-            }
-        }
-    ]
+  "builtin": [
+    {
+      "name": "rect",
+      "shader": {
+        "frag": "rect.frag",
+        "vert": "rect.vert"
+      }
+    },
+    {
+      "name": "texture",
+      "shader": {
+        "frag": "texture.frag",
+        "vert": "texture.vert"
+      }
+    }
+  ],
+  "custom": [
+    {
+      "name": "cube",
+      "shader": {
+        "frag": "cube.frag",
+        "vert": "cube.vert"
+      }
+    },
+    {
+      "name": "triangle",
+      "shader": {
+        "frag": "triangle.frag",
+        "vert": "triangle.vert"
+      }
+    },
+    {
+      "name": "lightPBR",
+      "shader": {
+        "frag": "lightPBR.frag",
+        "vert": "lightPBR.vert"
+      }
+    },
+    {
+      "name": "screenShader",
+      "shader": {
+        "frag": "screenShader.frag",
+        "vert": "screenShader.vert"
+      }
+    }
+  ]
 }

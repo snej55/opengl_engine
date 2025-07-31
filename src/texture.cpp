@@ -4,14 +4,24 @@
 #include <STB/stb_image.h>
 
 #include "texture.hpp"
+#include "util.hpp"
 
 Texture::Texture(const std::string& name, EngineObject* manager)
-    : EngineObject{("TEXTURE_" + name).c_str(), manager}
+    : EngineObject{("TEXTURE " + name).c_str(), manager}
 {
 }
 
-void Texture::loadFromFile(const char* path)
+bool Texture::loadFromFile(const char* path)
 {
+    // check if texture exists
+    if (!Util::fileExists(path))
+    {
+        Util::beginError();
+        std::cout << "TEXTURE::LOAD_FROM_FILE::ERROR: Failed to load texture from path `" << path << "` - texture does not exist";
+        Util::endError();
+        return false;
+    }
+
     unsigned int tex;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
@@ -29,7 +39,10 @@ void Texture::loadFromFile(const char* path)
     // check if image was successfully loaded
     if (!data)
     {
-        std::cout << "Failed to load texture: " << path << std::endl;
+        std::cout << "Failed to load texture: `" << path << "`" << std::endl;
+        stbi_image_free(data);
+        m_TEX = 0;
+        return false;
     } else
     {
         // get internal format for tex. data
@@ -56,6 +69,8 @@ void Texture::loadFromFile(const char* path)
     stbi_image_free(data);
     // set TEX ID
     m_TEX = tex;
+
+    return true;
 }
 
 // activate gl texture
@@ -79,9 +94,16 @@ void TextureManager::addTexture(const char* path, const char* name, Arena* arena
     // create new texture and add to arena
     Texture* texture {new Texture{name, this}};
     arena->addObject(texture);
-    m_textures.insert(std::pair{std::string{name}, texture});
-    // load actual texture
-    getTexture(std::string{name})->loadFromFile(path);
+
+    // load texture
+    if (!texture->loadFromFile(path))
+    {
+        Util::beginError();
+        std::cout << "TEXTURE_MANAGER::ADD_TEXTURE::ERROR: Failed to add texture `" << name << "`!";
+        Util::endError();
+    } else {
+        m_textures.insert(std::pair{std::string{name}, texture});
+    }
 }
 
 Texture* TextureManager::getTexture(const std::string& name) const

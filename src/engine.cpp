@@ -47,7 +47,9 @@ bool Engine::init(const int width, const int height, const char* title)
 
     if (!createWindow(width, height, title))
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to create window!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to create window!";
+        Util::endError();
         glfwTerminate();
         return false;
     }
@@ -57,7 +59,9 @@ bool Engine::init(const int width, const int height, const char* title)
     // initialize glad
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to initialize GLAD!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to initialize GLAD!";
+        Util::endError();
         return false;
     }
 
@@ -78,28 +82,36 @@ bool Engine::init(const int width, const int height, const char* title)
     // create IOHandler
     if (!createIOHandler())
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to create IOHandler!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to create IOHandler!";
+        Util::endError();
         return false;
     }
 
     // create clock
     if (!createClock())
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to create Clock!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to create Clock!";
+        Util::endError();
         return false;
     }
 
     // create shader manager
     if (!createShaderManager())
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to create ShaderManager!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to create ShaderManager!";
+        Util::endError();
         return false;
     }
 
     // check shaders
     if (!checkShaders())
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to check all shaders!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to check all shaders!";
+        Util::endError();
         return false;
     }
     loadShaders(); // load verified shaders
@@ -107,31 +119,41 @@ bool Engine::init(const int width, const int height, const char* title)
     // create texture manager
     if (!createTextureManager())
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to create TextureManager!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to create TextureManager!";
+        Util::endError();
         return false;
     }
 
     if (!createShapeManager())
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to create ShapeManager!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to create ShapeManager!";
+        Util::endError();
         return false;
     }
 
     if (!createCamera())
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to create Camera!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to create Camera!";
+        Util::endError();
         return false;
     }
 
     if (!createModelManager())
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to create ModelManager!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to create ModelManager!";
+        Util::endError();
         return false;
     }
 
     if (!createPostProcessor())
     {
-        std::cout << "ENGINE::INIT::ERROR: Failed to create PostProcessor!" << std::endl;
+        Util::beginError();
+        std::cout << "ENGINE::INIT::ERROR: Failed to create PostProcessor!";
+        Util::endError();
         return false;
     }
     m_postProcessor->init(getWidth(), getHeight());
@@ -183,7 +205,9 @@ bool Engine::createWindow(const int width, const int height, const char* title)
     // check if window already exists
     if (m_window != nullptr)
     {
-        std::cout << "ENGINE::CREATE_WINDOW::ERROR: Window already exists at `" << m_window << "`!\n";
+        Util::beginError();
+        std::cout << "ENGINE::CREATE_WINDOW::ERROR: Window already exists at `" << m_window << "`";
+        Util::endError();
         return false;
     }
     // allocate memory for window
@@ -218,12 +242,16 @@ bool Engine::createIOHandler()
 {
     if (m_iohandler != nullptr)
     {
-        std::cout << "ENGINE::CREATE_IOHANDLER::ERROR: IOHandler already exists at `" << m_iohandler << "`!\n";
+        Util::beginError();
+        std::cout << "ENGINE::CREATE_IOHANDLER::ERROR: IOHandler already exists at `" << m_iohandler << "`";
+        Util::endError();
         return false;
     }
     if (m_window == nullptr)
     {
-        std::cout << "ENGINE::CREATE_IOHANDLER::ERROR: Window is required to be created before IOHandler!\n";
+        Util::beginError();
+        std::cout << "ENGINE::CREATE_IOHANDLER::ERROR: Window is required to be created before IOHandler!";
+        Util::endError();
         return false;
     }
     // allocate memory for iohandler
@@ -251,7 +279,9 @@ bool Engine::createClock()
 {
     if (m_clock != nullptr)
     {
-        std::cout << "ENGINE::CREATE_CLOCK::ERROR: Clock already exists at `" << m_iohandler << "`!\n";
+        Util::beginError();
+        std::cout << "ENGINE::CREATE_CLOCK::ERROR: Clock already exists at `" << m_iohandler << "`";
+        Util::endError();
         return false;
     }
     // allocate memory for clock
@@ -278,7 +308,9 @@ bool Engine::createShaderManager()
 {
     if (m_shaderManager != nullptr)
     {
-        std::cout << "ENGINE::CREATE_SHADER_MANAGER::ERROR: Shader manager already exists at `" << m_shaderManager << "`!\n";
+        Util::beginError();
+        std::cout << "ENGINE::CREATE_SHADER_MANAGER::ERROR: Shader manager already exists at `" << m_shaderManager << "`";
+        Util::endError();
         return false;
     }
     // allocate memory for shader manager
@@ -314,7 +346,9 @@ bool Engine::checkShaders()
     // check if config file exists
     if (!Util::fileExists("shaders/shaders.json"))
     {
-        std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find `shaders.json` at `shaders/shaders.json`!";
+        Util::beginError();
+        std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find `shaders.json` at `shaders/shaders.json";
+        Util::endError();
         return false;
     }
 
@@ -332,7 +366,9 @@ bool Engine::checkShaders()
         // check if vertex shader exists
         if (!Util::fileExists(vertPath))
         {
-            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find vertex shader for *" << name << "* at: `" << vertPath << "`!\n";
+            Util::beginError();
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find vertex shader for *" << name << "* at: `" << vertPath << "`!";
+            Util::endError();
             file.close();
             return false;
         }
@@ -340,7 +376,9 @@ bool Engine::checkShaders()
         // same for fragment shader
         if (!Util::fileExists(fragPath))
         {
-            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find fragment shader for *" << name << "* at: `" << fragPath << "`!\n";
+            Util::beginError();
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find fragment shader for *" << name << "* at: `" << fragPath << "`!";
+            Util::endError();
             file.close();
             return false;
         }
@@ -358,7 +396,9 @@ bool Engine::checkShaders()
         // check if vertex shader exists
         if (!Util::fileExists(vertPath))
         {
-            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find vertex shader for *" << name << "* at: `" << vertPath << "`!\n";
+            Util::beginError();
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find vertex shader for *" << name << "* at: `" << vertPath << "`!";
+            Util::endError();
             file.close();
             return false;
         }
@@ -366,7 +406,9 @@ bool Engine::checkShaders()
         // same for fragment shader
         if (!Util::fileExists(fragPath))
         {
-            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find fragment shader for *" << name << "* at: `" << fragPath << "`!\n";
+            Util::beginError();
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find fragment shader for *" << name << "* at: `" << fragPath << "`!";
+            Util::endError();
             file.close();
             return false;
         }
@@ -386,7 +428,9 @@ void Engine::loadShaders()
 {
     if (!m_checkedShaders)
     {
-        std::cout << "ENGINE::LOAD_SHADERS::ERROR: Cannot load shaders: shader files have not been verified!\n";
+        Util::beginError();
+        std::cout << "ENGINE::LOAD_SHADERS::ERROR: Cannot load shaders: shader files have not been verified!";
+        Util::endError();
         return;
     }
 
@@ -528,7 +572,9 @@ bool Engine::createTextureManager()
 {
     if (m_textureManager != nullptr)
     {
-        std::cout << "ENGINE::CREATE_TEXTURE_MANAGER::ERROR: Texture manager already exists at `" << m_textureManager << "`!\n";
+        Util::beginError();
+        std::cout << "ENGINE::CREATE_TEXTURE_MANAGER::ERROR: Texture manager already exists at `" << m_textureManager << "`";
+        Util::endError();
         return false;
     }
     // allocate memory for texture manager
@@ -564,7 +610,9 @@ bool Engine::createShapeManager()
 {
     if (m_shapeManager != nullptr)
     {
-        std::cout << "ENGINE::CREATE_SHAPE_MANAGER::ERROR: Shape manager already exists at `" << m_shapeManager << "`!\n";
+        Util::beginError();
+        std::cout << "ENGINE::CREATE_SHAPE_MANAGER::ERROR: Shape manager already exists at `" << m_shapeManager << "`";
+        Util::endError();
         return false;
     }
     // create new shape manager
@@ -585,7 +633,9 @@ bool Engine::createCamera()
 {
     if (m_camera != nullptr)
     {
-        std::cout << "ENGINE::CREATE_CAMERA::ERROR: Camera already exists at `" << m_camera << "`!\n";
+        Util::beginError();
+        std::cout << "ENGINE::CREATE_CAMERA::ERROR: Camera already exists at `" << m_camera << "`";
+        Util::endError();
         return false;
     }
     // create new camera
@@ -627,7 +677,9 @@ bool Engine::createModelManager()
 {
     if (m_modelManager != nullptr)
     {
-        std::cout << "ENGINE::CREATE_MODEL_MANAGER::ERROR: Model manager already exists at `" << m_modelManager << "`!\n";
+        Util::beginError();
+        std::cout << "ENGINE::CREATE_MODEL_MANAGER::ERROR: Model manager already exists at `" << m_modelManager << "`";
+        Util::endError();
         return false;
     }
 
@@ -662,7 +714,9 @@ bool Engine::createPostProcessor()
 {
     if (m_postProcessor != nullptr)
     {
-        std::cout << "ENGINE::CREATE_POST_PROCESSOR::ERROR: Post processor already exists at `" << m_postProcessor << "`!\n";
+        Util::beginError();
+        std::cout << "ENGINE::CREATE_POST_PROCESSOR::ERROR: Post processor already exists at `" << m_postProcessor << "`";
+        Util::endError();
         return false;
     }
 

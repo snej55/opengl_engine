@@ -3,6 +3,7 @@
 //
 
 #include "model.hpp"
+#include "util.hpp"
 
 #include <assimp/postprocess.h>
 
@@ -10,7 +11,7 @@
 #include <sstream>
 
 Model::Model(const std::string& name, EngineObject* parent)
-    : EngineObject{("MODEL_" + name).c_str(), parent}, m_modelName{name}
+    : EngineObject{("MODEL " + name).c_str(), parent}, m_modelName{name}
 {
 }
 
@@ -22,8 +23,16 @@ void Model::render(const Shader* shader) const
     }
 }
 
-void Model::loadModel(const std::string& path)
+bool Model::loadModel(const std::string& path)
 {
+    if (!Util::fileExists(path))
+    {
+        Util::beginError();
+        std::cout << "MODEL::LOAD_MODEL::ERROR: Failed to load model from `" << path << "` - file does not exist!";
+        Util::endError();
+        return false;
+    }
+
     Assimp::Importer importer;
 
     const aiScene* scene{
@@ -34,8 +43,10 @@ void Model::loadModel(const std::string& path)
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         // if it isn't zero
-        std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
-        return;
+        Util::beginError();
+        std::cout << "ERROR::ASSIMP::" << importer.GetErrorString();
+        Util::endError();
+        return false;
     }
 
     directory = path.substr(0, path.find_last_of('/'));
@@ -65,6 +76,8 @@ void Model::loadModel(const std::string& path)
 
     const std::string size = ss.str();
     std::cout << "Loaded model at `" << path << "`, " << numVertices << " vertices (" << size << ")" << std::endl;
+
+    return true;
 }
 
 void Model::processNode(const aiNode* node, const aiScene* scene)
@@ -139,9 +152,16 @@ void ModelManager::addModel(const std::string& name, const std::string& path, Ar
     // create new model and add it to arena
     Model* model {new Model{name, this}};
     arena->addObject(model);
-    m_models.insert(std::pair{name, model});
-    // load model
-    getModel(name)->loadModel(path);
+
+    // add model
+    if (!model->loadModel(path))
+    {
+        Util::beginError();
+        std::cout << "MODEL_MANAGER::ADD_MODEL::ERROR: Failed to add model `" << name << "`";
+        Util::endError();
+    } else {
+        m_models.insert(std::pair{name, model});
+    }
 }
 
 Model* ModelManager::getModel(const std::string& name) const
@@ -150,7 +170,9 @@ Model* ModelManager::getModel(const std::string& name) const
     {
         return m_models.find(name)->second;
     }
-    std::cout << "MODEL_MANAGER::GET_MODEL::ERROR: Model `" << name << "` does not exist!\n";
+    Util::beginError();
+    std::cout << "MODEL_MANAGER::GET_MODEL::ERROR: Model `" << name << "` does not exist!";
+    Util::endError();
     return nullptr;
 }
 

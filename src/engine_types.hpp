@@ -19,7 +19,7 @@ public:
 
     virtual ~EngineObject()
     {
-        std::cout << "Freed {" << m_name << "}, child of {" << (
+        std::cout << "Freed { " << m_name << " }, child of {" << (
             m_parent == nullptr ? "NONE" : m_parent->getName()
         ) << "}" << std::endl;
     }

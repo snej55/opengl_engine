@@ -15,7 +15,7 @@ public:
     explicit Shader(const std::string& name, EngineObject* parent = nullptr);
     ~Shader() override;
 
-    void loadFromFile(const char* fragPath, const char* vertPath);
+    bool loadFromFile(const char* fragPath, const char* vertPath);
 
     void use() const;
 
