@@ -3,8 +3,15 @@
 
 An OpenGL rendering system to use for my projects, made largely to replace my old OpenGL wrapper.
 
+ - [Installation instructions](https://github.com/snej55/opengl_engine/tree/master?tab=readme-ov-file#installation-instructions)
+ - [To do](https://github.com/snej55/opengl_engine/tree/master?tab=readme-ov-file#to-do)
+
 ![screenshot](https://github.com/snej55/opengl_engine/blob/master/media/screenshots/Screenshot_20250628_110317.png)
 
+---
+
 [INSTALL.md]
+
+---
 
 [TODO.md]
