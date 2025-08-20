@@ -8,3 +8,4 @@
 /.ropeproject/
 /src/shaders/__pycache__/
 .kateproject.build
+/releases
