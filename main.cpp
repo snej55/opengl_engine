@@ -19,7 +19,7 @@ int main()
     engine.addTexture("tomato", "data/images/tomato.png");
     engine.addTexture("floor", "data/images/floor.png");
     engine.addModel("cube", "data/models/monkey.glb");
-    engine.addModel("light", "data/models/big_torus.obj");
+    engine.addModel("light", "data/models/sphere.obj");
 
     const Model* cube { engine.getModel("cube") };
     const Model* light { engine.getModel("light") };

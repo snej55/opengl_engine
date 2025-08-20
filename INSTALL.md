@@ -13,7 +13,9 @@ cd opengl_engine
 2. Build:
 
 ```
+# generate cmake files
 cmake -S . -B build -G Ninja
+# build it
 cmake --build build/ -j4
 ```
 
@@ -27,15 +29,15 @@ cmake --build build/ -j4
 3. Run:
 
 ```
-# either run it automatically:
+# either run it automatically via the build script:
 chmod +x ./run.sh
 ./run.sh
 
-# or do it manually
+# or do it manually (recommended)
 cd build
 ./main
 ```
 
 >[!NOTE]
 >Please make sure to run the compiled binary from the build folder,
-> so it has access to the required assets (shaders, models, etc).
+> so that it has access to the required assets (shaders, models, etc).
