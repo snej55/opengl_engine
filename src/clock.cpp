@@ -1,9 +1,11 @@
 #include "clock.hpp"
 
+#include <GLFW/glfw3.h>
+
 Clock::Clock(EngineObject* engine)
  : EngineObject{"Clock", engine}
 {
-    // initialize deltatime and starting time
+    // initialize delta time and starting time
     update();
 }
 

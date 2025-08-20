@@ -1,16 +1,14 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
-#include <GLFW/glfw3.h>
-
 #include "engine_types.hpp"
 
-class Clock : public EngineObject
+class Clock final : public EngineObject
 {
 public:
     explicit Clock(EngineObject* engine);
 
-    // update deltatime and last time
+    // update delta time and last time
     void update();
     [[nodiscard]] float getDeltaTime() const;
     [[nodiscard]] float getTime();
