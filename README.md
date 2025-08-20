@@ -75,14 +75,15 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Set up arena
 - [X] Shaders
 - [X] Shader manager
+- [X] Automatic shader loading
 - [X] Camera
-- [ ] Asset manager
 - [ ] Set up renderer class
 - [ ] Set up render queue
 - [ ] Config file loading
 - [X] README
 - [ ] Font rendering
 - [ ] Geometry shader
+- [X] Texture manager
 - [X] Texture loading and rendering
 - [ ] Screen coordinate rendering
 - [X] Rect rendering
@@ -93,8 +94,11 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Post processor with framebuffers
 - [ ] Blinn-phong lighting
 - [ ] Ambient lighting (SSAO)
-- [ ] PBR lighting
+- [X] PBR lighting
+- [ ] PBR materials
 - [X] Model loading
+- [X] Mesh class
+- [X] Model manager
 - [ ] Colour functions (lerp, different blending functions)
 
 
