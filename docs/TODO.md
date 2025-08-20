@@ -1,11 +1,12 @@
-## Target:
+
+## To do:
+
+### Target:
 
 Make a game engine that can handle world loading, model loading, render basic objects, and lighting (Blinn-Phong (for specular), SSAO, PBR), as well as
 other basic engine functionality (e.g. audio loading, physics systems, particle vfx etc.).
 
-## TODO:
-
-### v2
+### v2:
 - [X] Set up engine object type
 - [X] Set up engine manager
 - [X] Window management
@@ -38,7 +39,7 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [ ] Colour functions (lerp, different blending functions)
 
 
-### v1
+### v1:
 - [X] Set up engine objects
 - [X] Add app component
 - [X] Add window component

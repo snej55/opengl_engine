@@ -1,4 +1,4 @@
-# Installation instructions
+## Installation instructions
 
 >[!IMPORTANT]
 > CMake and Ninja are required to be installed, as well as a working c++ compiler.
