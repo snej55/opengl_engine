@@ -16,8 +16,12 @@ int main()
     std::cout << "Initialized engine!\n";
     engine.setCameraEnabled(true);
 
-    engine.addTexture("tomato", "data/images/tomato.png");
-    engine.addTexture("floor", "data/images/floor.png");
+    engine.addTexture("albedo", "data/materials/rustediron/rustediron2_basecolor.png");
+    engine.addTexture("ao", "data/materials/rustediron/rustediron2_ao.png");
+    engine.addTexture("metallic", "data/materials/rustediron/rustediron2_metallic.png");
+    engine.addTexture("normal", "data/materials/rustediron/rustediron2_normal.png");
+    engine.addTexture("roughness", "data/materials/rustediron/rustediron2_roughness.png");
+
     engine.addModel("cube", "data/models/monkey.glb");
     engine.addModel("light", "data/models/sphere.obj");
 

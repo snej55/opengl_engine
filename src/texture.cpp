@@ -22,9 +22,45 @@ bool Texture::loadFromFile(const char* path)
         return false;
     }
 
+    // load image
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char* data {stbi_load(path, &m_width, &m_height, &m_numChannels, 0)};
+
+    // check if image was successfully loaded
+    if (!data)
+    {
+        std::cout << "Failed to load texture: `" << path << "`" << std::endl;
+        stbi_image_free(data);
+        m_TEX = 0;
+        return false;
+    }
+
+    // get internal format for tex. data
+    GLenum internalFormat {0};
+    GLenum dataFormat {GL_RGB};
+    switch (m_numChannels)
+    {
+        case 1: // grayscale
+            internalFormat = GL_RED;
+            dataFormat = GL_RED;
+            break;
+        case 3:
+            internalFormat = GL_RGB;
+            break;
+        case 4:
+            internalFormat = GL_RGBA;
+            break;
+        default:
+            break;
+    }
+
+    // load opengl texture
     unsigned int tex;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), m_width, m_height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
 
     // tex wrap params
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -33,38 +69,8 @@ bool Texture::loadFromFile(const char* path)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    // load image
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char* data {stbi_load(path, &m_width, &m_height, &m_numChannels, 0)};
-    // check if image was successfully loaded
-    if (!data)
-    {
-        std::cout << "Failed to load texture: `" << path << "`" << std::endl;
-        stbi_image_free(data);
-        m_TEX = 0;
-        return false;
-    } else
-    {
-        // get internal format for tex. data
-        GLenum format {0};
-        switch (m_numChannels)
-        {
-            case 1:
-                format = GL_RED;
-                break;
-            case 3:
-                format = GL_RGB;
-                break;
-            case 4:
-                format = GL_RGBA;
-                break;
-            default:
-                break;
-        }
-        // load opengl texture
-        glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(format), m_width, m_height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        std::cout << "Successfully loaded texture from `" << path << "`\n";
-    }
+    std::cout << "Successfully loaded texture from `" << path << "`\n";
+
     // free image data
     stbi_image_free(data);
     // set TEX ID
