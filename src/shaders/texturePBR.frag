@@ -130,5 +130,5 @@ void main()
     vec3 ambient = vec3(0.03) * albedo * ao;
     vec3 color = ambient + Lo;
 
-    FragColor = vec4(color, 1.0);
+    FragColor = vec4(texture(albedoMap, fs_in.TexCoords).rgb, 1.0);
 }

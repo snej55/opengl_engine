@@ -23,7 +23,7 @@ int main()
     engine.addTexture("roughness", "data/materials/rustediron/rustediron2_roughness.png");
 
     engine.addModel("cube", "data/models/monkey.glb");
-    engine.addModel("light", "data/models/sphere.obj");
+    engine.addModel("light", "data/models/textured_sphere.obj");
 
     const Model* cube { engine.getModel("cube") };
     const Model* light { engine.getModel("light") };
@@ -41,7 +41,6 @@ int main()
     engine.setFloat("ao", 1.0f, "lightPBR");
 
     engine.useShader("texturePBR");
-
     engine.activateTexture("albedo", 0);
     engine.setInt("albedoMap", 0, "texturePBR");
     engine.activateTexture("ao", 1);
