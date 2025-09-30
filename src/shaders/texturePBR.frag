@@ -78,20 +78,23 @@ void main()
     float roughness = texture(roughnessMap, fs_in.TexCoords).r;
     float ao = texture(aoMap, fs_in.TexCoords).r;
 
+    vec3 Normal = texture(normalMap, fs_in.TexCoords).rgb;
+    Normal = Normal * 2.0 - 1.0;
+    Normal = normalize(fs_in.TBN * Normal);
     vec3 norm = normalize(Normal);
-    vec3 V = normalize(viewPos - FragPos);
+    vec3 V = normalize(viewPos - fs_in.FragPos);
 
     // outgoing radiance
     vec3 Lo = vec3(0.0);
 
     // ---- calculate light radiance ---- //
 
-    vec3 L = normalize(lightPos - FragPos);
+    vec3 L = normalize(lightPos - fs_in.FragPos);
     // half-vector
     vec3 H = normalize(V + L);
 
     // distance to lightPos
-    float dist = length(lightPos - FragPos);
+    float dist = length(lightPos - fs_in.FragPos);
     // standard realistic attenuation
     float attenuation = 1.0;
     vec3 radiance = lightColor * attenuation;

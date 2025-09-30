@@ -14,6 +14,8 @@ namespace MeshN
         glm::vec3 position;
         glm::vec3 normal;
         glm::vec2 texCoords;
+        glm::vec3 tangent; // TBN matrix
+        glm::vec3 biTangent; // "" ""
     };
 }
 

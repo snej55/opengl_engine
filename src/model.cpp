@@ -122,8 +122,20 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
         {
             vertex.texCoords = glm::vec2{0.0f, 0.0f};
         }
+
+        // calculate tangent and bitangent for normal mapping
+        const glm::vec3 tangent {
+            mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z
+        };
+
+        const glm::vec3 biTangent {
+            mesh->mBitangents[i].x, mesh->mBitangents[i].y, mesh->mBitangents[i].z
+        };
+
         vertex.position = pos;
         vertex.normal = normal;
+        vertex.tangent = tangent;
+        vertex.biTangent = biTangent;
         vertices.push_back(vertex);
     }
 
