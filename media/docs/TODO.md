@@ -1,4 +1,3 @@
-
 ## To do:
 
 ### Target:
@@ -36,7 +35,8 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [ ] Blinn-phong lighting
 - [ ] Ambient lighting (SSAO)
 - [X] PBR lighting
-- [ ] PBR materials
+- [X] PBR material rendering
+- [ ] PBR materials on models
 - [X] Model loading
 - [X] Mesh class
 - [X] Model manager
