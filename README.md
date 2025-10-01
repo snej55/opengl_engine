@@ -1,4 +1,4 @@
-## OpenGL engine 
+## OpenGL engine
 ![time](https://hackatime-badge.hackclub.com/U08264TFUKV/opengl_engine)
 
 An OpenGL rendering system to use for my projects, made largely to replace my old OpenGL wrapper.
@@ -6,7 +6,7 @@ An OpenGL rendering system to use for my projects, made largely to replace my ol
  - [Installation instructions](https://github.com/snej55/opengl_engine/tree/master?tab=readme-ov-file#installation-instructions)
  - [To do](https://github.com/snej55/opengl_engine/tree/master?tab=readme-ov-file#to-do)
 
-![screenshot](https://github.com/snej55/opengl_engine/blob/master/media/screenshots/Screenshot_20250628_110317.png)
+![screenshot](https://github.com/snej55/opengl_engine/blob/master/media/screenshots/Screenshot_20251001_201426.png)
 
 ---
 
@@ -57,7 +57,6 @@ cd build
 
 ---
 
-
 ## To do:
 
 ### Target:
@@ -95,7 +94,8 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [ ] Blinn-phong lighting
 - [ ] Ambient lighting (SSAO)
 - [X] PBR lighting
-- [ ] PBR materials
+- [X] PBR material rendering
+- [ ] PBR materials on models
 - [X] Model loading
 - [X] Mesh class
 - [X] Model manager
@@ -162,3 +162,4 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [ ] Add README
 - [ ] Add README to media
 - [ ] Add vfx demos + screenshots
+
