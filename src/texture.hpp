@@ -59,6 +59,11 @@ public:
     // Checks if texture <name> exists.
     [[nodiscard]] bool textureExists(const std::string& name) const;
 
+    // vertex buffer getters and setters
+    [[nodiscard]] unsigned int getVAO() const {return m_VAO;}
+    [[nodiscard]] unsigned int getVBO() const {return m_VBO;}
+    [[nodiscard]] unsigned int getEBO() const {return m_EBO;}
+
 private:
     std::map<std::string, Texture*> m_textures{};
     unsigned int m_VAO, m_VBO, m_EBO;

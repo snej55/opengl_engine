@@ -620,7 +620,14 @@ void Engine::drawTexture(const std::string& name, const FRect& destination) cons
     model = glm::translate(model, glm::vec3(destination.x, destination.y, 0.0f));
     model = glm::scale(model, glm::vec3(destination.w, destination.h, 1.0f));
 
+    tex->activate(0);
 
+    useShader("texture");
+    setMat4("model", model, "texture");
+    setInt("tex", 0, "texture");
+
+    glBindVertexArray(m_textureManager->getVAO());
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
 
 // ------ Shape Manager ------ //
