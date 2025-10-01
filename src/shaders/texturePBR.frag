@@ -2,14 +2,15 @@
 
 out vec4 FragColor;
 
+in vec3 Normal;
 in VS_OUT {
     vec3 FragPos;
     vec2 TexCoords;
-    mat3 TBN;
+    vec3 TangentLightPos;
+    vec3 TangentViewPos;
+    vec3 TangentFragPos;
 } fs_in;
 
-uniform vec3 viewPos;
-uniform vec3 lightPos;
 uniform vec3 lightColor;
 
 // textures
@@ -18,6 +19,9 @@ uniform sampler2D metallicMap;
 uniform sampler2D roughnessMap;
 uniform sampler2D aoMap;
 uniform sampler2D normalMap;
+
+uniform vec3 viewPos;
+uniform vec3 lightPos;
 
 const float PI = 3.14159265359;
 
@@ -78,10 +82,9 @@ void main()
     float roughness = texture(roughnessMap, fs_in.TexCoords).r;
     float ao = texture(aoMap, fs_in.TexCoords).r;
 
-    vec3 Normal = texture(normalMap, fs_in.TexCoords).rgb;
-    Normal = Normal * 2.0 - 1.0;
-    Normal = normalize(fs_in.TBN * Normal);
-    vec3 norm = normalize(Normal);
+    vec3 norm = texture(normalMap, fs_in.TexCoords).rgb;
+    norm = normalize(norm * 2.0 - 1.0); // normal in tangent space
+    norm = Normal;
     vec3 V = normalize(viewPos - fs_in.FragPos);
 
     // outgoing radiance
@@ -130,5 +133,5 @@ void main()
     vec3 ambient = vec3(0.03) * albedo * ao;
     vec3 color = ambient + Lo;
 
-    FragColor = vec4(texture(albedoMap, fs_in.TexCoords).rgb, 1.0);
+    FragColor = vec4(color, 1.0);
 }

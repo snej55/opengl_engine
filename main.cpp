@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
 
+#include "glm/ext/matrix_transform.hpp"
 #include "src/engine.hpp"
 
-constexpr glm::vec3 lightPos { 0.0f, 5.0f, 30.f };
+constexpr glm::vec3 lightPos { 0.0f, 0.0f, 0.0f };
 
 int main()
 {
@@ -23,16 +24,16 @@ int main()
     engine.addTexture("roughness", "data/materials/rustediron/rustediron2_roughness.png");
 
     engine.addModel("cube", "data/models/monkey.glb");
-    engine.addModel("light", "data/models/textured_sphere.obj");
+    engine.addModel("light", "data/models/sphere.obj");
 
     const Model* cube { engine.getModel("cube") };
     const Model* light { engine.getModel("light") };
 
     // engine.enableWireframe();
     const std::vector<glm::vec3> spheres = {
-        { 10.f, 4.f, 2.f },
-        { 5.f, 10.f, -10.f },
-        { -2.f, 5.f, 4.f },
+        // { 1.f, 4.f, 2.f },
+        // { 5.f, 1.f, -1.f },
+        // { -2.f, 5.f, 4.f },
         { -4.f, -3.f, 10.f }
     };
 
@@ -54,24 +55,16 @@ int main()
 
     while (!engine.getQuit()) {
         engine.enablePostProcessing();
+        // engine.enableWireframe();
         // clear screen
         engine.clear();
 
         engine.useShader("lightPBR");
         engine.setVec3("viewPos", engine.getCameraPosition(), "lightPBR");
-        glm::mat4 model { 1.0f };
-        // model = glm::rotate(model, glm::radians(static_cast<float>(glfwGetTime() * 20.f)), glm::vec3(0.7f, 1.0f, 0.2f));
-        engine.setMat4("model", model, "lightPBR");
         engine.setMat4("view", engine.getViewMatrix(), "lightPBR");
         engine.setMat4("projection", engine.getProjectionMatrix(), "lightPBR");
-        engine.setMat3("normalMat", engine.getNormalMatrix(model), "lightPBR");
-        engine.setFloat("metallic", 0.6f, "lightPBR");
-        engine.setFloat("roughness", 0.3f, "lightPBR");
         engine.setVec3("lightPos", lightPos, "lightPBR");
         engine.setVec3("lightColor", glm::vec3 { 1.0f }, "lightPBR");
-        engine.setVec3("albedo", glm::vec3 { 0.5, 0.0f, 0.0f }, "lightPBR");
-
-        cube->render(engine.getShader("lightPBR"));
 
         engine.setFloat("metallic", 1.0f, "lightPBR");
         engine.setFloat("roughness", 0.2, "lightPBR");
@@ -79,7 +72,7 @@ int main()
 
         engine.setFloat("metallic", 0.0f, "lightPBR");
         engine.setFloat("roughness", 1.0, "lightPBR");
-        model = glm::mat4 { 1.0f };
+        glm::mat4 model { 1.0f };
         model = glm::scale(model, glm::vec3 { 0.2f });
         model = glm::translate(model, lightPos);
         engine.setMat4("model", model, "lightPBR");
@@ -89,6 +82,9 @@ int main()
         light->render(engine.getShader("lightPBR"));
 
         engine.useShader("texturePBR");
+        engine.setVec3("lightPos", lightPos, "texturePBR");
+        engine.setVec3("lightColor", glm::vec3 { 1.0f }, "texturePBR");
+        engine.setVec3("viewPos", engine.getCameraPosition(), "texturePBR");
         engine.activateTexture("albedo", 0);
         engine.setInt("albedoMap", 0, "texturePBR");
         engine.activateTexture("ao", 1);
@@ -104,6 +100,7 @@ int main()
             model = glm::mat4 { 1.0f };
             model = glm::scale(model, glm::vec3(0.2f));
             model = glm::translate(model, spheres[i]);
+            // model = glm::rotate(model, engine.getTime() * 0.6f, {1.0f, 0.7f, 0.3f});
             engine.setMat4("model", model, "texturePBR");
             engine.setMat4("view", engine.getViewMatrix(), "texturePBR");
             engine.setMat4("projection", engine.getProjectionMatrix(), "texturePBR");
@@ -114,6 +111,7 @@ int main()
         // engine.drawTexture("albedo", {0.f, 0.f, 1.f, 1.f});
         // engine.drawRect({0.f, 0.f, 1.f, 1.f}, {255, 0, 0});
 
+        // engine.disableWireframe();
         engine.disablePostProcessing();
         engine.renderPostProcessing();
 
