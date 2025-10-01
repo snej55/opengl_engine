@@ -111,7 +111,7 @@ int main()
             light->render(engine.getShader("texturePBR"));
         }
 
-        engine.drawTexture("albedo", {0.f, 0.f, 1.f, 1.f});
+        // engine.drawTexture("albedo", {0.f, 0.f, 1.f, 1.f});
         // engine.drawRect({0.f, 0.f, 1.f, 1.f}, {255, 0, 0});
 
         engine.disablePostProcessing();

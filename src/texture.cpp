@@ -37,12 +37,10 @@ bool Texture::loadFromFile(const char* path)
 
     // get internal format for tex. data
     GLenum internalFormat {0};
-    GLenum dataFormat {GL_RGB};
     switch (m_numChannels)
     {
         case 1: // grayscale
             internalFormat = GL_RED;
-            dataFormat = GL_RED;
             break;
         case 3:
             internalFormat = GL_RGB;
@@ -51,6 +49,7 @@ bool Texture::loadFromFile(const char* path)
             internalFormat = GL_RGBA;
             break;
         default:
+            std::cout << "UNKNOWN NUMBER OF CHANNELS: " << m_numChannels << std::endl;
             break;
     }
 
@@ -58,8 +57,8 @@ bool Texture::loadFromFile(const char* path)
     unsigned int tex;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), m_width, m_height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
+    // glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), m_width, m_height, 0, internalFormat, GL_UNSIGNED_BYTE, data);
 
     glGenerateMipmap(GL_TEXTURE_2D);
     // tex wrap params
