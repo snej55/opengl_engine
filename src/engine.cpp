@@ -124,6 +124,7 @@ bool Engine::init(const int width, const int height, const char* title)
         Util::endError();
         return false;
     }
+    m_textureManager->generateBuffers();
 
     if (!createShapeManager())
     {
@@ -616,15 +617,26 @@ void Engine::drawTexture(const std::string& name, const FRect& destination) cons
         return;
     }
 
+    // get shader from shader manager
+    const Shader* textureShader {m_shaderManager->getShader("texture")};
+    if (!textureShader)
+    {
+        Util::beginError();
+        std::cout << "ENGINE::DRAW_TEXTURE::ERROR: Could not find shader *texture*!";
+        Util::endError();
+        return;
+    }
+
+
     glm::mat4 model{1.0f};
     model = glm::translate(model, glm::vec3(destination.x, destination.y, 0.0f));
     model = glm::scale(model, glm::vec3(destination.w, destination.h, 1.0f));
 
     tex->activate(0);
 
-    useShader("texture");
-    setMat4("model", model, "texture");
-    setInt("tex", 0, "texture");
+    textureShader->use();
+    textureShader->setMat4("model", model);
+    textureShader->setInt("tex", 0);
 
     glBindVertexArray(m_textureManager->getVAO());
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
