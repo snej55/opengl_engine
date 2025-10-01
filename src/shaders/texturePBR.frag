@@ -2,7 +2,6 @@
 
 out vec4 FragColor;
 
-in vec3 Normal;
 in VS_OUT {
     vec3 FragPos;
     vec2 TexCoords;
@@ -84,20 +83,20 @@ void main()
 
     vec3 norm = texture(normalMap, fs_in.TexCoords).rgb;
     norm = normalize(norm * 2.0 - 1.0); // normal in tangent space
-    norm = Normal;
-    vec3 V = normalize(viewPos - fs_in.FragPos);
+    // norm = Normal;
+    vec3 V = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
 
     // outgoing radiance
     vec3 Lo = vec3(0.0);
 
     // ---- calculate light radiance ---- //
 
-    vec3 L = normalize(lightPos - fs_in.FragPos);
+    vec3 L = normalize(fs_in.TangentLightPos - fs_in.TangentFragPos);
     // half-vector
     vec3 H = normalize(V + L);
 
     // distance to lightPos
-    float dist = length(lightPos - fs_in.FragPos);
+    float dist = length(fs_in.TangentLightPos - fs_in.TangentFragPos);
     // standard realistic attenuation
     float attenuation = 1.0;
     vec3 radiance = lightColor * attenuation;

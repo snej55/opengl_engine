@@ -4,8 +4,6 @@
 #include "glm/ext/matrix_transform.hpp"
 #include "src/engine.hpp"
 
-constexpr glm::vec3 lightPos { 0.0f, 0.0f, 0.0f };
-
 int main()
 {
     // initialize engine
@@ -24,16 +22,16 @@ int main()
     engine.addTexture("roughness", "data/materials/rustediron/rustediron2_roughness.png");
 
     engine.addModel("cube", "data/models/monkey.glb");
-    engine.addModel("light", "data/models/sphere.obj");
+    engine.addModel("light", "data/models/textured_sphere.obj");
 
     const Model* cube { engine.getModel("cube") };
     const Model* light { engine.getModel("light") };
 
     // engine.enableWireframe();
     const std::vector<glm::vec3> spheres = {
-        // { 1.f, 4.f, 2.f },
-        // { 5.f, 1.f, -1.f },
-        // { -2.f, 5.f, 4.f },
+        { 1.f, 4.f, 2.f },
+        { 5.f, 1.f, -5.f },
+        { -2.f, 5.f, 4.f },
         { -4.f, -3.f, 10.f }
     };
 
@@ -53,12 +51,15 @@ int main()
     engine.activateTexture("roughness", 4);
     engine.setInt("roughnessMap", 4, "texturePBR");
 
+    glm::vec3 lightPos { 1.0f, 1.0f, 1.0f };
+
     while (!engine.getQuit()) {
         engine.enablePostProcessing();
-        // engine.enableWireframe();
         // clear screen
         engine.clear();
 
+        // rotate light pos
+        lightPos = glm::vec3{glm::sin(engine.getTime()) * 5.0f, 0.0f, 0.0f};
         engine.useShader("lightPBR");
         engine.setVec3("viewPos", engine.getCameraPosition(), "lightPBR");
         engine.setMat4("view", engine.getViewMatrix(), "lightPBR");
@@ -111,7 +112,6 @@ int main()
         // engine.drawTexture("albedo", {0.f, 0.f, 1.f, 1.f});
         // engine.drawRect({0.f, 0.f, 1.f, 1.f}, {255, 0, 0});
 
-        // engine.disableWireframe();
         engine.disablePostProcessing();
         engine.renderPostProcessing();
 
