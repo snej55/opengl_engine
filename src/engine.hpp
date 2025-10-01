@@ -35,7 +35,7 @@ public:
     [[nodiscard]] Window* getWindow() const {return m_window;}
     [[nodiscard]] int getWidth() const {return m_window->getWidth();}
     [[nodiscard]] int getHeight() const {return m_window->getHeight();}
-    
+
     // clear screen
     void clear() const;
 
@@ -116,6 +116,8 @@ public:
     [[nodiscard]] Texture* getTexture(const std::string& name) const;
     void activateTexture(const std::string& name, int slot) const;
     [[nodiscard]] bool textureExists(const std::string& name) const;
+
+    void drawTexture(const std::string& name, const FRect& destination) const;
 
     // ------ Shapes ------ //
 

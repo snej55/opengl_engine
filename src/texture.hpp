@@ -42,6 +42,9 @@ class TextureManager final : public EngineObject
 public:
     explicit TextureManager(EngineObject* parent);
 
+    // generate VAO & VBO, etc
+    void generateBuffers();
+
     // load new texture
     void addTexture(const char* path, const char* name, Arena* arena);
 
@@ -58,6 +61,7 @@ public:
 
 private:
     std::map<std::string, Texture*> m_textures{};
+    unsigned int m_VAO, m_VBO, m_EBO;
 };
 
 #endif

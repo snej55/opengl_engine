@@ -94,6 +94,50 @@ TextureManager::TextureManager(EngineObject* parent)
 {
 }
 
+// generate vertex buffers and stuff
+void TextureManager::generateBuffers()
+{
+    constexpr float TexRectVertices[] {
+        1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
+        1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // bottom right
+        0.0f, -1.0f, 0.0f, 0.0f, 0.0f, // bottom left
+        0.0f, 0.0f, 0.0f, 0.0f, 1.0f // top left
+    };
+
+    constexpr unsigned int TexRectIndices[] {
+        0, 1, 3, // first Triangle
+        1, 2, 3 // second Triangle
+    };
+
+    // generate VAO and buffers
+    glGenVertexArrays(1, &m_VAO);
+    glGenBuffers(1, &m_VBO);
+    glGenBuffers(1, &m_EBO);
+
+    // bind vertex array
+    glBindVertexArray(m_VAO);
+
+    // buffer vertex data
+    glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(TexRectVertices), TexRectVertices, GL_STATIC_DRAW);
+
+    // buffer vertex indices
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(TexRectIndices), TexRectIndices, GL_STATIC_DRAW);
+
+    // vertex coordinates
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), reinterpret_cast<void*>(0));
+    glEnableVertexAttribArray(0);
+    // texture coordinates
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    // can safely unbind
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
 // load new texture
 void TextureManager::addTexture(const char* path, const char* name, Arena* arena)
 {

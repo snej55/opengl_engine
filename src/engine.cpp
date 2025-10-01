@@ -605,6 +605,24 @@ bool Engine::textureExists(const std::string& name) const
     return m_textureManager->textureExists(name);
 }
 
+void Engine::drawTexture(const std::string& name, const FRect& destination) const
+{
+    const Texture* tex {m_textureManager->getTexture(name)};
+    if (!tex)
+    {
+        Util::beginError();
+        std::cout << "ENGINE::DRAW_TEXTURE::ERROR: Cannot find texture `" << name << "`!\n";
+        Util::endError();
+        return;
+    }
+
+    glm::mat4 model{1.0f};
+    model = glm::translate(model, glm::vec3(destination.x, destination.y, 0.0f));
+    model = glm::scale(model, glm::vec3(destination.w, destination.h, 1.0f));
+
+
+}
+
 // ------ Shape Manager ------ //
 bool Engine::createShapeManager()
 {
