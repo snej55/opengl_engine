@@ -22,7 +22,7 @@ int main()
     engine.addTexture("roughness", "data/materials/rustediron/rustediron2_roughness.png");
 
     engine.addModel("cube", "data/models/monkey.glb");
-    engine.addModel("light", "data/models/textured_sphere.obj");
+    engine.addModel("light", "data/models/rusty_sphere.glb");
 
     const Model* cube { engine.getModel("cube") };
     const Model* light { engine.getModel("light") };
