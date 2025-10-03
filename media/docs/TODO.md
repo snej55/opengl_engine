@@ -28,11 +28,11 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [ ] Screen coordinate rendering
 - [X] Rect rendering
 - [X] Draw a cube
-- [ ] Add timers
+- [X] Add timers
 - [ ] Add fps counter
 - [X] Default shaders
 - [X] Post processor with framebuffers
-- [ ] Blinn-phong lighting
+- [X] Blinn-phong lighting
 - [ ] Ambient lighting (SSAO)
 - [X] PBR lighting
 - [X] PBR material rendering
