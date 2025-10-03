@@ -40,7 +40,7 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Model loading
 - [X] Mesh class
 - [X] Model manager
-- [ ] Colour functions (lerp, different blending functions)
+- [X] Colour functions (lerp, different blending functions)
 
 
 ### v1:
