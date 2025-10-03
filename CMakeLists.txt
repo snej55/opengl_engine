@@ -36,7 +36,8 @@ set(SOURCES main.cpp src/extern/glad.c src/engine.hpp src/engine.cpp
         src/model.hpp
         src/model.cpp
         src/postprocessing.cpp
-        src/postprocessing.hpp)
+        src/postprocessing.hpp
+        src/timer.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
