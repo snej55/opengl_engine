@@ -36,6 +36,11 @@ namespace Util
     {
         std::cout << "\033[m" << std::endl;
     }
+
+    inline float lerp(const float a, const float b, const float amount)
+    {
+        return a + (b - a) * amount;
+    }
 }
 
 #endif // UTIL_H

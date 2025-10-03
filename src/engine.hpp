@@ -126,6 +126,13 @@ public:
 
     void drawRect(const FRect& rect, const Color& color) const;
 
+    // color functions
+    //
+    // lerpColor() lerps the two colors rgb only, use lerpColorAlpha for rgba
+    [[nodiscard]] Color lerpColor(const Color& a, const Color& b, float amount) const;
+    // lerpColorAlpha() lerps the two colors rgba, use lerpColor for rgb only
+    [[nodiscard]] Color lerpColorAlpha(const Color& a, const Color& b, float amount) const;
+
     // ------ Camera ------ //
 
     bool createCamera();

@@ -664,6 +664,28 @@ void Engine::drawRect(const FRect& rect, const Color& color) const
     m_shapeManager->drawRect<float>(rect, color, m_shaderManager);
 }
 
+// lerp color rgb
+Color Engine::lerpColor(const Color& a, const Color& b, const float amount) const
+{
+    return Color{
+        static_cast<int>(Util::lerp(static_cast<float>(a.r), static_cast<float>(b.r), amount)),
+        static_cast<int>(Util::lerp(static_cast<float>(a.g), static_cast<float>(b.g), amount)),
+        static_cast<int>(Util::lerp(static_cast<float>(a.b), static_cast<float>(b.b), amount)),
+        255
+    };
+}
+
+// lerp color rgba
+Color Engine::lerpColorAlpha(const Color& a, const Color& b, const float amount) const
+{
+    return Color{
+        static_cast<int>(Util::lerp(static_cast<float>(a.r), static_cast<float>(b.r), amount)),
+        static_cast<int>(Util::lerp(static_cast<float>(a.g), static_cast<float>(b.g), amount)),
+        static_cast<int>(Util::lerp(static_cast<float>(a.b), static_cast<float>(b.b), amount)),
+        static_cast<int>(Util::lerp(static_cast<float>(a.a), static_cast<float>(b.a), amount)),
+    };
+}
+
 // ------ Camera ------ //
 
 bool Engine::createCamera()
