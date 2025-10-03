@@ -116,6 +116,7 @@ int main()
         engine.renderPostProcessing();
 
         // update engine
+        engine.displayFrameTime();
         engine.update();
     }
 

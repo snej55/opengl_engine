@@ -19,7 +19,7 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Camera
 - [ ] Set up renderer class
 - [ ] Set up render queue
-- [ ] Config file loading
+- [ ] Config file loading?
 - [X] README
 - [ ] Font rendering
 - [ ] Geometry shader

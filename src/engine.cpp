@@ -4,6 +4,7 @@
 
 // json libary
 #include <JSON/json.hpp>
+#include <numeric>
 
 #include "glm/ext/matrix_clip_space.hpp"
 using json = nlohmann::json;
@@ -234,6 +235,23 @@ void Engine::enableWireframe() const
 void Engine::disableWireframe() const
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+void Engine::displayFrameTime()
+{
+    m_deltaTimes.push_back(getDeltaTime());
+    if (m_deltaTimes.size() > 5)
+    {
+        // remove first element
+        m_deltaTimes.erase(m_deltaTimes.begin());
+    }
+
+    const float sum {std::accumulate(m_deltaTimes.begin(), m_deltaTimes.end(), 0.0f)};
+    const float avgFrameTime {sum / static_cast<float>(m_deltaTimes.size())};
+
+    std::stringstream ss{};
+    ss << "Frame time: " << static_cast<int>(avgFrameTime * 1000.f) << "ms";
+    m_window->setTitle(ss.str().c_str());
 }
 
 // ------ IOHandler ------ //

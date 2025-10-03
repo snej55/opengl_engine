@@ -44,6 +44,8 @@ public:
 
     void disableWireframe() const;
 
+    void displayFrameTime();
+
     // ------ IOHandler ------ //
 
     // create iohandler for keyboard input
@@ -219,6 +221,9 @@ private:
     bool m_loadedShaders {false}; // shaders loaded
     bool m_camFirstMouse {true}; // first mouse movement
     bool m_cameraEnabled {false}; // camera enabled
+
+    // miscallaneous stuff
+    std::vector<float> m_deltaTimes{};
 };
 
 #endif
