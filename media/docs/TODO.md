@@ -29,7 +29,7 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Rect rendering
 - [X] Draw a cube
 - [X] Add timers
-- [ ] Add fps counter
+- [X] Add fps counter
 - [X] Default shaders
 - [X] Post processor with framebuffers
 - [X] Blinn-phong lighting

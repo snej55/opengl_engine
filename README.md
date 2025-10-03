@@ -78,7 +78,7 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Camera
 - [ ] Set up renderer class
 - [ ] Set up render queue
-- [ ] Config file loading
+- [ ] Config file loading?
 - [X] README
 - [ ] Font rendering
 - [ ] Geometry shader
@@ -87,11 +87,11 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [ ] Screen coordinate rendering
 - [X] Rect rendering
 - [X] Draw a cube
-- [ ] Add timers
-- [ ] Add fps counter
+- [X] Add timers
+- [X] Add fps counter
 - [X] Default shaders
 - [X] Post processor with framebuffers
-- [ ] Blinn-phong lighting
+- [X] Blinn-phong lighting
 - [ ] Ambient lighting (SSAO)
 - [X] PBR lighting
 - [X] PBR material rendering
@@ -99,7 +99,7 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Model loading
 - [X] Mesh class
 - [X] Model manager
-- [ ] Colour functions (lerp, different blending functions)
+- [X] Colour functions (lerp, different blending functions)
 
 
 ### v1:
