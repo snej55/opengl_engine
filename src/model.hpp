@@ -16,6 +16,7 @@ class Model final : public EngineObject
 {
 public:
     explicit Model(const std::string& name, EngineObject* parent);
+    ~Model();
 
     bool loadModel(const std::string& path);
 

@@ -15,6 +15,14 @@ Model::Model(const std::string& name, EngineObject* parent)
 {
 }
 
+Model::~Model()
+{
+    for (std::size_t i{0}; i < m_meshes.size(); ++i)
+    {
+        m_meshes[i].free();
+    }
+}
+
 void Model::render(const Shader* shader) const
 {
     for (std::size_t i{0}; i < m_meshes.size(); ++i)
