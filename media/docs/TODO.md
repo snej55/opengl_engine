@@ -19,6 +19,8 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Camera
 - [ ] Set up G-Buffer (PBR data)
 - [ ] Deffered shading (PBR)
+- [ ] Integrate forward renderer alongside deffered shading
+- [ ] Extend deffered shading to deffered lighting (MSAA & blending)
 - [ ] Set up renderer class
 - [ ] Set up render queue
 - [ ] Config file loading?

@@ -4,7 +4,7 @@ project(main)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # for clangd
 
-set(GL_LIBS glfw3 assimp)
+set(GL_LIBS glfw3 assimp freetype)
 
 if (CMAKE_SYSTEM MATCHES Windows)
     message(STATUS "Target system is Windows")
@@ -18,7 +18,7 @@ elseif (CMAKE_SYSTEM MATCHES Linux)
     # link_directories(lib)
     link_directories(${CMAKE_SOURCE_DIR}/lib/linux)
     # fedora: mesa-libGLU
-    set(GL_LIBS GL GLU glfw3 assimp)
+    set(GL_LIBS GL GLU glfw3 assimp freetype)
 endif()
 
 set(SOURCES main.cpp src/extern/glad.c src/engine.hpp src/engine.cpp
