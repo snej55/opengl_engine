@@ -76,12 +76,16 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Shader manager
 - [X] Automatic shader loading
 - [X] Camera
+- [ ] Set up G-Buffer (PBR data)
+- [ ] Deffered shading (PBR)
+- [ ] Integrate forward renderer alongside deffered shading
+- [ ] Extend deffered shading to deffered lighting (MSAA & blending)
 - [ ] Set up renderer class
 - [ ] Set up render queue
 - [ ] Config file loading?
 - [X] README
 - [ ] Font rendering
-- [ ] Geometry shader
+- [ ] UI framebuffer
 - [X] Texture manager
 - [X] Texture loading and rendering
 - [ ] Screen coordinate rendering
@@ -99,8 +103,24 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Model loading
 - [X] Mesh class
 - [X] Model manager
+- [ ] Model animations (skeletal)
 - [X] Colour functions (lerp, different blending functions)
-
+- [ ] Box2D vs Chipmunk physics
+- [ ] Tesselation
+- [ ] Terrain generator
+- [ ] Level editor
+- [ ] Vim-style keybindings for level editor
+- [ ] Particles
+- [ ] ImGui ui
+- [ ] Audio loading (SoLoud?)
+- [ ] Asset manager singleton
+- [ ] 2D rendering
+- [ ] 2D tile map
+- [ ] 2D particles
+- [ ] 2D basic physics
+- [ ] WebAssembly builds (emscripten)
+- [ ] Separate Windowing api (SDL vs GLFW)
+- [ ] Vulkan?
 
 ### v1:
 - [X] Set up engine objects
