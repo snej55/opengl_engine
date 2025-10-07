@@ -158,7 +158,7 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
         }
     }
 
-    return Mesh{vertices, indices};
+    return Mesh{vertices, indices, {}};
 }
 
 ModelManager::ModelManager(EngineObject* parent)

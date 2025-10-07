@@ -17,23 +17,30 @@ namespace MeshN
         glm::vec3 tangent; // TBN matrix
         glm::vec3 biTangent; // "" ""
     };
+
+    struct Texture
+    {
+        unsigned int id;
+        std::string type;
+    };
 }
 
 class Mesh
 {
 public:
-    Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices);
+    Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<MeshN::Texture>& textures);
 
     void render(const Shader* shader) const;
 
     void free() const;
 
     [[nodiscard]] const std::vector<MeshN::Vertex>& getVertices() const {return m_vertices;}
-    [[nodiscard]] const std::vector<unsigned int>& getIncides() const {return m_indices;}
+    [[nodiscard]] const std::vector<unsigned int>& getIndices() const {return m_indices;}
 
 private:
     std::vector<MeshN::Vertex> m_vertices;
     std::vector<unsigned int> m_indices;
+    std::vector<MeshN::Texture> m_textures;
 
     unsigned int m_VAO{};
     unsigned int m_VBO{};

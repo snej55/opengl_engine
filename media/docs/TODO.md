@@ -25,7 +25,7 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [ ] Set up render queue
 - [ ] Config file loading?
 - [X] README
-- [ ] Font rendering
+- [X] Font rendering
 - [ ] UI framebuffer
 - [X] Texture manager
 - [X] Texture loading and rendering

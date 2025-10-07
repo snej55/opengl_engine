@@ -1,8 +1,8 @@
 #include <glad/glad.h>
 #include "mesh.hpp"
 
-Mesh::Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices)
- : m_vertices{vertices}, m_indices{indices}
+Mesh::Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<MeshN::Texture>& textures)
+ : m_vertices{vertices}, m_indices{indices}, m_textures{textures}
 {
     setupMesh();
 }
