@@ -175,7 +175,7 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextu
         for (unsigned int j{0}; i < m_loadedTextures.size(); ++j)
         {
             // compare
-            if (std::strcmp(m_loadedTextures[j].path.data(), str.C_Str()) == 0)
+            if (std::strcmp(m_loadedTextures[j].path, str.C_Str()) == 0)
             {
                 // we found something
                 // push back THAT texture instead
