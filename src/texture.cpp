@@ -6,38 +6,41 @@
 #include "texture.hpp"
 #include "util.hpp"
 
-Texture::Texture(const std::string& name, EngineObject* manager)
-    : EngineObject{("TEXTURE " + name).c_str(), manager}
+unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, int* numChannels, bool* success)
 {
-}
-
-bool Texture::loadFromFile(const char* path)
-{
+    *success = true;
     // check if texture exists
     if (!Util::fileExists(path))
     {
         Util::beginError();
         std::cout << "TEXTURE::LOAD_FROM_FILE::ERROR: Failed to load texture from path `" << path << "` - texture does not exist";
         Util::endError();
-        return false;
+        *width = 0;
+        *height = 0;
+        *numChannels = 0;
+        *success = false;
+        return 0;
     }
 
     // load image
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data {stbi_load(path, &m_width, &m_height, &m_numChannels, 0)};
+    unsigned char* data {stbi_load(path, width, height, numChannels, 0)};
 
     // check if image was successfully loaded
     if (!data)
     {
         std::cout << "Failed to load texture: `" << path << "`" << std::endl;
         stbi_image_free(data);
-        m_TEX = 0;
-        return false;
+        *width = 0;
+        *height = 0;
+        *numChannels = 0;
+        *success = false;
+        return 0;
     }
 
     // get internal format for tex. data
     GLenum internalFormat {0};
-    switch (m_numChannels)
+    switch (*numChannels)
     {
         case 1: // grayscale
             internalFormat = GL_RED;
@@ -49,16 +52,17 @@ bool Texture::loadFromFile(const char* path)
             internalFormat = GL_RGBA;
             break;
         default:
-            std::cout << "UNKNOWN NUMBER OF CHANNELS: " << m_numChannels << std::endl;
+            std::cout << "UNKNOWN NUMBER OF CHANNELS: " << *numChannels << std::endl;
             break;
     }
 
-    // load opengl texture
+    // texture ID
     unsigned int tex;
+    // load opengl texture
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
     // glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), m_width, m_height, 0, internalFormat, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), *width, *height, 0, internalFormat, GL_UNSIGNED_BYTE, data);
 
     glGenerateMipmap(GL_TEXTURE_2D);
     // tex wrap params
@@ -72,10 +76,21 @@ bool Texture::loadFromFile(const char* path)
 
     // free image data
     stbi_image_free(data);
-    // set TEX ID
-    m_TEX = tex;
 
-    return true;
+    // return texture id
+    return tex;
+}
+
+Texture::Texture(const std::string& name, EngineObject* manager)
+    : EngineObject{("TEXTURE " + name).c_str(), manager}
+{
+}
+
+bool Texture::loadFromFile(const char* path)
+{
+    bool success;
+    m_TEX = TextureN::loadFromFile(path, &m_width, &m_height, &m_numChannels, &success);
+    return success;
 }
 
 // activate gl texture

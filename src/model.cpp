@@ -4,6 +4,7 @@
 
 #include "model.hpp"
 #include "util.hpp"
+#include "texture.hpp"
 
 #include <assimp/postprocess.h>
 
@@ -161,6 +162,59 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
     return Mesh{vertices, indices, {}};
 }
 
+std::vector<MeshN::Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, MeshN::TextureType typeName)
+{
+    std::vector<MeshN::Texture> textures{};
+    for (unsigned int i{0}; i < mat->GetTextureCount(type); ++i)
+    {
+        aiString str;
+        mat->GetTexture(type, i, &str);
+        bool skip{false};
+
+        // check if we haven't already loaded this texture
+        for (unsigned int j{0}; i < m_loadedTextures.size(); ++j)
+        {
+            // compare
+            if (std::strcmp(m_loadedTextures[j].path.data(), str.C_Str()) == 0)
+            {
+                // we found something
+                // push back THAT texture instead
+                textures.push_back(m_loadedTextures[j]);
+                skip = true;
+                break;
+            }
+        }
+
+        // if we haven't already loaded the texture
+        if (!skip)
+        {
+            // get texture path
+            std::string filename{str.C_Str()};
+            filename = directory + '/' + filename;
+            // load texture id
+            bool success;
+            unsigned int texID {TextureN::loadFromFile(filename.c_str(), nullptr, nullptr, nullptr, &success)};
+            if (!success) // check if texture was loaded successfully
+            {
+                continue;
+            }
+
+            // create texture object
+            MeshN::Texture texture {
+                texID, // texture id
+                typeName, // MeshN::TextureType
+                filename.c_str() // texture path
+            };
+
+            m_loadedTextures.emplace_back(texture);
+            textures.push_back(texture);
+        }
+    }
+
+    return textures;
+}
+
+// -------------- Model Manager -------------- //
 ModelManager::ModelManager(EngineObject* parent)
     : EngineObject{"ModelManager", parent}
 {

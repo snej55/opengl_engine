@@ -18,10 +18,21 @@ namespace MeshN
         glm::vec3 biTangent; // "" ""
     };
 
+    enum TextureType
+    {
+        TEXTURE_ALBEDO = 0,
+        TEXTURE_AO = 1,
+        TEXTURE_METALLIC = 2,
+        TEXTURE_ROUGHNESS = 3,
+        TEXTURE_NORMAL = 4,
+        TEXTURE_NONE = 5,
+    };
+
     struct Texture
     {
         unsigned int id;
-        std::string type;
+        TextureType type;
+        const char* path;
     };
 }
 

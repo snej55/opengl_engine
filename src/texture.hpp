@@ -7,6 +7,12 @@
 #include "engine_types.hpp"
 #include "arena.hpp"
 
+namespace TextureN
+{
+    // returns texture id without having to create new Texture*
+    unsigned int loadFromFile(const char* path, int* width = nullptr, int* height = nullptr, int* numChannels = nullptr, bool* success = nullptr);
+}
+
 // Basic texture wrapper class.
 class Texture final : public EngineObject
 {

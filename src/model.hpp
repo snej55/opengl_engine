@@ -16,7 +16,7 @@ class Model final : public EngineObject
 {
 public:
     explicit Model(const std::string& name, EngineObject* parent);
-    ~Model();
+    ~Model() override;
 
     bool loadModel(const std::string& path);
 
@@ -27,8 +27,13 @@ private:
     std::string directory{};
     std::string m_modelName;
 
+    // loaded mesh textures (to avoid loading the same texture twice)
+    std::vector<MeshN::Texture> m_loadedTextures{};
+
     void processNode(const aiNode* node, const aiScene* scene);
     Mesh processMesh(const aiMesh* mesh, const aiScene* scene);
+
+    std::vector<MeshN::Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, MeshN::TextureType typeName);
 };
 
 class ModelManager final : public EngineObject
