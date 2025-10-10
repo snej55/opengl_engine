@@ -3,6 +3,8 @@
 //
 
 #include "model.hpp"
+#include "assimp/material.h"
+#include "mesh.hpp"
 #include "util.hpp"
 #include "texture.hpp"
 
@@ -34,6 +36,7 @@ void Model::render(const Shader* shader) const
 
 bool Model::loadModel(const std::string& path)
 {
+    // check if model already exists
     if (!Util::fileExists(path))
     {
         Util::beginError();
@@ -44,9 +47,10 @@ bool Model::loadModel(const std::string& path)
 
     Assimp::Importer importer;
 
-    const aiScene* scene{
-        importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace |  aiProcess_JoinIdenticalVertices)
-    };
+    const aiScene *scene{importer.ReadFile(
+        path, aiProcess_JoinIdenticalVertices | aiProcess_Triangulate |
+                  aiProcess_GenSmoothNormals | aiProcess_FlipUVs |
+                  aiProcess_CalcTangentSpace)};
 
     // error handling
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -68,6 +72,7 @@ bool Model::loadModel(const std::string& path)
         numVertices += static_cast<int>(mesh.getVertices().size());
     }
 
+    // just some useful info :)
     unsigned long vertSize {sizeof(MeshN::Vertex) * numVertices};
     std::stringstream ss{};
     if (vertSize > 1000 * 1000)
@@ -110,6 +115,7 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
 {
     std::vector<MeshN::Vertex> vertices{};
     std::vector<unsigned int> indices{};
+    std::vector<MeshN::Texture> textures{};
 
     for (std::size_t i {0}; i < mesh->mNumVertices; ++i)
     {
@@ -158,6 +164,18 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
             indices.push_back(face.mIndices[j]);
         }
     }
+
+    // materials
+    aiMaterial* material{scene->mMaterials[mesh->mMaterialIndex]};
+
+    std::vector<MeshN::Texture> aoMaps{loadMaterialTextures(material, aiTextureType_AMBIENT_OCCLUSION, MeshN::TEXTURE_AO)};
+    textures.insert(textures.end(), aoMaps.begin(), aoMaps.end());
+    std::vector<MeshN::Texture> albedoMaps{loadMaterialTextures(material, aiTextureType_BASE_COLOR, MeshN::TEXTURE_ALBEDO)};
+    textures.insert(textures.end(), albedoMaps.begin(), albedoMaps.end());
+    std::vector<MeshN::Texture> metallicMaps{loadMaterialTextures(material, aiTextureType_METALNESS, MeshN::TEXTURE_METALLIC)};
+    textures.insert(textures.end(), metallicMaps.begin(), metallicMaps.end());
+    std::vector<MeshN::Texture> roughnessMaps{loadMaterialTextures(material, aiTextureType_GLTF_METALLIC_ROUGHNESS, MeshN::TEXTURE_ROUGHNESS)};
+    textures.insert(textures.end(), roughnessMaps.begin(), roughnessMaps.end());
 
     return Mesh{vertices, indices, {}};
 }

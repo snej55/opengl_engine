@@ -8,17 +8,21 @@
 
 unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, int* numChannels, bool* success)
 {
-    *success = true;
+    int imageWidth{0};
+    int imageHeight{0};
+    int imageChannels{0};
+
+    std::cout << path << '\n';
+    if (success)
+        *success = true;
     // check if texture exists
     if (!Util::fileExists(path))
     {
         Util::beginError();
         std::cout << "TEXTURE::LOAD_FROM_FILE::ERROR: Failed to load texture from path `" << path << "` - texture does not exist";
         Util::endError();
-        *width = 0;
-        *height = 0;
-        *numChannels = 0;
-        *success = false;
+        if (success)
+            *success = false;
         return 0;
     }
 
@@ -31,10 +35,8 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
     {
         std::cout << "Failed to load texture: `" << path << "`" << std::endl;
         stbi_image_free(data);
-        *width = 0;
-        *height = 0;
-        *numChannels = 0;
-        *success = false;
+        if (success)
+            *success = false;
         return 0;
     }
 
