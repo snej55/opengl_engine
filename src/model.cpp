@@ -176,6 +176,8 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
     textures.insert(textures.end(), metallicMaps.begin(), metallicMaps.end());
     std::vector<MeshN::Texture> roughnessMaps{loadMaterialTextures(material, aiTextureType_GLTF_METALLIC_ROUGHNESS, MeshN::TEXTURE_ROUGHNESS)};
     textures.insert(textures.end(), roughnessMaps.begin(), roughnessMaps.end());
+    std::vector<MeshN::Texture> normalMaps{loadMaterialTextures(material, aiTextureType_NORMALS, MeshN::TEXTURE_NORMAL)};
+    textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 
     return Mesh{vertices, indices, {}};
 }
@@ -190,7 +192,7 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextu
         bool skip{false};
 
         // check if we haven't already loaded this texture
-        for (unsigned int j{0}; i < m_loadedTextures.size(); ++j)
+        for (unsigned int j{0}; j < m_loadedTextures.size(); ++j)
         {
             // compare
             if (std::strcmp(m_loadedTextures[j].path, str.C_Str()) == 0)
@@ -211,7 +213,7 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextu
             filename = directory + '/' + filename;
             // load texture id
             bool success;
-            unsigned int texID {TextureN::loadFromFile(filename.c_str(), nullptr, nullptr, nullptr, &success)};
+            const unsigned int texID {TextureN::loadFromFile(filename.c_str(), nullptr, nullptr, nullptr, &success)};
             if (!success) // check if texture was loaded successfully
             {
                 continue;

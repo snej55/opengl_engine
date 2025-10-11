@@ -4,6 +4,9 @@
 #include <STB/stb_image.h>
 
 #include "texture.hpp"
+
+#include <complex>
+
 #include "util.hpp"
 
 unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, int* numChannels, bool* success)
@@ -15,6 +18,7 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
     std::cout << path << '\n';
     if (success)
         *success = true;
+
     // check if texture exists
     if (!Util::fileExists(path))
     {
@@ -28,7 +32,7 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
 
     // load image
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data {stbi_load(path, width, height, numChannels, 0)};
+    unsigned char* data {stbi_load(path, &imageWidth, &imageHeight, &imageChannels, 0)};
 
     // check if image was successfully loaded
     if (!data)
@@ -42,7 +46,7 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
 
     // get internal format for tex. data
     GLenum internalFormat {0};
-    switch (*numChannels)
+    switch (imageChannels)
     {
         case 1: // grayscale
             internalFormat = GL_RED;
@@ -54,7 +58,7 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
             internalFormat = GL_RGBA;
             break;
         default:
-            std::cout << "UNKNOWN NUMBER OF CHANNELS: " << *numChannels << std::endl;
+            std::cout << "UNKNOWN NUMBER OF CHANNELS: " << imageChannels << std::endl;
             break;
     }
 
@@ -64,7 +68,7 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
     // glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), *width, *height, 0, internalFormat, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), imageWidth, imageHeight, 0, internalFormat, GL_UNSIGNED_BYTE, data);
 
     glGenerateMipmap(GL_TEXTURE_2D);
     // tex wrap params
@@ -78,6 +82,14 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
 
     // free image data
     stbi_image_free(data);
+
+    // update width, height, numChannels
+    if (width)
+        *width = imageWidth;
+    if (height)
+        *height = imageHeight;
+    if (numChannels)
+        *numChannels = imageChannels;
 
     // return texture id
     return tex;
