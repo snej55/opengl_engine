@@ -47,10 +47,10 @@ bool Model::loadModel(const std::string& path)
 
     Assimp::Importer importer;
 
-    const aiScene *scene{importer.ReadFile(
+    const aiScene* scene{importer.ReadFile(
         path, aiProcess_JoinIdenticalVertices | aiProcess_Triangulate |
                   aiProcess_GenSmoothNormals | aiProcess_FlipUVs |
-                  aiProcess_CalcTangentSpace)};
+                  aiProcess_CalcTangentSpace | aiProcess_OptimizeGraph | aiProcess_OptimizeMeshes)};
 
     // error handling
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -184,7 +184,7 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
     std::vector<MeshN::Texture> normalMaps{loadMaterialTextures(material, aiTextureType_NORMALS, MeshN::TEXTURE_NORMAL)};
     textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 
-    return Mesh{vertices, indices, {}};
+    return Mesh{vertices, indices, textures};
 }
 
 std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiMaterial* mat, const aiTextureType type, const MeshN::TextureType typeName)
@@ -200,13 +200,17 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiMaterial* mat, c
         for (unsigned int j{0}; j < m_loadedTextures.size(); ++j)
         {
             // compare
-            if (std::strcmp(m_loadedTextures[j].path, str.C_Str()) == 0)
+            if (std::strcmp(m_loadedTextures[j].path.c_str(), str.C_Str()) == 0)
             {
-                // we found something
-                // push back THAT texture instead
-                textures.push_back(m_loadedTextures[j]);
-                skip = true;
-                break;
+                // we found something with the same path
+                // check if texture type is the same
+                if (m_loadedTextures[j].type == typeName)
+                {
+                    // push back THAT texture instead
+                    textures.push_back(m_loadedTextures[j]);
+                    skip = true;
+                    break;
+                }
             }
         }
 
@@ -217,7 +221,7 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiMaterial* mat, c
             std::string filename{directory + '/' + str.C_Str()};
             // load texture id
             bool success;
-            const unsigned int texID {TextureN::loadFromFile(filename.c_str(), nullptr, nullptr, nullptr, &success)};
+            const unsigned int texID {TextureN::loadFromFile(filename.c_str(), nullptr, nullptr, nullptr, &success, typeName)};
             if (!success) // check if texture was loaded successfully (don't add bad texture)
             {
                 continue;
@@ -227,10 +231,10 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiMaterial* mat, c
             MeshN::Texture texture {
                 texID, // texture id
                 typeName, // MeshN::TextureType
-                filename.c_str() // texture path
+                str.C_Str() // texture path
             };
 
-            m_loadedTextures.emplace_back(texture);
+            m_loadedTextures.push_back(texture);
             textures.push_back(texture);
         }
     }

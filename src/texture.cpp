@@ -1,3 +1,4 @@
+#include "mesh.hpp"
 #include <glad/glad.h>
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -6,7 +7,7 @@
 #include "texture.hpp"
 #include "util.hpp"
 
-unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, int* numChannels, bool* success)
+unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, int* numChannels, bool* success, MeshN::TextureType materialType)
 {
     int imageWidth{0};
     int imageHeight{0};
@@ -74,6 +75,28 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
     // tex filtering params
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // check if texture is roughness or metallic map
+    // gltf combines roughness and metallic maps, with metallic in b-channel and roughness in g-channel
+    // so the texture needs to be swizzled
+    if (materialType != MeshN::TEXTURE_NONE)
+    {
+        switch (materialType)
+        {
+            case MeshN::TEXTURE_METALLIC:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_BLUE);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_BLUE);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
+                break;
+            case MeshN::TEXTURE_ROUGHNESS:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_GREEN);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_GREEN);
+                break;
+            default:
+                break;
+        }
+    }
 
     std::cout << "Successfully loaded texture from `" << path << "`\n";
 

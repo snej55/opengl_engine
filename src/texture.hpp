@@ -6,11 +6,12 @@
 
 #include "engine_types.hpp"
 #include "arena.hpp"
+#include "mesh.hpp"
 
 namespace TextureN
 {
     // returns texture id without having to create new Texture*
-    unsigned int loadFromFile(const char* path, int* width = nullptr, int* height = nullptr, int* numChannels = nullptr, bool* success = nullptr);
+    unsigned int loadFromFile(const char* path, int* width = nullptr, int* height = nullptr, int* numChannels = nullptr, bool* success = nullptr, MeshN::TextureType materialType = MeshN::TEXTURE_NONE);
 }
 
 // Basic texture wrapper class.
