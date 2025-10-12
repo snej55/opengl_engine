@@ -33,6 +33,7 @@ namespace MeshN
         unsigned int id;
         TextureType type;
         std::string path;
+        bool embedded;
     };
 }
 

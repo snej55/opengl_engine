@@ -180,25 +180,25 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
     aiMaterial* material{scene->mMaterials[mesh->mMaterialIndex]};
 
     // use custom glTF Material Output node in blender for ambient occlusion texture
-    std::vector<MeshN::Texture> aoMaps{loadMaterialTextures(material, aiTextureType_LIGHTMAP, MeshN::TEXTURE_AO)};
+    std::vector<MeshN::Texture> aoMaps{loadMaterialTextures(scene, material, aiTextureType_LIGHTMAP, MeshN::TEXTURE_AO)};
     textures.insert(textures.end(), aoMaps.begin(), aoMaps.end());
     // albedo texture
-    std::vector<MeshN::Texture> albedoMaps{loadMaterialTextures(material, aiTextureType_BASE_COLOR, MeshN::TEXTURE_ALBEDO)};
+    std::vector<MeshN::Texture> albedoMaps{loadMaterialTextures(scene, material, aiTextureType_BASE_COLOR, MeshN::TEXTURE_ALBEDO)};
     textures.insert(textures.end(), albedoMaps.begin(), albedoMaps.end());
     // metallic texture (b-channel of metallic-roughness texture)
-    std::vector<MeshN::Texture> metallicMaps{loadMaterialTextures(material, aiTextureType_METALNESS, MeshN::TEXTURE_METALLIC)};
+    std::vector<MeshN::Texture> metallicMaps{loadMaterialTextures(scene, material, aiTextureType_METALNESS, MeshN::TEXTURE_METALLIC)};
     textures.insert(textures.end(), metallicMaps.begin(), metallicMaps.end());
     // roughness texture (g-channel)
-    std::vector<MeshN::Texture> roughnessMaps{loadMaterialTextures(material, aiTextureType_GLTF_METALLIC_ROUGHNESS, MeshN::TEXTURE_ROUGHNESS)};
+    std::vector<MeshN::Texture> roughnessMaps{loadMaterialTextures(scene, material, aiTextureType_GLTF_METALLIC_ROUGHNESS, MeshN::TEXTURE_ROUGHNESS)};
     textures.insert(textures.end(), roughnessMaps.begin(), roughnessMaps.end());
     // normal map texture
-    std::vector<MeshN::Texture> normalMaps{loadMaterialTextures(material, aiTextureType_NORMALS, MeshN::TEXTURE_NORMAL)};
+    std::vector<MeshN::Texture> normalMaps{loadMaterialTextures(scene, material, aiTextureType_NORMALS, MeshN::TEXTURE_NORMAL)};
     textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 
     return Mesh{vertices, indices, textures};
 }
 
-std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiMaterial* mat, const aiTextureType type, const MeshN::TextureType typeName)
+std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiScene* scene, const aiMaterial* mat, const aiTextureType type, const MeshN::TextureType typeName)
 {
     std::vector<MeshN::Texture> textures{};
     for (unsigned int i{0}; i < mat->GetTextureCount(type); ++i)
@@ -214,8 +214,8 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiMaterial* mat, c
             if (std::strcmp(m_loadedTextures[j].path.c_str(), str.C_Str()) == 0)
             {
                 // we found something with the same path
-                // check if texture type is the same
-                if (m_loadedTextures[j].type == typeName)
+                // check if texture type is the same, and it isn't embedded (path is *1 or smth)
+                if (m_loadedTextures[j].type == typeName && !m_loadedTextures[j].embedded)
                 {
                     // push back THAT texture instead
                     textures.push_back(m_loadedTextures[j]);
@@ -225,36 +225,47 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiMaterial* mat, c
             }
         }
 
-        // if we haven't already loaded the texture
-        if (!skip)
+        // jump to next iteration if we already loaded this texture
+        if (skip)
+            continue;
+
+        unsigned int texID;
+        bool success;
+
+        // check if texture is embedded in scene or separate
+        if (const aiTexture* texPtr = scene->GetEmbeddedTexture(str.C_Str()))
         {
+            // if texPtr isn't nullptr, texture can be read from memory
+            texID = loadEmbeddedTexture(texPtr, &success, typeName);
+        } else {
             // get texture path
             std::string filename{directory + '/' + str.C_Str()};
             // load texture id
-            bool success;
-            const unsigned int texID {TextureN::loadFromFile(filename.c_str(), nullptr, nullptr, nullptr, &success, typeName)};
-            if (!success) // check if texture was loaded successfully (don't add bad texture)
-            {
-                continue;
-            }
-
-            // create texture object
-            MeshN::Texture texture {
-                texID, // texture id
-                typeName, // MeshN::TextureType
-                str.C_Str() // texture path
-            };
-
-            m_loadedTextures.push_back(texture);
-            textures.push_back(texture);
+            texID = TextureN::loadFromFile(filename.c_str(), nullptr, nullptr, nullptr, &success, typeName);
         }
+
+        if (!success) // check if texture was loaded successfully (don't add bad texture)
+        {
+            continue;
+        }
+
+        // create texture object
+        MeshN::Texture texture {
+            texID, // texture id
+            typeName, // MeshN::TextureType
+            str.C_Str(), // texture path
+            false
+        };
+
+        m_loadedTextures.push_back(texture);
+        textures.push_back(texture);
     }
 
     return textures;
 }
 
 // load texture embedded in scene
-unsigned int Model::loadEmbeddedTexture(const aiTexture* texture, bool* success, MeshN::TextureType materialType)
+unsigned int Model::loadEmbeddedTexture(const aiTexture* texture, bool* success, const MeshN::TextureType materialType)
 {
     int imageWidth{0};
     int imageHeight{0};
@@ -270,7 +281,7 @@ unsigned int Model::loadEmbeddedTexture(const aiTexture* texture, bool* success,
         // texture data
         reinterpret_cast<unsigned char*>(texture->pcData),
         // buffer length
-        texture->mWidth * (texture->mHeight == 0 ? 1 : texture->mHeight),
+        static_cast<int>(texture->mWidth * (texture->mHeight == 0 ? 1 : texture->mHeight)),
         &imageWidth, &imageHeight, &imageChannels,
         0
     );
@@ -315,23 +326,20 @@ unsigned int Model::loadEmbeddedTexture(const aiTexture* texture, bool* success,
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    if (materialType != MeshN::TEXTURE_NONE)
+    switch (materialType)
     {
-        switch (materialType)
-        {
-            case MeshN::TEXTURE_METALLIC:
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_BLUE);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_BLUE);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
-                break;
-            case MeshN::TEXTURE_ROUGHNESS:
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_GREEN);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_GREEN);
-                break;
-            default:
-                break;
-        }
+        case MeshN::TEXTURE_METALLIC:
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_BLUE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_BLUE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
+            break;
+        case MeshN::TEXTURE_ROUGHNESS:
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_GREEN);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_GREEN);
+            break;
+        default:
+            break;
     }
 
     // free texture data

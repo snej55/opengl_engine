@@ -34,8 +34,8 @@ private:
     void processNode(const aiNode* node, const aiScene* scene);
     Mesh processMesh(const aiMesh* mesh, const aiScene* scene);
 
-    std::vector<MeshN::Texture> loadMaterialTextures(const aiMaterial* mat, aiTextureType type, MeshN::TextureType typeName);
-    unsigned int loadEmbeddedTexture(const aiTexture* texture, bool* success, MeshN::TextureType materialType);
+    std::vector<MeshN::Texture> loadMaterialTextures(const aiScene* scene, const aiMaterial* mat, aiTextureType type, MeshN::TextureType typeName);
+    static unsigned int loadEmbeddedTexture(const aiTexture* texture, bool* success = nullptr, MeshN::TextureType materialType = MeshN::TEXTURE_NONE);
 };
 
 class ModelManager final : public EngineObject
