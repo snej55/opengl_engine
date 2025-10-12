@@ -2,13 +2,16 @@
 // Created by Jens Kromdijk on 23/06/25.
 //
 
+#include <glad/glad.h>
+#include <assimp/postprocess.h>
+// #define STB_IMAGE_IMPLEMENTATION
+#include <STB/stb_image.h>
+
 #include "model.hpp"
 #include "assimp/material.h"
 #include "mesh.hpp"
 #include "util.hpp"
 #include "texture.hpp"
-
-#include <assimp/postprocess.h>
 
 #include <string>
 #include <sstream>
@@ -248,6 +251,94 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiMaterial* mat, c
     }
 
     return textures;
+}
+
+// load texture embedded in scene
+unsigned int Model::loadEmbeddedTexture(const aiTexture* texture, bool* success, MeshN::TextureType materialType)
+{
+    int imageWidth{0};
+    int imageHeight{0};
+    int imageChannels{0};
+    unsigned char* data{nullptr};
+
+    if (success)
+        *success = true;
+
+    // load texture data from memory
+    stbi_set_flip_vertically_on_load(true);
+    data = stbi_load_from_memory(
+        // texture data
+        reinterpret_cast<unsigned char*>(texture->pcData),
+        // buffer length
+        texture->mWidth * (texture->mHeight == 0 ? 1 : texture->mHeight),
+        &imageWidth, &imageHeight, &imageChannels,
+        0
+    );
+
+    // check success
+    if (!data)
+    {
+        std::cout << "MODEL::LOAD_EMBEDDED_TEXTURE::ERROR: Failed to load texture from memory!\n";
+        stbi_image_free(data);
+        if (success)
+            *success = false;
+        return 0;
+    }
+
+    // get format
+    GLenum internalFormat{0};
+    switch (imageChannels)
+    {
+        case 1: // grayscale
+            internalFormat = GL_RED;
+            break;
+        case 3:
+            internalFormat = GL_RGB;
+            break;
+        case 4:
+            internalFormat = GL_RGBA;
+            break;
+        default:
+            std::cout << "UNKNOWN NUMBER OF CHANNELS: " << imageChannels << std::endl;
+            break;
+    }
+
+    // same as in TextureN::loadFromFile
+    unsigned int texID;
+    glGenTextures(1, &texID);
+    glBindTexture(GL_TEXTURE_2D, texID);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), imageWidth, imageHeight, 0, internalFormat, GL_UNSIGNED_BYTE, data);
+
+    glGenerateMipmap(GL_TEXTURE_2D);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    if (materialType != MeshN::TEXTURE_NONE)
+    {
+        switch (materialType)
+        {
+            case MeshN::TEXTURE_METALLIC:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_BLUE);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_BLUE);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
+                break;
+            case MeshN::TEXTURE_ROUGHNESS:
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_GREEN);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_GREEN);
+                break;
+            default:
+                break;
+        }
+    }
+
+    // free texture data
+    stbi_image_free(data);
+
+    // return texture id
+    return texID;
 }
 
 // -------------- Model Manager -------------- //

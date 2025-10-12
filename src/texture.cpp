@@ -65,7 +65,7 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
     // load opengl texture
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
-    // glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), imageWidth, imageHeight, 0, internalFormat, GL_UNSIGNED_BYTE, data);
 
     glGenerateMipmap(GL_TEXTURE_2D);

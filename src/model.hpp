@@ -35,6 +35,7 @@ private:
     Mesh processMesh(const aiMesh* mesh, const aiScene* scene);
 
     std::vector<MeshN::Texture> loadMaterialTextures(const aiMaterial* mat, aiTextureType type, MeshN::TextureType typeName);
+    unsigned int loadEmbeddedTexture(const aiTexture* texture, bool* success, MeshN::TextureType materialType);
 };
 
 class ModelManager final : public EngineObject
