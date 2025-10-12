@@ -168,14 +168,19 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
     // materials
     aiMaterial* material{scene->mMaterials[mesh->mMaterialIndex]};
 
+    // use custom glTF Material Output node in blender for ambient occlusion texture
     std::vector<MeshN::Texture> aoMaps{loadMaterialTextures(material, aiTextureType_LIGHTMAP, MeshN::TEXTURE_AO)};
     textures.insert(textures.end(), aoMaps.begin(), aoMaps.end());
+    // albedo texture
     std::vector<MeshN::Texture> albedoMaps{loadMaterialTextures(material, aiTextureType_BASE_COLOR, MeshN::TEXTURE_ALBEDO)};
     textures.insert(textures.end(), albedoMaps.begin(), albedoMaps.end());
+    // metallic texture (b-channel of metallic-roughness texture)
     std::vector<MeshN::Texture> metallicMaps{loadMaterialTextures(material, aiTextureType_METALNESS, MeshN::TEXTURE_METALLIC)};
     textures.insert(textures.end(), metallicMaps.begin(), metallicMaps.end());
+    // roughness texture (g-channel)
     std::vector<MeshN::Texture> roughnessMaps{loadMaterialTextures(material, aiTextureType_GLTF_METALLIC_ROUGHNESS, MeshN::TEXTURE_ROUGHNESS)};
     textures.insert(textures.end(), roughnessMaps.begin(), roughnessMaps.end());
+    // normal map texture
     std::vector<MeshN::Texture> normalMaps{loadMaterialTextures(material, aiTextureType_NORMALS, MeshN::TEXTURE_NORMAL)};
     textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 
