@@ -21,6 +21,7 @@ public:
     bool loadModel(const std::string& path);
 
     void render(const Shader* shader) const;
+    void renderPBR(const Shader* pbrShader) const;
 
 private:
     std::vector<Mesh> m_meshes{};

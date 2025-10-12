@@ -42,6 +42,7 @@ public:
     Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<MeshN::Texture>& textures);
 
     void render(const Shader* shader) const;
+    void renderPBR(const Shader* pbrShader) const;
 
     void free() const;
 

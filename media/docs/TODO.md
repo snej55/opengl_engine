@@ -40,7 +40,8 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [ ] Ambient lighting (SSAO)
 - [X] PBR lighting
 - [X] PBR material rendering
-- [ ] PBR materials on models
+- [X] PBR materials on models
+- [ ] Add support for embedded materials in models
 - [X] Model loading
 - [X] Mesh class
 - [X] Model manager

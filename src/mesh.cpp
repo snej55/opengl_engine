@@ -14,6 +14,53 @@ void Mesh::render(const Shader* shader) const
     glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, nullptr);
 }
 
+void Mesh::renderPBR(const Shader* pbrShader) const
+{
+    pbrShader->use();
+    std::string textureType;
+
+    for (int i{0}; i < m_textures.size(); ++i)
+    {
+        glActiveTexture(GL_TEXTURE0 + i);
+        glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
+
+        switch (m_textures[i].type)
+        {
+            case MeshN::TEXTURE_ALBEDO:
+                textureType = "albedoMap";
+                break;
+            case MeshN::TEXTURE_AO:
+                textureType = "aoMap";
+                break;
+            case MeshN::TEXTURE_METALLIC:
+                textureType = "metallicMap";
+                break;
+            case MeshN::TEXTURE_ROUGHNESS:
+                textureType = "roughnessMap";
+                break;
+            case MeshN::TEXTURE_NORMAL:
+                textureType = "normalMap";
+                break;
+            default:
+                textureType = "unknown";
+                break;
+        }
+
+        // don't render unknown texture
+        if (textureType == "unknown")
+            continue;
+
+        pbrShader->setInt(textureType, i);
+    }
+
+    glBindVertexArray(m_VAO);
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, nullptr);
+
+    // reset
+    glBindVertexArray(0);
+    glActiveTexture(GL_TEXTURE0);
+}
+
 void Mesh::free() const
 {
     glDeleteVertexArrays(1, &m_VAO);
