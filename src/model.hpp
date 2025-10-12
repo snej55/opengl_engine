@@ -33,7 +33,7 @@ private:
     void processNode(const aiNode* node, const aiScene* scene);
     Mesh processMesh(const aiMesh* mesh, const aiScene* scene);
 
-    std::vector<MeshN::Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, MeshN::TextureType typeName);
+    std::vector<MeshN::Texture> loadMaterialTextures(const aiMaterial* mat, aiTextureType type, MeshN::TextureType typeName);
 };
 
 class ModelManager final : public EngineObject

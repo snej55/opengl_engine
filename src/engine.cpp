@@ -2,7 +2,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-// json libary
+// json library
 #include <JSON/json.hpp>
 #include <numeric>
 

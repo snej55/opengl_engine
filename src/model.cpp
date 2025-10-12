@@ -168,7 +168,7 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
     // materials
     aiMaterial* material{scene->mMaterials[mesh->mMaterialIndex]};
 
-    std::vector<MeshN::Texture> aoMaps{loadMaterialTextures(material, aiTextureType_AMBIENT_OCCLUSION, MeshN::TEXTURE_AO)};
+    std::vector<MeshN::Texture> aoMaps{loadMaterialTextures(material, aiTextureType_LIGHTMAP, MeshN::TEXTURE_AO)};
     textures.insert(textures.end(), aoMaps.begin(), aoMaps.end());
     std::vector<MeshN::Texture> albedoMaps{loadMaterialTextures(material, aiTextureType_BASE_COLOR, MeshN::TEXTURE_ALBEDO)};
     textures.insert(textures.end(), albedoMaps.begin(), albedoMaps.end());
@@ -182,13 +182,13 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
     return Mesh{vertices, indices, {}};
 }
 
-std::vector<MeshN::Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, MeshN::TextureType typeName)
+std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiMaterial* mat, const aiTextureType type, const MeshN::TextureType typeName)
 {
     std::vector<MeshN::Texture> textures{};
     for (unsigned int i{0}; i < mat->GetTextureCount(type); ++i)
     {
         aiString str;
-        mat->GetTexture(type, i, &str);
+        mat->Get(AI_MATKEY_TEXTURE(type, i), str);
         bool skip{false};
 
         // check if we haven't already loaded this texture
@@ -209,12 +209,11 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextu
         if (!skip)
         {
             // get texture path
-            std::string filename{str.C_Str()};
-            filename = directory + '/' + filename;
+            std::string filename{directory + '/' + str.C_Str()};
             // load texture id
             bool success;
             const unsigned int texID {TextureN::loadFromFile(filename.c_str(), nullptr, nullptr, nullptr, &success)};
-            if (!success) // check if texture was loaded successfully
+            if (!success) // check if texture was loaded successfully (don't add bad texture)
             {
                 continue;
             }

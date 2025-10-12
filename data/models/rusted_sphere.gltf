@@ -25,12 +25,15 @@
 			"normalTexture":{
 				"index":0
 			},
+			"occlusionTexture":{
+				"index":1
+			},
 			"pbrMetallicRoughness":{
 				"baseColorTexture":{
-					"index":1
+					"index":2
 				},
 				"metallicRoughnessTexture":{
-					"index":2
+					"index":3
 				}
 			}
 		}
@@ -63,6 +66,10 @@
 		{
 			"sampler":0,
 			"source":2
+		},
+		{
+			"sampler":0,
+			"source":3
 		}
 	],
 	"images":[
@@ -70,6 +77,11 @@
 			"mimeType":"image/png",
 			"name":"rustediron2_normal",
 			"uri":"rustediron2_normal.png"
+		},
+		{
+			"mimeType":"image/png",
+			"name":"rustediron2_ao",
+			"uri":"rustediron2_ao.png"
 		},
 		{
 			"mimeType":"image/png",

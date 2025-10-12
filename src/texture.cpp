@@ -4,9 +4,6 @@
 #include <STB/stb_image.h>
 
 #include "texture.hpp"
-
-#include <complex>
-
 #include "util.hpp"
 
 unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, int* numChannels, bool* success)
