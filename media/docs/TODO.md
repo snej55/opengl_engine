@@ -41,7 +41,7 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] PBR lighting
 - [X] PBR material rendering
 - [X] PBR materials on models
-- [ ] Add support for embedded materials in models
+- [X] Add support for embedded materials in models
 - [X] Model loading
 - [X] Mesh class
 - [X] Model manager
