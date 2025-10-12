@@ -6,7 +6,7 @@ An OpenGL rendering system to use for my projects, made largely to replace my ol
  - [Installation instructions](https://github.com/snej55/opengl_engine/tree/master?tab=readme-ov-file#installation-instructions)
  - [To do](https://github.com/snej55/opengl_engine/tree/master?tab=readme-ov-file#to-do)
 
-![screenshot](https://github.com/snej55/opengl_engine/blob/master/media/screenshots/Screenshot_20251001_201426.png)
+![screenshot](https://github.com/snej55/opengl_engine/blob/master/media/screenshots/Screenshot_20251012_131612.png)
 
 ---
 
@@ -84,7 +84,7 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [ ] Set up render queue
 - [ ] Config file loading?
 - [X] README
-- [ ] Font rendering
+- [X] Font rendering
 - [ ] UI framebuffer
 - [X] Texture manager
 - [X] Texture loading and rendering
