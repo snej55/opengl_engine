@@ -115,6 +115,46 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
     return tex;
 }
 
+// load hdr irradiance map
+unsigned int TextureN::loadHDRMap(const char* path, bool* success)
+{
+    if (!Util::fileExists(path))
+    {
+        Util::beginError();
+        std::cout << "TEXTUREN::LOAD_HDR_MAP::ERROR: File `" << path << "` does not exist." << std::endl;
+        Util::endError();
+        *success = false;
+        return 0;
+    }
+
+    int width{0};
+    int height{0};
+    int numChannels{0};
+    stbi_set_flip_vertically_on_load(true);
+    float* data = stbi_loadf(path, &width, &height, &numChannels, 0);
+
+    unsigned int hdrTexture;
+    if (data)
+    {
+        glGenTextures(1, &hdrTexture);
+        glBindTexture(GL_TEXTURE_2D, hdrTexture);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        *success = true;
+    } else {
+        *success = false;
+        hdrTexture = 0;
+    }
+
+    stbi_image_free(data);
+    return hdrTexture;
+}
+
 Texture::Texture(const std::string& name, EngineObject* manager)
     : EngineObject{("TEXTURE " + name).c_str(), manager}
 {

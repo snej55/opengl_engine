@@ -15,16 +15,9 @@ int main()
     std::cout << "Initialized engine!\n";
     engine.setCameraEnabled(true);
 
-    engine.addTexture("albedo", "data/materials/rustediron/rustediron2_basecolor.png");
-    engine.addTexture("ao", "data/materials/rustediron/rustediron2_ao.png");
-    engine.addTexture("metallic", "data/materials/rustediron/rustediron2_metallic.png");
-    engine.addTexture("normal", "data/materials/rustediron/rustediron2_normal.png");
-    engine.addTexture("roughness", "data/materials/rustediron/rustediron2_roughness.png");
-
     engine.addModel("cube", "data/models/monkey.glb");
     engine.addModel("light", "data/models/rusty_sphere.glb");
 
-    const Model* cube { engine.getModel("cube") };
     const Model* light { engine.getModel("light") };
 
     // engine.enableWireframe();
@@ -38,18 +31,6 @@ int main()
     engine.useShader("lightPBR");
     engine.setVec3("albedo", glm::vec3 { 0.5, 0.0f, 0.0f }, "lightPBR");
     engine.setFloat("ao", 1.0f, "lightPBR");
-
-    engine.useShader("texturePBR");
-    engine.activateTexture("albedo", 0);
-    engine.setInt("albedoMap", 0, "texturePBR");
-    engine.activateTexture("ao", 1);
-    engine.setInt("aoMap", 1, "texturePBR");
-    engine.activateTexture("metallic", 2);
-    engine.setInt("metallicMap", 2, "texturePBR");
-    engine.activateTexture("normal", 3);
-    engine.setInt("normalMap", 3, "texturePBR");
-    engine.activateTexture("roughness", 4);
-    engine.setInt("roughnessMap", 4, "texturePBR");
 
     glm::vec3 lightPos { 1.0f, 1.0f, 1.0f };
 

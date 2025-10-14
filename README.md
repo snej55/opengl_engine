@@ -61,8 +61,7 @@ cd build
 
 ### Target:
 
-Make a game engine that can handle world loading, model loading, render basic objects, and lighting (Blinn-Phong (for specular), SSAO, PBR), as well as
-other basic engine functionality (e.g. audio loading, physics systems, particle vfx etc.).
+Make a basic OpenGL rendering framework that can handle PBR lighting & stuff, as well as basic game engine stuff (e.g. physics, audio, window management, level-editor, multi-platform exports)
 
 ### v2:
 - [X] Set up engine object type

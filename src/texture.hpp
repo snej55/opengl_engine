@@ -12,6 +12,9 @@ namespace TextureN
 {
     // returns texture id without having to create new Texture*
     unsigned int loadFromFile(const char* path, int* width = nullptr, int* height = nullptr, int* numChannels = nullptr, bool* success = nullptr, MeshN::TextureType materialType = MeshN::TEXTURE_NONE);
+
+    // load hdr irradiance map
+    unsigned int loadHDRMap(const char* path, bool* success);
 }
 
 // Basic texture wrapper class.

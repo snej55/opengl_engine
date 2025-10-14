@@ -2,8 +2,7 @@
 
 ### Target:
 
-Make a game engine that can handle world loading, model loading, render basic objects, and lighting (Blinn-Phong (for specular), SSAO, PBR), as well as
-other basic engine functionality (e.g. audio loading, physics systems, particle vfx etc.).
+Make an OpenGL rendering framework that can handle PBR lighting & stuff, as well as basic game engine utilities (e.g. physics, audio, window management, level-editor, multi-platform exports)
 
 ### v2:
 - [X] Set up engine object type
@@ -18,9 +17,9 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Automatic shader loading
 - [X] Camera
 - [ ] Set up G-Buffer (PBR data)
-- [ ] Deffered shading (PBR)
-- [ ] Integrate forward renderer alongside deffered shading
-- [ ] Extend deffered shading to deffered lighting (MSAA & blending)
+- [ ] Deferred shading (PBR)
+- [ ] Integrate forward renderer alongside deferred shading
+- [ ] Extend deferred shading to deferred lighting (MSAA & blending)
 - [ ] Set up renderer class
 - [ ] Set up render queue
 - [ ] Config file loading?
@@ -36,7 +35,6 @@ other basic engine functionality (e.g. audio loading, physics systems, particle 
 - [X] Add fps counter
 - [X] Default shaders
 - [X] Post processor with framebuffers
-- [X] Blinn-phong lighting
 - [ ] Ambient lighting (SSAO)
 - [X] PBR lighting
 - [X] PBR material rendering
