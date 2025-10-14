@@ -39,6 +39,8 @@ Make an OpenGL rendering framework that can handle PBR lighting & stuff, as well
 - [X] PBR lighting
 - [X] PBR material rendering
 - [X] PBR materials on models
+- [ ] Diffuse IBL
+- [ ] Specular IBL
 - [X] Add support for embedded materials in models
 - [X] Model loading
 - [X] Mesh class
