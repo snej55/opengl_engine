@@ -14,7 +14,7 @@ namespace TextureN
     unsigned int loadFromFile(const char* path, int* width = nullptr, int* height = nullptr, int* numChannels = nullptr,
                               bool* success = nullptr, MeshN::TextureType materialType = MeshN::TEXTURE_NONE);
 
-    // load hdr irradiance map
+    // load hdr irradiance map (for IBL)
     unsigned int loadHDRMap(const char* path, bool* success);
 } // namespace TextureN
 

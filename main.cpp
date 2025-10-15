@@ -16,6 +16,7 @@ int main()
     std::cout << "Initialized engine!\n";
     engine.setCameraEnabled(true);
 
+    // use only gltf files for now
     engine.addModel("cube", "data/models/monkey.glb");
     engine.addModel("light", "data/models/rusty_sphere.glb");
 
