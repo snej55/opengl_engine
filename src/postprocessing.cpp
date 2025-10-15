@@ -3,15 +3,9 @@
 #include "engine.hpp"
 #include "util.hpp"
 
-PostProcessor::PostProcessor(EngineObject* parent)
-    : EngineObject{"PostProcessor", parent}
-{
-}
+PostProcessor::PostProcessor(EngineObject* parent) : EngineObject{"PostProcessor", parent} {}
 
-PostProcessor::~PostProcessor()
-{
-    free();
-}
+PostProcessor::~PostProcessor() { free(); }
 
 // free framebuffer
 void PostProcessor::free()
@@ -25,7 +19,7 @@ void PostProcessor::free()
 bool PostProcessor::check() const
 {
     // check
-    bool success {true};
+    bool success{true};
     glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
     // check framebuffer status
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -34,7 +28,8 @@ bool PostProcessor::check() const
         std::cout << "POST_PROCESSOR::CHECK::ERROR: Framebuffer is not complete!";
         Util::endError();
         success = false;
-    } else
+    }
+    else
     {
         std::cout << "Successfully initialized postprocessor!" << std::endl;
     }
@@ -135,15 +130,8 @@ void PostProcessor::generateRenderbuffer()
 
 void PostProcessor::generateQuad()
 {
-    constexpr float quadVerticesTexCoords[] {
-        -1.0f, 1.0f, 0.0f, 1.0f,
-        -1.0f, -1.0f, 0.0f, 0.0f,
-        1.0f, -1.0f, 1.0f, 0.0f,
-
-        -1.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, -1.0f, 1.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, 1.0f
-    };
+    constexpr float quadVerticesTexCoords[]{-1.0f, 1.0f, 0.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f, 0.0f,
+                                            -1.0f, 1.0f, 0.0f, 1.0f, 1.0f,  -1.0f, 1.0f, 0.0f, 1.0f, 1.0f,  1.0f, 1.0f};
     unsigned int quadVAO, quadVBO;
     glGenVertexArrays(1, &quadVAO);
     glGenBuffers(1, &quadVBO);
@@ -161,12 +149,6 @@ void PostProcessor::generateQuad()
     glBindVertexArray(0);
 }
 
-void PostProcessor::enable() const
-{
-    glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
-}
+void PostProcessor::enable() const { glBindFramebuffer(GL_FRAMEBUFFER, m_FBO); }
 
-void PostProcessor::disable() const
-{
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
+void PostProcessor::disable() const { glBindFramebuffer(GL_FRAMEBUFFER, 0); }

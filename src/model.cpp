@@ -2,21 +2,21 @@
 // Created by Jens Kromdijk on 23/06/25.
 //
 
-#include <glad/glad.h>
-#include <assimp/postprocess.h>
 #include <STB/stb_image.h>
+#include <assimp/postprocess.h>
+#include <glad/glad.h>
 
-#include "model.hpp"
 #include "assimp/material.h"
 #include "mesh.hpp"
-#include "util.hpp"
+#include "model.hpp"
 #include "texture.hpp"
+#include "util.hpp"
 
-#include <string>
 #include <sstream>
+#include <string>
 
-Model::Model(const std::string& name, EngineObject* parent)
-    : EngineObject{("MODEL " + name).c_str(), parent}, m_modelName{name}
+Model::Model(const std::string& name, EngineObject* parent) :
+    EngineObject{("MODEL " + name).c_str(), parent}, m_modelName{name}
 {
 }
 
@@ -58,9 +58,9 @@ bool Model::loadModel(const std::string& path)
     Assimp::Importer importer;
 
     const aiScene* scene{importer.ReadFile(
-        path, aiProcess_JoinIdenticalVertices | aiProcess_Triangulate |
-                  aiProcess_GenSmoothNormals | aiProcess_FlipUVs |
-                  aiProcess_CalcTangentSpace | aiProcess_OptimizeGraph | aiProcess_OptimizeMeshes)};
+        path,
+        aiProcess_JoinIdenticalVertices | aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs |
+            aiProcess_CalcTangentSpace | aiProcess_OptimizeGraph | aiProcess_OptimizeMeshes)};
 
     // error handling
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -83,17 +83,19 @@ bool Model::loadModel(const std::string& path)
     }
 
     // just some useful info :)
-    unsigned long vertSize {sizeof(MeshN::Vertex) * numVertices};
+    unsigned long vertSize{sizeof(MeshN::Vertex) * numVertices};
     std::stringstream ss{};
     if (vertSize > 1000 * 1000)
     {
         vertSize = vertSize / 1000 / 1000;
         ss << vertSize << " MB";
-    } else if (vertSize > 1000)
+    }
+    else if (vertSize > 1000)
     {
         vertSize = vertSize / 1000;
         ss << vertSize << " KB";
-    } else
+    }
+    else
     {
         ss << vertSize << " B";
     }
@@ -106,7 +108,7 @@ bool Model::loadModel(const std::string& path)
 
 void Model::processNode(const aiNode* node, const aiScene* scene)
 {
-    for (std::size_t i {0}; i < node->mNumMeshes; ++i)
+    for (std::size_t i{0}; i < node->mNumMeshes; ++i)
     {
         // node->mMeshes is a list of indices for scene->mMeshes
         const aiMesh* mesh{scene->mMeshes[node->mMeshes[i]]};
@@ -115,7 +117,7 @@ void Model::processNode(const aiNode* node, const aiScene* scene)
     }
 
     // repeat recursively for all children
-    for (std::size_t i {0}; i < node->mNumChildren; ++i)
+    for (std::size_t i{0}; i < node->mNumChildren; ++i)
     {
         processNode(node->mChildren[i], scene);
     }
@@ -127,35 +129,28 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
     std::vector<unsigned int> indices{};
     std::vector<MeshN::Texture> textures{};
 
-    for (std::size_t i {0}; i < mesh->mNumVertices; ++i)
+    for (std::size_t i{0}; i < mesh->mNumVertices; ++i)
     {
         MeshN::Vertex vertex{};
         // get vertex positions
-        const glm::vec3 pos {
-            mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z
-        };
+        const glm::vec3 pos{mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z};
         // same for normals
-        const glm::vec3 normal {
-            mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z
-        };
+        const glm::vec3 normal{mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z};
         // texture coordinates if mesh has them
         if (mesh->mTextureCoords[0])
         {
-            const glm::vec2 texCoords {mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y};
+            const glm::vec2 texCoords{mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y};
             vertex.texCoords = texCoords;
-        } else
+        }
+        else
         {
             vertex.texCoords = glm::vec2{0.0f, 0.0f};
         }
 
         // calculate tangent and bitangent for normal mapping
-        const glm::vec3 tangent {
-            mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z
-        };
+        const glm::vec3 tangent{mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z};
 
-        const glm::vec3 biTangent {
-            mesh->mBitangents[i].x, mesh->mBitangents[i].y, mesh->mBitangents[i].z
-        };
+        const glm::vec3 biTangent{mesh->mBitangents[i].x, mesh->mBitangents[i].y, mesh->mBitangents[i].z};
 
         vertex.position = pos;
         vertex.normal = normal;
@@ -179,25 +174,31 @@ Mesh Model::processMesh(const aiMesh* mesh, const aiScene* scene)
     aiMaterial* material{scene->mMaterials[mesh->mMaterialIndex]};
 
     // use custom glTF Material Output node in blender for ambient occlusion texture
-    std::vector<MeshN::Texture> aoMaps{loadMaterialTextures(scene, material, aiTextureType_LIGHTMAP, MeshN::TEXTURE_AO)};
+    std::vector<MeshN::Texture> aoMaps{
+        loadMaterialTextures(scene, material, aiTextureType_LIGHTMAP, MeshN::TEXTURE_AO)};
     textures.insert(textures.end(), aoMaps.begin(), aoMaps.end());
     // albedo texture
-    std::vector<MeshN::Texture> albedoMaps{loadMaterialTextures(scene, material, aiTextureType_BASE_COLOR, MeshN::TEXTURE_ALBEDO)};
+    std::vector<MeshN::Texture> albedoMaps{
+        loadMaterialTextures(scene, material, aiTextureType_BASE_COLOR, MeshN::TEXTURE_ALBEDO)};
     textures.insert(textures.end(), albedoMaps.begin(), albedoMaps.end());
     // metallic texture (b-channel of metallic-roughness texture)
-    std::vector<MeshN::Texture> metallicMaps{loadMaterialTextures(scene, material, aiTextureType_METALNESS, MeshN::TEXTURE_METALLIC)};
+    std::vector<MeshN::Texture> metallicMaps{
+        loadMaterialTextures(scene, material, aiTextureType_METALNESS, MeshN::TEXTURE_METALLIC)};
     textures.insert(textures.end(), metallicMaps.begin(), metallicMaps.end());
     // roughness texture (g-channel)
-    std::vector<MeshN::Texture> roughnessMaps{loadMaterialTextures(scene, material, aiTextureType_GLTF_METALLIC_ROUGHNESS, MeshN::TEXTURE_ROUGHNESS)};
+    std::vector<MeshN::Texture> roughnessMaps{
+        loadMaterialTextures(scene, material, aiTextureType_GLTF_METALLIC_ROUGHNESS, MeshN::TEXTURE_ROUGHNESS)};
     textures.insert(textures.end(), roughnessMaps.begin(), roughnessMaps.end());
     // normal map texture
-    std::vector<MeshN::Texture> normalMaps{loadMaterialTextures(scene, material, aiTextureType_NORMALS, MeshN::TEXTURE_NORMAL)};
+    std::vector<MeshN::Texture> normalMaps{
+        loadMaterialTextures(scene, material, aiTextureType_NORMALS, MeshN::TEXTURE_NORMAL)};
     textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 
     return Mesh{vertices, indices, textures};
 }
 
-std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiScene* scene, const aiMaterial* mat, const aiTextureType type, const MeshN::TextureType typeName)
+std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiScene* scene, const aiMaterial* mat,
+                                                        const aiTextureType type, const MeshN::TextureType typeName)
 {
     std::vector<MeshN::Texture> textures{};
     for (unsigned int i{0}; i < mat->GetTextureCount(type); ++i)
@@ -236,7 +237,9 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiScene* scene, co
         {
             // if texPtr isn't nullptr, texture can be read from memory
             texID = loadEmbeddedTexture(texPtr, &success, typeName);
-        } else {
+        }
+        else
+        {
             // get texture path
             std::string filename{directory + '/' + str.C_Str()};
             // load texture id
@@ -249,12 +252,10 @@ std::vector<MeshN::Texture> Model::loadMaterialTextures(const aiScene* scene, co
         }
 
         // create texture object
-        MeshN::Texture texture {
-            texID, // texture id
-            typeName, // MeshN::TextureType
-            str.C_Str(), // texture path
-            false
-        };
+        MeshN::Texture texture{texID, // texture id
+                               typeName, // MeshN::TextureType
+                               str.C_Str(), // texture path
+                               false};
 
         m_loadedTextures.push_back(texture);
         textures.push_back(texture);
@@ -280,10 +281,8 @@ unsigned int Model::loadEmbeddedTexture(const aiTexture* texture, bool* success,
         // texture data
         reinterpret_cast<unsigned char*>(texture->pcData),
         // buffer length
-        static_cast<int>(texture->mWidth * (texture->mHeight == 0 ? 1 : texture->mHeight)),
-        &imageWidth, &imageHeight, &imageChannels,
-        0
-    );
+        static_cast<int>(texture->mWidth * (texture->mHeight == 0 ? 1 : texture->mHeight)), &imageWidth, &imageHeight,
+        &imageChannels, 0);
 
     // check success
     if (!data)
@@ -299,18 +298,18 @@ unsigned int Model::loadEmbeddedTexture(const aiTexture* texture, bool* success,
     GLenum internalFormat{0};
     switch (imageChannels)
     {
-        case 1: // grayscale
-            internalFormat = GL_RED;
-            break;
-        case 3:
-            internalFormat = GL_RGB;
-            break;
-        case 4:
-            internalFormat = GL_RGBA;
-            break;
-        default:
-            std::cout << "UNKNOWN NUMBER OF CHANNELS: " << imageChannels << std::endl;
-            break;
+    case 1: // grayscale
+        internalFormat = GL_RED;
+        break;
+    case 3:
+        internalFormat = GL_RGB;
+        break;
+    case 4:
+        internalFormat = GL_RGBA;
+        break;
+    default:
+        std::cout << "UNKNOWN NUMBER OF CHANNELS: " << imageChannels << std::endl;
+        break;
     }
 
     // same as in TextureN::loadFromFile
@@ -318,7 +317,8 @@ unsigned int Model::loadEmbeddedTexture(const aiTexture* texture, bool* success,
     glGenTextures(1, &texID);
     glBindTexture(GL_TEXTURE_2D, texID);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), imageWidth, imageHeight, 0, internalFormat, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), imageWidth, imageHeight, 0, internalFormat,
+                 GL_UNSIGNED_BYTE, data);
 
     glGenerateMipmap(GL_TEXTURE_2D);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -327,18 +327,18 @@ unsigned int Model::loadEmbeddedTexture(const aiTexture* texture, bool* success,
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     switch (materialType)
     {
-        case MeshN::TEXTURE_METALLIC:
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_BLUE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_BLUE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
-            break;
-        case MeshN::TEXTURE_ROUGHNESS:
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_GREEN);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_GREEN);
-            break;
-        default:
-            break;
+    case MeshN::TEXTURE_METALLIC:
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_BLUE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_BLUE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
+        break;
+    case MeshN::TEXTURE_ROUGHNESS:
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_GREEN);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_GREEN);
+        break;
+    default:
+        break;
     }
 
     // free texture data
@@ -349,16 +349,13 @@ unsigned int Model::loadEmbeddedTexture(const aiTexture* texture, bool* success,
 }
 
 // -------------- Model Manager -------------- //
-ModelManager::ModelManager(EngineObject* parent)
-    : EngineObject{"ModelManager", parent}
-{
-}
+ModelManager::ModelManager(EngineObject* parent) : EngineObject{"ModelManager", parent} {}
 
 // load new model
 void ModelManager::addModel(const std::string& name, const std::string& path, Arena* arena)
 {
     // create new model and add it to arena
-    Model* model {new Model{name, this}};
+    Model* model{new Model{name, this}};
     arena->addObject(model);
 
     // add model
@@ -367,7 +364,9 @@ void ModelManager::addModel(const std::string& name, const std::string& path, Ar
         Util::beginError();
         std::cout << "MODEL_MANAGER::ADD_MODEL::ERROR: Failed to add model `" << name << "`";
         Util::endError();
-    } else {
+    }
+    else
+    {
         m_models.insert(std::pair{name, model});
     }
 }
@@ -389,13 +388,11 @@ void ModelManager::renderModel(const Shader* shader, const std::string& name) co
     if (modelExists(name))
     {
         getModel(name)->render(shader);
-    } else
+    }
+    else
     {
         std::cout << "MODEL_MANAGER::GET_MODEL::ERROR: Model `" << name << "` does not exist!\n";
     }
 }
 
-bool ModelManager::modelExists(const std::string& name) const
-{
-    return m_models.find(name) != m_models.end();
-}
+bool ModelManager::modelExists(const std::string& name) const { return m_models.find(name) != m_models.end(); }

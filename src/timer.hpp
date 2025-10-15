@@ -18,9 +18,9 @@ public:
     [[nodiscard]] float getTimeF() const;
 
     // get the start time of the timer
-    [[nodiscard]] float getRawStartTime() const {return m_startTime;}
+    [[nodiscard]] float getRawStartTime() const { return m_startTime; }
     // get the last time of the timer
-    [[nodiscard]] float getRawLastTime() const {return m_lastTime;}
+    [[nodiscard]] float getRawLastTime() const { return m_lastTime; }
 
 private:
     // start time (time since glfw initialized in seconds)

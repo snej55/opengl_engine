@@ -3,15 +3,9 @@
 
 #include <iostream>
 
-Arena::Arena(EngineObject* engine)
- : EngineObject{"Arena", engine}
-{
-}
+Arena::Arena(EngineObject* engine) : EngineObject{"Arena", engine} {}
 
-Arena::~Arena()
-{
-    free();
-}
+Arena::~Arena() { free(); }
 
 // free memory of objects
 void Arena::free()

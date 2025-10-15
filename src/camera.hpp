@@ -6,8 +6,8 @@
 #define CAMERA_H
 
 #include <glad/glad.h>
-#include <glm/glm.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/glm.hpp>
 
 #include "engine_types.hpp"
 
@@ -27,13 +27,12 @@ namespace CameraN
     constexpr float SPEED{2.5f};
     constexpr float SENSITIVITY{0.05f};
     constexpr float ZOOM{45.0f};
-}
+} // namespace CameraN
 
 class Camera final : public EngineObject
 {
 public:
-    explicit Camera(EngineObject* engine)
-        : EngineObject{"Camera", engine}
+    explicit Camera(EngineObject* engine) : EngineObject{"Camera", engine}
     {
         m_position = glm::vec3(0.0f, 0.0f, 3.0f);
         m_front = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -47,28 +46,25 @@ public:
         updateCameraVectors();
     }
 
-    [[nodiscard]] glm::mat4 getViewMatrix() const
-    {
-        return glm::lookAt(m_position, m_position + m_front, m_up);
-    }
+    [[nodiscard]] glm::mat4 getViewMatrix() const { return glm::lookAt(m_position, m_position + m_front, m_up); }
 
     void processInput(const CameraN::CameraMotion direction, const float deltaTime)
     {
         const float velocity{m_movementSpeed * deltaTime};
         switch (direction)
         {
-            case (CameraN::CameraMotion::FORWARD):
-                m_position += m_front * velocity;
-                return;
-            case CameraN::CameraMotion::BACKWARD:
-                m_position -= m_front * velocity;
-                return;
-            case CameraN::CameraMotion::LEFT:
-                m_position -= m_right * velocity;
-                return;
-            case CameraN::CameraMotion::RIGHT:
-                m_position += m_right * velocity;
-                break;
+        case (CameraN::CameraMotion::FORWARD):
+            m_position += m_front * velocity;
+            return;
+        case CameraN::CameraMotion::BACKWARD:
+            m_position -= m_front * velocity;
+            return;
+        case CameraN::CameraMotion::LEFT:
+            m_position -= m_right * velocity;
+            return;
+        case CameraN::CameraMotion::RIGHT:
+            m_position += m_right * velocity;
+            break;
         }
     }
 
@@ -110,55 +106,25 @@ public:
         }
     }
 
-    [[nodiscard]] float getZoom() const
-    {
-        return m_zoom;
-    }
+    [[nodiscard]] float getZoom() const { return m_zoom; }
 
-    [[nodiscard]] glm::vec3 getPosition() const
-    {
-        return m_position;
-    }
+    [[nodiscard]] glm::vec3 getPosition() const { return m_position; }
 
-    [[nodiscard]] glm::vec3 getFront() const
-    {
-        return m_front;
-    }
+    [[nodiscard]] glm::vec3 getFront() const { return m_front; }
 
-    [[nodiscard]] glm::vec3 getUp() const
-    {
-        return m_up;
-    }
+    [[nodiscard]] glm::vec3 getUp() const { return m_up; }
 
-    [[nodiscard]] glm::vec3 getRight() const
-    {
-        return m_right;
-    }
+    [[nodiscard]] glm::vec3 getRight() const { return m_right; }
 
-    [[nodiscard]] glm::vec3 getWorldUp() const
-    {
-        return m_worldUp;
-    }
+    [[nodiscard]] glm::vec3 getWorldUp() const { return m_worldUp; }
 
-    [[nodiscard]] float getYaw() const
-    {
-        return m_yaw;
-    }
+    [[nodiscard]] float getYaw() const { return m_yaw; }
 
-    [[nodiscard]] float getPitch() const
-    {
-        return m_pitch;
-    }
+    [[nodiscard]] float getPitch() const { return m_pitch; }
 
-    [[nodiscard]] float getMovementSpeed() const
-    {
-        return m_movementSpeed;
-    }
+    [[nodiscard]] float getMovementSpeed() const { return m_movementSpeed; }
 
-    [[nodiscard]] float getMouseSensitivity() const
-    {
-        return m_mouseSensitivity;
-    }
+    [[nodiscard]] float getMouseSensitivity() const { return m_mouseSensitivity; }
 
 private:
     glm::vec3 m_position{};
@@ -187,4 +153,4 @@ private:
 };
 
 
-#endif //CAMERA_H
+#endif // CAMERA_H

@@ -30,15 +30,15 @@ public:
     void disable() const;
 
     // getters
-    [[nodiscard]] int getWidth() const {return m_width;}
-    [[nodiscard]] int getHeight() const {return m_height;}
+    [[nodiscard]] int getWidth() const { return m_width; }
+    [[nodiscard]] int getHeight() const { return m_height; }
 
-    [[nodiscard]] unsigned int getFBO() const {return m_FBO;}
-    [[nodiscard]] unsigned int getRBO() const {return m_RBO;}
-    [[nodiscard]] unsigned int getTEX() const {return m_TEX;}
+    [[nodiscard]] unsigned int getFBO() const { return m_FBO; }
+    [[nodiscard]] unsigned int getRBO() const { return m_RBO; }
+    [[nodiscard]] unsigned int getTEX() const { return m_TEX; }
 
-    [[nodiscard]] unsigned int getVAO() const {return m_VAO;}
-    [[nodiscard]] unsigned int getVBO() const {return m_VBO;}
+    [[nodiscard]] unsigned int getVAO() const { return m_VAO; }
+    [[nodiscard]] unsigned int getVBO() const { return m_VBO; }
 
 private:
     // framebuffer dimensions

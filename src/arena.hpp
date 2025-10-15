@@ -25,7 +25,7 @@ public:
     void addObject(EngineObject* object);
     // remove object from arena
     void removeObject(unsigned int id);
-    
+
 private:
     std::vector<EngineObject*> m_objects{};
 

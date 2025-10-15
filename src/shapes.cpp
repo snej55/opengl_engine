@@ -9,8 +9,7 @@
 #include "shapes.hpp"
 #include "util.hpp"
 
-ShapeManager::ShapeManager(EngineObject* parent)
-    : EngineObject{"ShapeManager", parent}
+ShapeManager::ShapeManager(EngineObject* parent) : EngineObject{"ShapeManager", parent}
 {
     // generate vertex arrays
     init();
@@ -47,16 +46,16 @@ void ShapeManager::init()
 }
 
 // draw a rect
-template<typename T>
+template <typename T>
 void ShapeManager::drawRect(const Rect<T>& rect, const Color& color, ShaderManager* shaderManager) const
 {
     // get rect position and dimensions
-    glm::mat4 model {1.0f};
+    glm::mat4 model{1.0f};
     model = glm::translate(model, glm::vec3(rect.x, rect.y, 0.0f));
     model = glm::scale(model, glm::vec3(rect.w, rect.h, 1.0f));
 
     // get shader from shader manager
-    const Shader* rectShader {shaderManager->getShader("rect")};
+    const Shader* rectShader{shaderManager->getShader("rect")};
     if (rectShader == nullptr)
     {
         Util::beginError();
@@ -88,15 +87,12 @@ void ShapeManager::drawRect(const IRect& rect, const Color& color, ShaderManager
 // rgba color (0-255) to floating point (0.0-1.0) opengl colours
 glm::vec3 ShapeManager::color2vec3(const Color& color)
 {
-    return {
-        static_cast<float>(color.r) / 255.0f, static_cast<float>(color.g) / 255.0f, static_cast<float>(color.b) / 255.0f
-    };
+    return {static_cast<float>(color.r) / 255.0f, static_cast<float>(color.g) / 255.0f,
+            static_cast<float>(color.b) / 255.0f};
 }
 
 glm::vec4 ShapeManager::color2vec4(const Color& color)
 {
-    return {
-        static_cast<float>(color.r) / 255.0f, static_cast<float>(color.g) / 255.0f, static_cast<float>(color.b) / 255.0f,
-        static_cast<float>(color.a) / 255.0f
-    };
+    return {static_cast<float>(color.r) / 255.0f, static_cast<float>(color.g) / 255.0f,
+            static_cast<float>(color.b) / 255.0f, static_cast<float>(color.a) / 255.0f};
 }

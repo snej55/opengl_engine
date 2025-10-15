@@ -3,37 +3,37 @@
 #include "shader.hpp"
 #include "util.hpp"
 
-#include <string>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <sstream>
+#include <string>
 
 
-Shader::Shader(const std::string& name, EngineObject* parent)
-: EngineObject{("SHADER " + name).c_str(), parent}, m_shaderName{name}
+Shader::Shader(const std::string& name, EngineObject* parent) :
+    EngineObject{("SHADER " + name).c_str(), parent}, m_shaderName{name}
 {
 }
 
-Shader::~Shader()
-{
-    glDeleteProgram(m_ID);
-}
+Shader::~Shader() { glDeleteProgram(m_ID); }
 
 bool Shader::loadFromFile(const char* fragPath, const char* vertPath)
 {
-    bool shaderSuccess {true};
+    bool shaderSuccess{true};
 
     // check if shader files exist
     if (!Util::fileExists(fragPath))
     {
         Util::beginError();
-        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Failed to read fragment shader from `" << fragPath << "` - file does not exist!";
+        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Failed to read fragment shader from `" << fragPath
+                  << "` - file does not exist!";
         Util::endError();
         return false;
-    } else if (!Util::fileExists(vertPath))
+    }
+    else if (!Util::fileExists(vertPath))
     {
         Util::beginError();
-        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Failed to read vertex shader from `" << vertPath << "` - file does not exist!";
+        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Failed to read vertex shader from `" << vertPath
+                  << "` - file does not exist!";
         Util::endError();
         return false;
     }
@@ -61,16 +61,18 @@ bool Shader::loadFromFile(const char* fragPath, const char* vertPath)
 
         vertCode = vertStream.str();
         fragCode = fragStream.str();
-    } catch ([[maybe_unused]] std::ifstream::failure& e)
+    }
+    catch ([[maybe_unused]] std::ifstream::failure& e)
     {
         Util::beginError();
-        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Could not read source files: {vert: `" << vertPath << "`, frag: `" << fragPath << "`}";
+        std::cout << "SHADER::LOAD_FROM_FILE::ERROR: Could not read source files: {vert: `" << vertPath << "`, frag: `"
+                  << fragPath << "`}";
         Util::endError();
         return false;
     }
 
-    const char* vShaderCode {vertCode.c_str()};
-    const char* fShaderCode {fragCode.c_str()};
+    const char* vShaderCode{vertCode.c_str()};
+    const char* fShaderCode{fragCode.c_str()};
 
     // compile shaders
     unsigned int vertex, fragment;
@@ -144,15 +146,9 @@ bool Shader::loadFromFile(const char* fragPath, const char* vertPath)
     return shaderSuccess;
 }
 
-void Shader::use() const
-{
-    glUseProgram(m_ID);
-}
+void Shader::use() const { glUseProgram(m_ID); }
 
-unsigned int Shader::getShaderID() const
-{
-    return m_ID;
-}
+unsigned int Shader::getShaderID() const { return m_ID; }
 
 
 // ----- shader uniform setters -----
@@ -227,23 +223,22 @@ void Shader::setMat4(const std::string& name, const glm::mat4& value) const
 }
 
 // ------ Shader manager ------
-ShaderManager::ShaderManager(EngineObject* parent)
- : EngineObject{"ShaderManager", parent}
-{
-}
+ShaderManager::ShaderManager(EngineObject* parent) : EngineObject{"ShaderManager", parent} {}
 
 // load new shader
 void ShaderManager::addShader(const std::string& name, const char* fragPath, const char* vertPath, Arena* arena)
 {
     // create new shader and add it to arena
-    Shader* shader {new Shader{name, this}};
+    Shader* shader{new Shader{name, this}};
     arena->addObject(shader);
     if (!shader->loadFromFile(fragPath, vertPath))
     {
         Util::beginError();
         std::cout << "SHADER_MANAGER::ADD_SHADER::ERROR: Failed to add shader `" << name << "`";
         Util::endError();
-    } else {
+    }
+    else
+    {
         m_shaders.insert(std::pair{name, shader});
     }
 
@@ -268,7 +263,8 @@ void ShaderManager::useShader(const std::string& name) const
     if (shaderExists(name))
     {
         getShader(name)->use();
-    } else
+    }
+    else
     {
         Util::beginError();
         std::cout << "SHADER_MANAGER::USE_SHADER::ERROR: Shader `" << name << "` does not exist!";
@@ -276,7 +272,4 @@ void ShaderManager::useShader(const std::string& name) const
     }
 }
 
-bool ShaderManager::shaderExists(const std::string& name) const
-{
-    return m_shaders.find(name) != m_shaders.end();
-}
+bool ShaderManager::shaderExists(const std::string& name) const { return m_shaders.find(name) != m_shaders.end(); }

@@ -2,8 +2,7 @@
 
 #include <GLFW/glfw3.h>
 
-Clock::Clock(EngineObject* engine)
- : EngineObject{"Clock", engine}
+Clock::Clock(EngineObject* engine) : EngineObject{"Clock", engine}
 {
     // initialize delta time and starting time
     update();
@@ -20,10 +19,7 @@ void Clock::update()
     m_time = static_cast<float>(glfwGetTime());
 }
 
-float Clock::getDeltaTime() const
-{
-    return m_deltaTime;
-}
+float Clock::getDeltaTime() const { return m_deltaTime; }
 
 float Clock::getTime()
 {

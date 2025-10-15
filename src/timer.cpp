@@ -10,10 +10,7 @@ Timer::Timer()
 }
 
 // update last time
-void Timer::update()
-{
-    m_lastTime = static_cast<float>(glfwGetTime());
-}
+void Timer::update() { m_lastTime = static_cast<float>(glfwGetTime()); }
 
 // reset start time and last time
 void Timer::reset()
@@ -23,12 +20,6 @@ void Timer::reset()
 }
 
 // get time as int
-int Timer::getTime() const
-{
-    return static_cast<int>(m_lastTime - m_startTime);
-}
+int Timer::getTime() const { return static_cast<int>(m_lastTime - m_startTime); }
 
-float Timer::getTimeF() const
-{
-    return m_lastTime - m_startTime;
-}
+float Timer::getTimeF() const { return m_lastTime - m_startTime; }

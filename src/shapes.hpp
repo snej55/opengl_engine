@@ -32,18 +32,18 @@ struct Color
 
 namespace Shapes
 {
-    inline float RectVertices[] {
-        1.0f, 0.0f, 0.0f, // top right
+    inline float RectVertices[]{
+        1.0f, 0.0f,  0.0f, // top right
         1.0f, -1.0f, 0.0f, // bottom right
         0.0f, -1.0f, 0.0f, // bottom left
-        0.0f, 0.0f, 0.0f // top left
+        0.0f, 0.0f,  0.0f // top left
     };
 
-    inline unsigned int RectIndices[] {
+    inline unsigned int RectIndices[]{
         0, 1, 3, // first Triangle
         1, 2, 3 // second Triangle
     };
-}
+} // namespace Shapes
 
 class ShapeManager final : public EngineObject
 {

@@ -5,14 +5,16 @@ layout(location = 1) in vec3 aNormal;
 layout(location = 2) in vec2 aTexCoords;
 layout(location = 3) in vec3 aTangent;
 
-out VS_OUT {
+out VS_OUT
+{
     vec3 FragPos;
     vec2 TexCoords;
     // for normal mapping
     vec3 TangentLightPos;
     vec3 TangentViewPos;
     vec3 TangentFragPos;
-} vs_out;
+}
+vs_out;
 
 // basic camera transformations
 uniform mat4 model;

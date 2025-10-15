@@ -1,5 +1,5 @@
-#include "mesh.hpp"
 #include <glad/glad.h>
+#include "mesh.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <STB/stb_image.h>
@@ -7,7 +7,8 @@
 #include "texture.hpp"
 #include "util.hpp"
 
-unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, int* numChannels, bool* success, MeshN::TextureType materialType)
+unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, int* numChannels, bool* success,
+                                    MeshN::TextureType materialType)
 {
     int imageWidth{0};
     int imageHeight{0};
@@ -21,7 +22,8 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
     if (!Util::fileExists(path))
     {
         Util::beginError();
-        std::cout << "TEXTURE::LOAD_FROM_FILE::ERROR: Failed to load texture from path `" << path << "` - texture does not exist";
+        std::cout << "TEXTURE::LOAD_FROM_FILE::ERROR: Failed to load texture from path `" << path
+                  << "` - texture does not exist";
         Util::endError();
         if (success)
             *success = false;
@@ -30,7 +32,7 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
 
     // load image
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data {stbi_load(path, &imageWidth, &imageHeight, &imageChannels, 0)};
+    unsigned char* data{stbi_load(path, &imageWidth, &imageHeight, &imageChannels, 0)};
 
     // check if image was successfully loaded
     if (!data)
@@ -43,21 +45,21 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
     }
 
     // get internal format for tex. data
-    GLenum internalFormat {0};
+    GLenum internalFormat{0};
     switch (imageChannels)
     {
-        case 1: // grayscale
-            internalFormat = GL_RED;
-            break;
-        case 3:
-            internalFormat = GL_RGB;
-            break;
-        case 4:
-            internalFormat = GL_RGBA;
-            break;
-        default:
-            std::cout << "UNKNOWN NUMBER OF CHANNELS: " << imageChannels << std::endl;
-            break;
+    case 1: // grayscale
+        internalFormat = GL_RED;
+        break;
+    case 3:
+        internalFormat = GL_RGB;
+        break;
+    case 4:
+        internalFormat = GL_RGBA;
+        break;
+    default:
+        std::cout << "UNKNOWN NUMBER OF CHANNELS: " << imageChannels << std::endl;
+        break;
     }
 
     // texture ID
@@ -66,7 +68,8 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), imageWidth, imageHeight, 0, internalFormat, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, static_cast<GLint>(internalFormat), imageWidth, imageHeight, 0, internalFormat,
+                 GL_UNSIGNED_BYTE, data);
 
     glGenerateMipmap(GL_TEXTURE_2D);
     // tex wrap params
@@ -83,18 +86,18 @@ unsigned int TextureN::loadFromFile(const char* path, int* width, int* height, i
     {
         switch (materialType)
         {
-            case MeshN::TEXTURE_METALLIC:
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_BLUE);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_BLUE);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
-                break;
-            case MeshN::TEXTURE_ROUGHNESS:
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_GREEN);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_GREEN);
-                break;
-            default:
-                break;
+        case MeshN::TEXTURE_METALLIC:
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_BLUE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_BLUE);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_BLUE);
+            break;
+        case MeshN::TEXTURE_ROUGHNESS:
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_R, GL_GREEN);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_G, GL_GREEN);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_B, GL_GREEN);
+            break;
+        default:
+            break;
         }
     }
 
@@ -146,7 +149,9 @@ unsigned int TextureN::loadHDRMap(const char* path, bool* success)
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         *success = true;
-    } else {
+    }
+    else
+    {
         *success = false;
         hdrTexture = 0;
     }
@@ -155,10 +160,7 @@ unsigned int TextureN::loadHDRMap(const char* path, bool* success)
     return hdrTexture;
 }
 
-Texture::Texture(const std::string& name, EngineObject* manager)
-    : EngineObject{("TEXTURE " + name).c_str(), manager}
-{
-}
+Texture::Texture(const std::string& name, EngineObject* manager) : EngineObject{("TEXTURE " + name).c_str(), manager} {}
 
 bool Texture::loadFromFile(const char* path)
 {
@@ -177,22 +179,19 @@ void Texture::activate(const int slot) const
 }
 
 // ------- Texture Manager ------- //
-TextureManager::TextureManager(EngineObject* parent)
-    : EngineObject{"TextureManager", parent}
-{
-}
+TextureManager::TextureManager(EngineObject* parent) : EngineObject{"TextureManager", parent} {}
 
 // generate vertex buffers and stuff
 void TextureManager::generateBuffers()
 {
-    constexpr float TexRectVertices[] {
-        1.0f, 0.0f, 0.0f, 1.0f, 1.0f, // top right
+    constexpr float TexRectVertices[]{
+        1.0f, 0.0f,  0.0f, 1.0f, 1.0f, // top right
         1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // bottom right
         0.0f, -1.0f, 0.0f, 0.0f, 0.0f, // bottom left
-        0.0f, 0.0f, 0.0f, 0.0f, 1.0f // top left
+        0.0f, 0.0f,  0.0f, 0.0f, 1.0f // top left
     };
 
-    constexpr unsigned int TexRectIndices[] {
+    constexpr unsigned int TexRectIndices[]{
         0, 1, 3, // first Triangle
         1, 2, 3 // second Triangle
     };
@@ -229,7 +228,7 @@ void TextureManager::generateBuffers()
 void TextureManager::addTexture(const char* path, const char* name, Arena* arena)
 {
     // create new texture and add to arena
-    Texture* texture {new Texture{name, this}};
+    Texture* texture{new Texture{name, this}};
     arena->addObject(texture);
 
     // load texture
@@ -238,7 +237,9 @@ void TextureManager::addTexture(const char* path, const char* name, Arena* arena
         Util::beginError();
         std::cout << "TEXTURE_MANAGER::ADD_TEXTURE::ERROR: Failed to add texture `" << name << "`!";
         Util::endError();
-    } else {
+    }
+    else
+    {
         m_textures.insert(std::pair{std::string{name}, texture});
     }
 }
@@ -261,7 +262,8 @@ void TextureManager::activateTexture(const std::string& name, int slot) const
     if (textureExists(name))
     {
         getTexture(name)->activate(slot);
-    } else
+    }
+    else
     {
         Util::beginError();
         std::cout << "TEXTURE_MANAGER::ACTIVATE_TEXTURE::ERROR: Texture `" << name << "' does not exist!";
@@ -269,7 +271,4 @@ void TextureManager::activateTexture(const std::string& name, int slot) const
     }
 }
 
-bool TextureManager::textureExists(const std::string& name) const
-{
-    return m_textures.find(name) != m_textures.end();
-}
+bool TextureManager::textureExists(const std::string& name) const { return m_textures.find(name) != m_textures.end(); }

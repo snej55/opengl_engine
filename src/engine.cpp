@@ -1,6 +1,6 @@
 // gl libraries
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 // json library
 #include <JSON/json.hpp>
@@ -9,14 +9,13 @@
 #include "glm/ext/matrix_clip_space.hpp"
 using json = nlohmann::json;
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
 #include "engine.hpp"
 #include "util.hpp"
 
-Engine::Engine()
- : EngineObject{"Engine"}
+Engine::Engine() : EngineObject{"Engine"}
 {
     // memory manager
     m_arena = new Arena{this};
@@ -221,21 +220,12 @@ bool Engine::createWindow(const int width, const int height, const char* title)
 }
 
 // clear gl buffers
-void Engine::clear() const
-{
-    m_window->clear();
-}
+void Engine::clear() const { m_window->clear(); }
 
 // enable wireframe rendering
-void Engine::enableWireframe() const
-{
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-}
+void Engine::enableWireframe() const { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
 
-void Engine::disableWireframe() const
-{
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-}
+void Engine::disableWireframe() const { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
 
 void Engine::displayFrameTime()
 {
@@ -246,8 +236,8 @@ void Engine::displayFrameTime()
         m_deltaTimes.erase(m_deltaTimes.begin());
     }
 
-    const float sum {std::accumulate(m_deltaTimes.begin(), m_deltaTimes.end(), 0.0f)};
-    const float avgFrameTime {sum / static_cast<float>(m_deltaTimes.size())};
+    const float sum{std::accumulate(m_deltaTimes.begin(), m_deltaTimes.end(), 0.0f)};
+    const float avgFrameTime{sum / static_cast<float>(m_deltaTimes.size())};
 
     std::stringstream ss{};
     ss << "Frame time: " << static_cast<int>(avgFrameTime * 1000.f) << "ms";
@@ -280,15 +270,9 @@ bool Engine::createIOHandler()
     return true; // success!
 }
 
-bool Engine::getQuit() const
-{
-    return m_window->getShouldClose();
-}
+bool Engine::getQuit() const { return m_window->getShouldClose(); }
 
-bool Engine::getPressed(const int key) const
-{
-    return m_iohandler->getPressed(key);
-}
+bool Engine::getPressed(const int key) const { return m_iohandler->getPressed(key); }
 
 
 // ------ Clock ------ //
@@ -311,16 +295,10 @@ bool Engine::createClock()
 }
 
 // get delta time from clock
-float Engine::getDeltaTime() const
-{
-    return m_clock->getDeltaTime();
-}
+float Engine::getDeltaTime() const { return m_clock->getDeltaTime(); }
 
 // get time from clock
-float Engine::getTime() const
-{
-    return m_clock->getTime();
-}
+float Engine::getTime() const { return m_clock->getTime(); }
 
 // ------ Shader Manager ------ //
 bool Engine::createShaderManager()
@@ -328,7 +306,8 @@ bool Engine::createShaderManager()
     if (m_shaderManager != nullptr)
     {
         Util::beginError();
-        std::cout << "ENGINE::CREATE_SHADER_MANAGER::ERROR: Shader manager already exists at `" << m_shaderManager << "`";
+        std::cout << "ENGINE::CREATE_SHADER_MANAGER::ERROR: Shader manager already exists at `" << m_shaderManager
+                  << "`";
         Util::endError();
         return false;
     }
@@ -344,20 +323,11 @@ void Engine::addShader(const std::string& name, const char* fragPath, const char
     m_shaderManager->addShader(name, fragPath, vertPath, m_arena);
 }
 
-Shader* Engine::getShader(const std::string& name) const
-{
-    return m_shaderManager->getShader(name);
-}
+Shader* Engine::getShader(const std::string& name) const { return m_shaderManager->getShader(name); }
 
-void Engine::useShader(const std::string& name) const
-{
-    m_shaderManager->useShader(name);
-}
+void Engine::useShader(const std::string& name) const { m_shaderManager->useShader(name); }
 
-bool Engine::shaderExists(const std::string& name) const
-{
-    return m_shaderManager->shaderExists(name);
-}
+bool Engine::shaderExists(const std::string& name) const { return m_shaderManager->shaderExists(name); }
 
 // check builtin shaders
 bool Engine::checkShaders()
@@ -372,21 +342,22 @@ bool Engine::checkShaders()
     }
 
     // load json
-    std::ifstream file {"shaders/shaders.json"};
+    std::ifstream file{"shaders/shaders.json"};
     json data = json::parse(file); // NOTE: brace initialization doesn't work
 
     // check builtin shaders
     for (const auto& shader : data["builtin"])
     {
-        std::string name {shader["name"]};
-        std::string vertPath {"shaders/builtin/" + std::string(shader["shader"]["vert"])};
-        std::string fragPath {"shaders/builtin/" + std::string(shader["shader"]["frag"])};
+        std::string name{shader["name"]};
+        std::string vertPath{"shaders/builtin/" + std::string(shader["shader"]["vert"])};
+        std::string fragPath{"shaders/builtin/" + std::string(shader["shader"]["frag"])};
 
         // check if vertex shader exists
         if (!Util::fileExists(vertPath))
         {
             Util::beginError();
-            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find vertex shader for *" << name << "* at: `" << vertPath << "`!";
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find vertex shader for *" << name << "* at: `"
+                      << vertPath << "`!";
             Util::endError();
             file.close();
             return false;
@@ -396,7 +367,8 @@ bool Engine::checkShaders()
         if (!Util::fileExists(fragPath))
         {
             Util::beginError();
-            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find fragment shader for *" << name << "* at: `" << fragPath << "`!";
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find fragment shader for *" << name << "* at: `"
+                      << fragPath << "`!";
             Util::endError();
             file.close();
             return false;
@@ -408,15 +380,16 @@ bool Engine::checkShaders()
     // repeat for custom
     for (const auto& shader : data["custom"])
     {
-        std::string name {shader["name"]};
-        std::string vertPath {"shaders/" + std::string(shader["shader"]["vert"])};
-        std::string fragPath {"shaders/" + std::string(shader["shader"]["frag"])};
+        std::string name{shader["name"]};
+        std::string vertPath{"shaders/" + std::string(shader["shader"]["vert"])};
+        std::string fragPath{"shaders/" + std::string(shader["shader"]["frag"])};
 
         // check if vertex shader exists
         if (!Util::fileExists(vertPath))
         {
             Util::beginError();
-            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find vertex shader for *" << name << "* at: `" << vertPath << "`!";
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find vertex shader for *" << name << "* at: `"
+                      << vertPath << "`!";
             Util::endError();
             file.close();
             return false;
@@ -426,7 +399,8 @@ bool Engine::checkShaders()
         if (!Util::fileExists(fragPath))
         {
             Util::beginError();
-            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find fragment shader for *" << name << "* at: `" << fragPath << "`!";
+            std::cout << "ENGINE::CHECK_SHADERS::ERROR: Could not find fragment shader for *" << name << "* at: `"
+                      << fragPath << "`!";
             Util::endError();
             file.close();
             return false;
@@ -453,22 +427,22 @@ void Engine::loadShaders()
         return;
     }
 
-    std::ifstream file {"shaders/shaders.json"};
+    std::ifstream file{"shaders/shaders.json"};
     json data = json::parse(file);
     // load builtin shaders
     for (const auto& shader : data["builtin"])
     {
-        std::string name {shader["name"]};
-        std::string vertPath {"shaders/builtin/" + std::string(shader["shader"]["vert"])};
-        std::string fragPath {"shaders/builtin/" + std::string(shader["shader"]["frag"])};
+        std::string name{shader["name"]};
+        std::string vertPath{"shaders/builtin/" + std::string(shader["shader"]["vert"])};
+        std::string fragPath{"shaders/builtin/" + std::string(shader["shader"]["frag"])};
         addShader(name, fragPath.c_str(), vertPath.c_str());
     }
     // repeat for custom shaders
     for (const auto& shader : data["custom"])
     {
-        std::string name {shader["name"]};
-        std::string vertPath {"shaders/" + std::string(shader["shader"]["vert"])};
-        std::string fragPath {"shaders/" + std::string(shader["shader"]["frag"])};
+        std::string name{shader["name"]};
+        std::string vertPath{"shaders/" + std::string(shader["shader"]["vert"])};
+        std::string fragPath{"shaders/" + std::string(shader["shader"]["frag"])};
         addShader(name, fragPath.c_str(), vertPath.c_str());
     }
 
@@ -477,7 +451,7 @@ void Engine::loadShaders()
 
 void Engine::setBool(const std::string& name, const bool value, const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setBool(name, value);
@@ -486,7 +460,7 @@ void Engine::setBool(const std::string& name, const bool value, const std::strin
 
 void Engine::setInt(const std::string& name, const int value, const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setInt(name, value);
@@ -495,7 +469,7 @@ void Engine::setInt(const std::string& name, const int value, const std::string&
 
 void Engine::setFloat(const std::string& name, const float value, const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setFloat(name, value);
@@ -505,7 +479,7 @@ void Engine::setFloat(const std::string& name, const float value, const std::str
 // vectors
 void Engine::setVec2(const std::string& name, const glm::vec2& value, const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setVec2(name, value);
@@ -514,7 +488,7 @@ void Engine::setVec2(const std::string& name, const glm::vec2& value, const std:
 
 void Engine::setVec2(const std::string& name, const float x, const float y, const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setVec2(name, x, y);
@@ -523,16 +497,17 @@ void Engine::setVec2(const std::string& name, const float x, const float y, cons
 
 void Engine::setVec3(const std::string& name, const glm::vec3& value, const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setVec3(name, value);
     }
 }
 
-void Engine::setVec3(const std::string& name, const float x, const float y, const float z, const std::string& shaderName) const
+void Engine::setVec3(const std::string& name, const float x, const float y, const float z,
+                     const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setVec3(name, x, y, z);
@@ -541,16 +516,17 @@ void Engine::setVec3(const std::string& name, const float x, const float y, cons
 
 void Engine::setVec4(const std::string& name, const glm::vec4& value, const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setVec4(name, value);
     }
 }
 
-void Engine::setVec4(const std::string& name, const float x, const float y, const float z, const float w, const std::string& shaderName) const
+void Engine::setVec4(const std::string& name, const float x, const float y, const float z, const float w,
+                     const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setVec4(name, x, y, z, w);
@@ -560,7 +536,7 @@ void Engine::setVec4(const std::string& name, const float x, const float y, cons
 // matrices
 void Engine::setMat2(const std::string& name, const glm::mat2& value, const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setMat2(name, value);
@@ -569,7 +545,7 @@ void Engine::setMat2(const std::string& name, const glm::mat2& value, const std:
 
 void Engine::setMat3(const std::string& name, const glm::mat3& value, const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setMat3(name, value);
@@ -578,7 +554,7 @@ void Engine::setMat3(const std::string& name, const glm::mat3& value, const std:
 
 void Engine::setMat4(const std::string& name, const glm::mat4& value, const std::string& shaderName) const
 {
-    const Shader* shader {getShader(shaderName)};
+    const Shader* shader{getShader(shaderName)};
     if (shader != nullptr)
     {
         shader->setMat4(name, value);
@@ -592,7 +568,8 @@ bool Engine::createTextureManager()
     if (m_textureManager != nullptr)
     {
         Util::beginError();
-        std::cout << "ENGINE::CREATE_TEXTURE_MANAGER::ERROR: Texture manager already exists at `" << m_textureManager << "`";
+        std::cout << "ENGINE::CREATE_TEXTURE_MANAGER::ERROR: Texture manager already exists at `" << m_textureManager
+                  << "`";
         Util::endError();
         return false;
     }
@@ -609,24 +586,18 @@ void Engine::addTexture(const std::string& name, const char* path) const
     m_textureManager->addTexture(path, name.c_str(), m_arena);
 }
 
-Texture* Engine::getTexture(const std::string& name) const
-{
-    return m_textureManager->getTexture(name);
-}
+Texture* Engine::getTexture(const std::string& name) const { return m_textureManager->getTexture(name); }
 
 void Engine::activateTexture(const std::string& name, const int slot) const
 {
     m_textureManager->activateTexture(name, slot);
 }
 
-bool Engine::textureExists(const std::string& name) const
-{
-    return m_textureManager->textureExists(name);
-}
+bool Engine::textureExists(const std::string& name) const { return m_textureManager->textureExists(name); }
 
 void Engine::drawTexture(const std::string& name, const FRect& destination) const
 {
-    const Texture* tex {m_textureManager->getTexture(name)};
+    const Texture* tex{m_textureManager->getTexture(name)};
     if (!tex)
     {
         Util::beginError();
@@ -636,7 +607,7 @@ void Engine::drawTexture(const std::string& name, const FRect& destination) cons
     }
 
     // get shader from shader manager
-    const Shader* textureShader {m_shaderManager->getShader("texture")};
+    const Shader* textureShader{m_shaderManager->getShader("texture")};
     if (!textureShader)
     {
         Util::beginError();
@@ -685,12 +656,9 @@ void Engine::drawRect(const FRect& rect, const Color& color) const
 // lerp color rgb
 Color Engine::lerpColor(const Color& a, const Color& b, const float amount) const
 {
-    return Color{
-        static_cast<int>(Util::lerp(static_cast<float>(a.r), static_cast<float>(b.r), amount)),
-        static_cast<int>(Util::lerp(static_cast<float>(a.g), static_cast<float>(b.g), amount)),
-        static_cast<int>(Util::lerp(static_cast<float>(a.b), static_cast<float>(b.b), amount)),
-        255
-    };
+    return Color{static_cast<int>(Util::lerp(static_cast<float>(a.r), static_cast<float>(b.r), amount)),
+                 static_cast<int>(Util::lerp(static_cast<float>(a.g), static_cast<float>(b.g), amount)),
+                 static_cast<int>(Util::lerp(static_cast<float>(a.b), static_cast<float>(b.b), amount)), 255};
 }
 
 // lerp color rgba
@@ -721,10 +689,7 @@ bool Engine::createCamera()
     return true;
 }
 
-glm::mat4 Engine::getViewMatrix() const
-{
-    return m_camera->getViewMatrix();
-}
+glm::mat4 Engine::getViewMatrix() const { return m_camera->getViewMatrix(); }
 
 glm::mat4 Engine::getProjectionMatrix() const
 {
@@ -732,15 +697,9 @@ glm::mat4 Engine::getProjectionMatrix() const
                             static_cast<float>(getWidth()) / static_cast<float>(getHeight()), 0.1f, 100000.0f);
 }
 
-glm::vec3 Engine::getCameraPosition() const
-{
-    return m_camera->getPosition();
-}
+glm::vec3 Engine::getCameraPosition() const { return m_camera->getPosition(); }
 
-glm::mat4 Engine::getNormalMatrix(const glm::mat4& model) const
-{
-    return glm::transpose(glm::inverse(model));
-}
+glm::mat4 Engine::getNormalMatrix(const glm::mat4& model) const { return glm::transpose(glm::inverse(model)); }
 
 void Engine::setCameraEnabled(const bool value)
 {
@@ -770,20 +729,14 @@ void Engine::addModel(const std::string& name, const std::string& path) const
     m_modelManager->addModel(name, path, m_arena);
 }
 
-Model* Engine::getModel(const std::string& name) const
-{
-    return m_modelManager->getModel(name);
-}
+Model* Engine::getModel(const std::string& name) const { return m_modelManager->getModel(name); }
 
 void Engine::renderModel(const std::string& name, const Shader* shader) const
 {
     m_modelManager->renderModel(shader, name);
 }
 
-bool Engine::modelExists(const std::string& name) const
-{
-    return m_modelManager->modelExists(name);
-}
+bool Engine::modelExists(const std::string& name) const { return m_modelManager->modelExists(name); }
 
 // ------ Post Processor ------ //
 
@@ -792,7 +745,8 @@ bool Engine::createPostProcessor()
     if (m_postProcessor != nullptr)
     {
         Util::beginError();
-        std::cout << "ENGINE::CREATE_POST_PROCESSOR::ERROR: Post processor already exists at `" << m_postProcessor << "`";
+        std::cout << "ENGINE::CREATE_POST_PROCESSOR::ERROR: Post processor already exists at `" << m_postProcessor
+                  << "`";
         Util::endError();
         return false;
     }
@@ -802,33 +756,18 @@ bool Engine::createPostProcessor()
     return true;
 }
 
-void Engine::enablePostProcessing() const
-{
-    m_postProcessor->enable();
-}
+void Engine::enablePostProcessing() const { m_postProcessor->enable(); }
 
-void Engine::disablePostProcessing() const
-{
-    m_postProcessor->disable();
-}
+void Engine::disablePostProcessing() const { m_postProcessor->disable(); }
 
-void Engine::renderPostProcessing() const
-{
-    m_postProcessor->render(getShader("screenShader"));
-}
+void Engine::renderPostProcessing() const { m_postProcessor->render(getShader("screenShader")); }
 
-void Engine::updatePostProcessor(const int width, const int height) const
-{
-    m_postProcessor->generate(width, height);
-}
+void Engine::updatePostProcessor(const int width, const int height) const { m_postProcessor->generate(width, height); }
 
 
 // ------ Arena ------ //
 
-void Engine::addObject(EngineObject*& object) const
-{
-    m_arena->addObject(object);
-}
+void Engine::addObject(EngineObject*& object) const { m_arena->addObject(object); }
 
 void Engine::removeObject(EngineObject*& object) const
 {
@@ -838,16 +777,13 @@ void Engine::removeObject(EngineObject*& object) const
     }
 }
 
-void Engine::removeObjectID(const unsigned int id) const
-{
-    m_arena->removeObject(id);
-}
+void Engine::removeObjectID(const unsigned int id) const { m_arena->removeObject(id); }
 
 // ---- Window callbacks ---- //
 void Engine::mouse_callback(const double xPosIn, const double yPosIn)
 {
-    const float xPos {static_cast<float>(xPosIn)};
-    const float yPos {static_cast<float>(yPosIn)};
+    const float xPos{static_cast<float>(xPosIn)};
+    const float yPos{static_cast<float>(yPosIn)};
 
     if (m_camFirstMouse)
     {
@@ -856,8 +792,8 @@ void Engine::mouse_callback(const double xPosIn, const double yPosIn)
         m_camFirstMouse = false;
     }
 
-    const float xOffset {xPos - m_camLastX};
-    const float yOffset {m_camLastY - yPos}; // remember to reverse because of reversed coordinates
+    const float xOffset{xPos - m_camLastX};
+    const float yOffset{m_camLastY - yPos}; // remember to reverse because of reversed coordinates
 
     m_camLastX = xPos;
     m_camLastY = yPos;
@@ -865,7 +801,4 @@ void Engine::mouse_callback(const double xPosIn, const double yPosIn)
     m_camera->processMouseMovement(xOffset, yOffset);
 }
 
-void Engine::scroll_callback(const double yOffset) const
-{
-    m_camera->processMouseScroll(static_cast<float>(yOffset));
-}
+void Engine::scroll_callback(const double yOffset) const { m_camera->processMouseScroll(static_cast<float>(yOffset)); }

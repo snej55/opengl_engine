@@ -35,20 +35,21 @@ namespace MeshN
         std::string path;
         bool embedded;
     };
-}
+} // namespace MeshN
 
 class Mesh
 {
 public:
-    Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<MeshN::Texture>& textures);
+    Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices,
+         const std::vector<MeshN::Texture>& textures);
 
     void render(const Shader* shader) const;
     void renderPBR(const Shader* pbrShader) const;
 
     void free() const;
 
-    [[nodiscard]] const std::vector<MeshN::Vertex>& getVertices() const {return m_vertices;}
-    [[nodiscard]] const std::vector<unsigned int>& getIndices() const {return m_indices;}
+    [[nodiscard]] const std::vector<MeshN::Vertex>& getVertices() const { return m_vertices; }
+    [[nodiscard]] const std::vector<unsigned int>& getIndices() const { return m_indices; }
 
 private:
     std::vector<MeshN::Vertex> m_vertices;

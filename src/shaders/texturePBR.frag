@@ -2,13 +2,15 @@
 
 out vec4 FragColor;
 
-in VS_OUT {
+in VS_OUT
+{
     vec3 FragPos;
     vec2 TexCoords;
     vec3 TangentLightPos;
     vec3 TangentViewPos;
     vec3 TangentFragPos;
-} fs_in;
+}
+fs_in;
 
 uniform vec3 lightColor;
 
@@ -25,10 +27,7 @@ uniform vec3 lightPos;
 const float PI = 3.14159265359;
 
 // F0 = surface reflection at zero incidence
-vec3 fresnelSchlick(float cosTheta, vec3 F0)
-{
-    return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
-}
+vec3 fresnelSchlick(float cosTheta, vec3 F0) { return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0); }
 
 // normal distrobution function
 float distroGGX(vec3 norm, vec3 h, float roughness)

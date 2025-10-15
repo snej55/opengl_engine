@@ -21,7 +21,7 @@ public:
     // check if key has been pressed
     [[nodiscard]] bool getPressed(int key) const;
     // check if ESC has been pressed
-    [[nodiscard]] bool getQuit() const {return m_quit;}
+    [[nodiscard]] bool getQuit() const { return m_quit; }
 
 private:
     // for glfwGetKey

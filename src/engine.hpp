@@ -3,17 +3,17 @@
 
 #include <glad/glad.h>
 
-#include "engine_types.hpp"
-#include "window.hpp"
 #include "arena.hpp"
-#include "iohandler.hpp"
-#include "clock.hpp"
-#include "shader.hpp"
-#include "texture.hpp"
-#include "shapes.hpp"
 #include "camera.hpp"
+#include "clock.hpp"
+#include "engine_types.hpp"
+#include "iohandler.hpp"
 #include "model.hpp"
 #include "postprocessing.hpp"
+#include "shader.hpp"
+#include "shapes.hpp"
+#include "texture.hpp"
+#include "window.hpp"
 
 class Engine final : public EngineObject
 {
@@ -32,9 +32,9 @@ public:
     // create window object
     bool createWindow(int width, int height, const char* title);
     // window getters
-    [[nodiscard]] Window* getWindow() const {return m_window;}
-    [[nodiscard]] int getWidth() const {return m_window->getWidth();}
-    [[nodiscard]] int getHeight() const {return m_window->getHeight();}
+    [[nodiscard]] Window* getWindow() const { return m_window; }
+    [[nodiscard]] int getWidth() const { return m_window->getWidth(); }
+    [[nodiscard]] int getHeight() const { return m_window->getHeight(); }
 
     // clear screen
     void clear() const;
@@ -50,7 +50,7 @@ public:
 
     // create iohandler for keyboard input
     bool createIOHandler();
-    [[nodiscard]] IOHandler* getIOHandler() const {return m_iohandler;}
+    [[nodiscard]] IOHandler* getIOHandler() const { return m_iohandler; }
 
     // check if ESC has been pressed from IOHandler
     [[nodiscard]] bool getQuit() const;
@@ -60,7 +60,7 @@ public:
 
     // create clock
     bool createClock();
-    [[nodiscard]] Clock* getClock() const {return m_clock;}
+    [[nodiscard]] Clock* getClock() const { return m_clock; }
 
     // get delta time from clock
     [[nodiscard]] float getDeltaTime() const;
@@ -71,7 +71,7 @@ public:
 
     // create shader manager
     bool createShaderManager();
-    [[nodiscard]] ShaderManager* getShaderManager() const {return m_shaderManager;}
+    [[nodiscard]] ShaderManager* getShaderManager() const { return m_shaderManager; }
 
     // shader manager methods
     void addShader(const std::string& name, const char* fragPath, const char* vertPath) const;
@@ -84,8 +84,8 @@ public:
     // load shaders from shaders.json
     void loadShaders();
 
-    [[nodiscard]] bool getShadersChecked() const {return m_checkedShaders;}
-    [[nodiscard]] bool getShadersLoaded() const {return m_loadedShaders;}
+    [[nodiscard]] bool getShadersChecked() const { return m_checkedShaders; }
+    [[nodiscard]] bool getShadersLoaded() const { return m_loadedShaders; }
 
     // shader uniform setters
     // shader uniforms
@@ -111,7 +111,7 @@ public:
     // ------ Textures ------ //
 
     bool createTextureManager();
-    [[nodiscard]] TextureManager* getTextureManager() const {return m_textureManager;}
+    [[nodiscard]] TextureManager* getTextureManager() const { return m_textureManager; }
 
     // texture manager methods
     void addTexture(const std::string& name, const char* path) const;
@@ -124,7 +124,7 @@ public:
     // ------ Shapes ------ //
 
     bool createShapeManager();
-    [[nodiscard]] ShapeManager* getShapeManager() const {return m_shapeManager;}
+    [[nodiscard]] ShapeManager* getShapeManager() const { return m_shapeManager; }
 
     void drawRect(const FRect& rect, const Color& color) const;
 
@@ -138,7 +138,7 @@ public:
     // ------ Camera ------ //
 
     bool createCamera();
-    [[nodiscard]] Camera* getCamera() const {return m_camera;}
+    [[nodiscard]] Camera* getCamera() const { return m_camera; }
 
     // view & perspective matrices getters
     [[nodiscard]] glm::mat4 getViewMatrix() const;
@@ -150,12 +150,12 @@ public:
 
     // enable or disable window mouse capture
     void setCameraEnabled(bool value);
-    [[nodiscard]] bool getCameraEnabled() const {return m_cameraEnabled;};
+    [[nodiscard]] bool getCameraEnabled() const { return m_cameraEnabled; };
 
     // ------ Models ------ //
 
     bool createModelManager();
-    [[nodiscard]] ModelManager* getModelManager() const {return m_modelManager;}
+    [[nodiscard]] ModelManager* getModelManager() const { return m_modelManager; }
 
     void addModel(const std::string& name, const std::string& path) const;
     [[nodiscard]] Model* getModel(const std::string& name) const;
@@ -165,7 +165,7 @@ public:
     // ------ Post Processor ------ //
 
     bool createPostProcessor();
-    [[nodiscard]] PostProcessor* getPostProcessor() const {return m_postProcessor;}
+    [[nodiscard]] PostProcessor* getPostProcessor() const { return m_postProcessor; }
 
     // enable and disable rendering to post processor
     void enablePostProcessing() const;
@@ -193,34 +193,34 @@ public:
 
 private:
     // memory manager
-    Arena* m_arena {nullptr};
+    Arena* m_arena{nullptr};
 
     // ----- Engine components ----- //
 
     // core components
-    Window* m_window {nullptr};
-    IOHandler* m_iohandler {nullptr};
-    Clock* m_clock {nullptr};
+    Window* m_window{nullptr};
+    IOHandler* m_iohandler{nullptr};
+    Clock* m_clock{nullptr};
 
     // managers
-    ShaderManager* m_shaderManager {nullptr};
-    TextureManager* m_textureManager {nullptr};
-    ShapeManager* m_shapeManager {nullptr};
-    ModelManager* m_modelManager {nullptr};
+    ShaderManager* m_shaderManager{nullptr};
+    TextureManager* m_textureManager{nullptr};
+    ShapeManager* m_shapeManager{nullptr};
+    ModelManager* m_modelManager{nullptr};
 
     // other components
-    PostProcessor* m_postProcessor {nullptr};
+    PostProcessor* m_postProcessor{nullptr};
 
     // camera stuff
-    Camera* m_camera {nullptr};
-    float m_camLastX {};
-    float m_camLastY {};
+    Camera* m_camera{nullptr};
+    float m_camLastX{};
+    float m_camLastY{};
 
     // flags
-    bool m_checkedShaders {false}; // shaders.json checked
-    bool m_loadedShaders {false}; // shaders loaded
-    bool m_camFirstMouse {true}; // first mouse movement
-    bool m_cameraEnabled {false}; // camera enabled
+    bool m_checkedShaders{false}; // shaders.json checked
+    bool m_loadedShaders{false}; // shaders loaded
+    bool m_camFirstMouse{true}; // first mouse movement
+    bool m_cameraEnabled{false}; // camera enabled
 
     // miscallaneous stuff
     std::vector<float> m_deltaTimes{};

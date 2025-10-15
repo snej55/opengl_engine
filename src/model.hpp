@@ -1,16 +1,16 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include "engine_types.hpp"
 #include "mesh.hpp"
 #include "shader.hpp"
-#include "engine_types.hpp"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
 
 class Model final : public EngineObject
 {
@@ -34,8 +34,10 @@ private:
     void processNode(const aiNode* node, const aiScene* scene);
     Mesh processMesh(const aiMesh* mesh, const aiScene* scene);
 
-    std::vector<MeshN::Texture> loadMaterialTextures(const aiScene* scene, const aiMaterial* mat, aiTextureType type, MeshN::TextureType typeName);
-    static unsigned int loadEmbeddedTexture(const aiTexture* texture, bool* success = nullptr, MeshN::TextureType materialType = MeshN::TEXTURE_NONE);
+    std::vector<MeshN::Texture> loadMaterialTextures(const aiScene* scene, const aiMaterial* mat, aiTextureType type,
+                                                     MeshN::TextureType typeName);
+    static unsigned int loadEmbeddedTexture(const aiTexture* texture, bool* success = nullptr,
+                                            MeshN::TextureType materialType = MeshN::TEXTURE_NONE);
 };
 
 class ModelManager final : public EngineObject

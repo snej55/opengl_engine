@@ -3,11 +3,11 @@
 
 #include <glm/glm.hpp>
 
-#include <string>
 #include <map>
+#include <string>
 
-#include "engine_types.hpp"
 #include "arena.hpp"
+#include "engine_types.hpp"
 
 class Shader final : public EngineObject
 {
@@ -41,7 +41,7 @@ public:
     void setMat3(const std::string& name, const glm::mat3& value) const;
     void setMat4(const std::string& name, const glm::mat4& value) const;
 
-    [[nodiscard]] std::string_view getShaderName() const {return m_shaderName;}
+    [[nodiscard]] std::string_view getShaderName() const { return m_shaderName; }
 
 protected:
     unsigned int m_ID{0};

@@ -1,20 +1,14 @@
-#include "engine.hpp"
 #include "window.hpp"
+#include "engine.hpp"
 #include "util.hpp"
 
 #include <iostream>
 
 // initialize EngineObject
-Window::Window(EngineObject* parent)
- : EngineObject{"Window", parent}
-{
-}
+Window::Window(EngineObject* parent) : EngineObject{"Window", parent} {}
 
 // free
-Window::~Window()
-{
-    free();
-}
+Window::~Window() { free(); }
 
 // create glfw window
 bool Window::init(const int width, const int height, const char* title)
@@ -39,7 +33,8 @@ bool Window::init(const int width, const int height, const char* title)
     setHeight(height);
     setTitle(title); // implicit conversion
 
-    std::cout << "WINDOW::INIT: Created GLFW window: {dimensions: " << width << " * " << height << ", title: " << title << "}\n";
+    std::cout << "WINDOW::INIT: Created GLFW window: {dimensions: " << width << " * " << height << ", title: " << title
+              << "}\n";
 
     // success!
     return true;
@@ -67,10 +62,7 @@ void Window::createViewPort()
 }
 
 // checks if window should close
-bool Window::getShouldClose() const
-{
-    return glfwWindowShouldClose(m_window) || getQuit();
-}
+bool Window::getShouldClose() const { return glfwWindowShouldClose(m_window) || getQuit(); }
 
 // clear screen
 void Window::clear() const
@@ -136,15 +128,12 @@ void Window::mouse_callback(const double xpos, const double ypos) const
     dynamic_cast<Engine*>(m_parent)->mouse_callback(xpos, ypos);
 }
 
-void Window::scroll_callback(const double yoffset) const
-{
-    dynamic_cast<Engine*>(m_parent)->scroll_callback(yoffset);
-}
+void Window::scroll_callback(const double yoffset) const { dynamic_cast<Engine*>(m_parent)->scroll_callback(yoffset); }
 
 // glfw callbacks
 void Window::win_framebuffer_size_callback(GLFWwindow* window, const int width, const int height)
 {
-    if (Window* handler{static_cast<Window*>(glfwGetWindowUserPointer(window))})
+    if (Window * handler{static_cast<Window*>(glfwGetWindowUserPointer(window))})
     {
         handler->framebuffer_size_callback(width, height);
     }
@@ -152,7 +141,7 @@ void Window::win_framebuffer_size_callback(GLFWwindow* window, const int width, 
 
 void Window::win_mouse_callback(GLFWwindow* window, const double xpos, const double ypos)
 {
-    if (Window* handler{static_cast<Window*>(glfwGetWindowUserPointer(window))})
+    if (Window * handler{static_cast<Window*>(glfwGetWindowUserPointer(window))})
     {
         handler->mouse_callback(xpos, ypos);
     }
@@ -160,7 +149,7 @@ void Window::win_mouse_callback(GLFWwindow* window, const double xpos, const dou
 
 void Window::win_scroll_callback(GLFWwindow* window, const double xoffset, const double yoffset)
 {
-    if (Window* handler{static_cast<Window*>(glfwGetWindowUserPointer(window))})
+    if (Window * handler{static_cast<Window*>(glfwGetWindowUserPointer(window))})
     {
         handler->scroll_callback(yoffset);
     }

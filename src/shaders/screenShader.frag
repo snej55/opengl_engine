@@ -12,7 +12,8 @@ uniform sampler2D screenTexture;
 const float gamma = 2.2;
 
 // https://github.com/KhronosGroup/ToneMapping/tree/main/PBR_Neutral
-vec3 PBRNeutralToneMapping(vec3 color) {
+vec3 PBRNeutralToneMapping(vec3 color)
+{
     const float startCompression = 0.8 - 0.04;
     const float desaturation = 0.15;
 
@@ -21,7 +22,8 @@ vec3 PBRNeutralToneMapping(vec3 color) {
     color -= offset;
 
     float peak = max(color.r, max(color.g, color.b));
-    if (peak < startCompression) return color;
+    if (peak < startCompression)
+        return color;
 
     const float d = 1. - startCompression;
     float newPeak = 1. - d * d / (peak + d - startCompression);

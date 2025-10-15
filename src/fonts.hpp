@@ -9,8 +9,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <string>
 #include <map>
+#include <string>
 
 #include "engine_types.hpp"
 #include "shader.hpp"
@@ -33,22 +33,23 @@ public:
     void free() const;
 
     // render text
-    void renderText(const Shader& shader, const std::string& text, float x, float y, float scale, const glm::vec3&& color);
+    void renderText(const Shader& shader, const std::string& text, float x, float y, float scale,
+                    const glm::vec3&& color);
 
     // update projection matrix with framebuffer dimensions on resize
     void updateProjection(float width, float height);
 
     // getters & setters for font face and library
-    [[nodiscard]] const FT_Face& getFace() const {return m_face;}
-    [[nodiscard]] const FT_Library& getLibrary() const {return m_FT;}
+    [[nodiscard]] const FT_Face& getFace() const { return m_face; }
+    [[nodiscard]] const FT_Library& getLibrary() const { return m_FT; }
 
     // font path and loaded flag
-    [[nodiscard]] std::string_view getFontPath() const {return m_fontPath;}
-    [[nodiscard]] bool getLoaded() const {return m_loaded;}
+    [[nodiscard]] std::string_view getFontPath() const { return m_fontPath; }
+    [[nodiscard]] bool getLoaded() const { return m_loaded; }
 
     // vertex array object & vertex buffer object
-    [[nodiscard]] unsigned int getVAO() const {return m_VAO;}
-    [[nodiscard]] unsigned int getVBO() const {return m_VBO;}
+    [[nodiscard]] unsigned int getVAO() const { return m_VAO; }
+    [[nodiscard]] unsigned int getVBO() const { return m_VBO; }
 
 private:
     FT_Face m_face{}; // font face

@@ -7,7 +7,8 @@
 
 #include "engine_types.hpp"
 
-class Window final : public EngineObject {
+class Window final : public EngineObject
+{
 public:
     explicit Window(EngineObject* parent); // initialize EngineObject
     ~Window() override; // free
@@ -23,9 +24,9 @@ public:
 
     // --- Window management stuff ---
     // tell window whether to quit or not
-    void setQuit(const bool val) {m_quit = val;};
+    void setQuit(const bool val) { m_quit = val; };
     // check whether window has been told to quit
-    [[nodiscard]] bool getQuit() const {return m_quit;}
+    [[nodiscard]] bool getQuit() const { return m_quit; }
     // checks if window should close
     [[nodiscard]] bool getShouldClose() const;
     // clear screen
@@ -60,14 +61,14 @@ public:
     void scroll_callback(double yoffset) const;
 
 private:
-    int m_width { 0 };
-    int m_height { 0 };
-    std::string m_title {};
+    int m_width{0};
+    int m_height{0};
+    std::string m_title{};
 
     // flags
     bool m_quit{false}; // quit
 
-    GLFWwindow* m_window { nullptr };
+    GLFWwindow* m_window{nullptr};
 
     // glfw callbacks
     static void win_framebuffer_size_callback(GLFWwindow* window, int width, int height);

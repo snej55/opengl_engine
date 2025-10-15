@@ -1,8 +1,8 @@
-#include <glad/glad.h>
 #include "mesh.hpp"
+#include <glad/glad.h>
 
-Mesh::Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<MeshN::Texture>& textures)
- : m_vertices{vertices}, m_indices{indices}, m_textures{textures}
+Mesh::Mesh(const std::vector<MeshN::Vertex>& vertices, const std::vector<unsigned int>& indices,
+           const std::vector<MeshN::Texture>& textures) : m_vertices{vertices}, m_indices{indices}, m_textures{textures}
 {
     setupMesh();
 }
@@ -26,24 +26,24 @@ void Mesh::renderPBR(const Shader* pbrShader) const
 
         switch (m_textures[i].type)
         {
-            case MeshN::TEXTURE_ALBEDO:
-                textureType = "albedoMap";
-                break;
-            case MeshN::TEXTURE_AO:
-                textureType = "aoMap";
-                break;
-            case MeshN::TEXTURE_METALLIC:
-                textureType = "metallicMap";
-                break;
-            case MeshN::TEXTURE_ROUGHNESS:
-                textureType = "roughnessMap";
-                break;
-            case MeshN::TEXTURE_NORMAL:
-                textureType = "normalMap";
-                break;
-            default:
-                textureType = "unknown";
-                break;
+        case MeshN::TEXTURE_ALBEDO:
+            textureType = "albedoMap";
+            break;
+        case MeshN::TEXTURE_AO:
+            textureType = "aoMap";
+            break;
+        case MeshN::TEXTURE_METALLIC:
+            textureType = "metallicMap";
+            break;
+        case MeshN::TEXTURE_ROUGHNESS:
+            textureType = "roughnessMap";
+            break;
+        case MeshN::TEXTURE_NORMAL:
+            textureType = "normalMap";
+            break;
+        default:
+            textureType = "unknown";
+            break;
         }
 
         // don't render unknown texture
@@ -78,20 +78,26 @@ void Mesh::setupMesh()
     glBindVertexArray(meshVAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, meshVBO);
-    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(m_vertices.size() * sizeof(MeshN::Vertex)), m_vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(m_vertices.size() * sizeof(MeshN::Vertex)), m_vertices.data(),
+                 GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(m_indices.size() * sizeof(unsigned int)), m_indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(m_indices.size() * sizeof(unsigned int)),
+                 m_indices.data(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(MeshN::Vertex), reinterpret_cast<void*>(0));
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(MeshN::Vertex), reinterpret_cast<void*>(offsetof(MeshN::Vertex, normal)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(MeshN::Vertex),
+                          reinterpret_cast<void*>(offsetof(MeshN::Vertex, normal)));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(MeshN::Vertex), reinterpret_cast<void*>(offsetof(MeshN::Vertex, texCoords)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(MeshN::Vertex),
+                          reinterpret_cast<void*>(offsetof(MeshN::Vertex, texCoords)));
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(MeshN::Vertex), reinterpret_cast<void*>(offsetof(MeshN::Vertex, tangent)));
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(MeshN::Vertex),
+                          reinterpret_cast<void*>(offsetof(MeshN::Vertex, tangent)));
     glEnableVertexAttribArray(3);
-    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(MeshN::Vertex), reinterpret_cast<void*>(offsetof(MeshN::Vertex, biTangent)));
+    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(MeshN::Vertex),
+                          reinterpret_cast<void*>(offsetof(MeshN::Vertex, biTangent)));
     glEnableVertexAttribArray(4);
 
     // not really necessary but just in case

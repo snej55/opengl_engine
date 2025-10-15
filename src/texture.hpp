@@ -1,21 +1,22 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include <string>
 #include <map>
+#include <string>
 
-#include "engine_types.hpp"
 #include "arena.hpp"
+#include "engine_types.hpp"
 #include "mesh.hpp"
 
 namespace TextureN
 {
     // returns texture id without having to create new Texture*
-    unsigned int loadFromFile(const char* path, int* width = nullptr, int* height = nullptr, int* numChannels = nullptr, bool* success = nullptr, MeshN::TextureType materialType = MeshN::TEXTURE_NONE);
+    unsigned int loadFromFile(const char* path, int* width = nullptr, int* height = nullptr, int* numChannels = nullptr,
+                              bool* success = nullptr, MeshN::TextureType materialType = MeshN::TEXTURE_NONE);
 
     // load hdr irradiance map
     unsigned int loadHDRMap(const char* path, bool* success);
-}
+} // namespace TextureN
 
 // Basic texture wrapper class.
 class Texture final : public EngineObject
@@ -30,14 +31,14 @@ public:
     void activate(int slot) const;
 
     // Get GL_TEXTURE ID.
-    [[nodiscard]] unsigned int getTex() const {return m_TEX;}
+    [[nodiscard]] unsigned int getTex() const { return m_TEX; }
 
     // Get width of texture.
-    [[nodiscard]] int getWidth() const {return m_width;}
+    [[nodiscard]] int getWidth() const { return m_width; }
     // Get height of texture.
-    [[nodiscard]] int getHeight() const {return m_height;}
+    [[nodiscard]] int getHeight() const { return m_height; }
     // Get number of color channels of texture.
-    [[nodiscard]] int getNumChannels() const {return m_numChannels;}
+    [[nodiscard]] int getNumChannels() const { return m_numChannels; }
 
 private:
     unsigned int m_TEX{0};
@@ -70,9 +71,9 @@ public:
     [[nodiscard]] bool textureExists(const std::string& name) const;
 
     // vertex buffer getters and setters
-    [[nodiscard]] unsigned int getVAO() const {return m_VAO;}
-    [[nodiscard]] unsigned int getVBO() const {return m_VBO;}
-    [[nodiscard]] unsigned int getEBO() const {return m_EBO;}
+    [[nodiscard]] unsigned int getVAO() const { return m_VAO; }
+    [[nodiscard]] unsigned int getVBO() const { return m_VBO; }
+    [[nodiscard]] unsigned int getEBO() const { return m_EBO; }
 
 private:
     std::map<std::string, Texture*> m_textures{};

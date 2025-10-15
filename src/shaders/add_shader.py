@@ -22,6 +22,7 @@ void main()
 }
 """
 
+
 # save shader files and add shader to shaders.json
 def save(shader_name: str, builtin: bool = False) -> None:
     # load shaders.json and check if shader exists
@@ -55,19 +56,16 @@ def save(shader_name: str, builtin: bool = False) -> None:
 
     # add shader to shaders.json
     with open("shaders.json", "w") as f:
-        shaders[shader_type].append({
-            "name": shader_name,
-            "shader": {
-                "vert": vert_path,
-                "frag": frag_path
-            }
-        })
+        shaders[shader_type].append(
+            {"name": shader_name, "shader": {"vert": vert_path, "frag": frag_path}}
+        )
         json.dump(shaders, f, indent=4, sort_keys=True)
 
     print(f"Added shader `{shader_name}` to shaders.json")
 
+
 # input shader
 if __name__ == "__main__":
     name = input("Enter shader name: ")
-    if name != '':
+    if name != "":
         save(name)
