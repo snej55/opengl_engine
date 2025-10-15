@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
 
-#include "glm/ext/matrix_transform.hpp"
+#include <glm/ext/matrix_transform.hpp>
 #include "src/engine.hpp"
+#include "src/texture.hpp"
+#include "src/util.hpp"
 
 int main()
 {
@@ -13,6 +15,7 @@ int main()
         std::cout << "Failed to initialize engine!\n";
         return 1;
     }
+
     std::cout << "Initialized engine!\n";
     engine.setCameraEnabled(true);
 
@@ -31,6 +34,16 @@ int main()
 
     glm::vec3 lightPos{1.0f, 1.0f, 1.0f};
 
+    // hdr irradiance map
+    bool success;
+    unsigned int hdrMap{TextureN::loadHDRMap("data/skyboxes/golden_gate.hdr", &success)};
+    if (!success)
+    {
+        Util::beginError();
+        std::cout << "ERROR: Failed to load HDR map!" << std::endl;
+        Util::endError();
+    }
+
     while (!engine.getQuit())
     {
         engine.enablePostProcessing();
@@ -43,10 +56,8 @@ int main()
         engine.setVec3("viewPos", engine.getCameraPosition(), "lightPBR");
         engine.setMat4("view", engine.getViewMatrix(), "lightPBR");
         engine.setMat4("projection", engine.getProjectionMatrix(), "lightPBR");
-        engine.setVec3("lightPos", lightPos, "lightPBR");
         engine.setVec3("lightColor", glm::vec3{1.0f}, "lightPBR");
 
-        engine.setFloat("roughness", 0.2, "lightPBR");
         engine.setVec3("albedo", glm::vec3{0.5, 0.1f, 0.7f}, "lightPBR");
 
         engine.setFloat("metallic", 0.0f, "lightPBR");
