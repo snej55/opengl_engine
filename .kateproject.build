@@ -3,9 +3,9 @@
     "target_sets": [
         {
             "cmake_config": "Debug",
-            "directory": "/home/jenskromdijk/Documents/coding/opengl_project/build",
+            "directory": "/home/jenskromdijk/projects/opengl_engine/build",
             "loaded_via_cmake": true,
-            "name": "main@/home/jenskromdijk/Documents/coding/opengl_project/build - [Debug]",
+            "name": "main@/home/jenskromdijk/projects/opengl_engine/build - [Debug]",
             "targets": null
         }
     ]

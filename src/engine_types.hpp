@@ -6,8 +6,8 @@
 #ifndef ENGINE_TYPES
 #define ENGINE_TYPES
 
-#include <iostream>
 #include <string>
+#include <iostream>
 
 class EngineObject
 {

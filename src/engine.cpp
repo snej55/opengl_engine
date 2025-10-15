@@ -1,6 +1,6 @@
 // gl libraries
-#include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 // json library
 #include <JSON/json.hpp>
@@ -9,8 +9,8 @@
 #include "glm/ext/matrix_clip_space.hpp"
 using json = nlohmann::json;
 
-#include <fstream>
 #include <iostream>
+#include <fstream>
 
 #include "engine.hpp"
 #include "util.hpp"

@@ -1,5 +1,5 @@
-#include "window.hpp"
 #include "engine.hpp"
+#include "window.hpp"
 #include "util.hpp"
 
 #include <iostream>
