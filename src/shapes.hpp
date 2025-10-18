@@ -1,6 +1,7 @@
 #ifndef SHAPES_H
 #define SHAPES_H
 
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 
 #include "engine_types.hpp"
