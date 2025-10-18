@@ -104,7 +104,6 @@ int main()
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-
     // reset window viewport
     glViewport(0, 0, engine.getWidth(), engine.getHeight());
     while (!engine.getQuit())
@@ -152,6 +151,13 @@ int main()
             light->renderPBR(engine.getShader("texturePBR"));
         }
 
+        engine.useShader("skybox");
+        engine.setMat4("view", engine.getViewMatrix(), "skybox");
+        engine.setMat4("projection", engine.getProjectionMatrix(), "skybox");
+        engine.setInt("environmentMap", 0, "skybox");
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
+        renderCube();
         engine.disablePostProcessing();
         engine.renderPostProcessing();
 

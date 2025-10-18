@@ -74,6 +74,7 @@ bool Engine::init(const int width, const int height, const char* title)
 
     // configure global opengl state
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
 
     std::cout << "ENGINE::INIT: Initialized global OpenGL state!\n";
 
