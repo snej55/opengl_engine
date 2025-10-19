@@ -64,6 +64,13 @@
                 "frag": "skybox.frag",
                 "vert": "skybox.vert"
             }
-        }
+        },
+	{
+	    "name": "irConvolution",
+	    "shader": {
+		"frag": "irConvolution.frag",
+		"vert": "cubeMap.vert"
+	    }
+	}
     ]
 }
