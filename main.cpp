@@ -123,6 +123,12 @@ int main()
     glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 32, 32);
 
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    {
+	Util::beginError();
+	std::cout << "ERROR: Framebuffer not complete!" << std::endl;
+	Util::endError();
+    }
     engine.useShader("irConvolution");
     engine.setInt("environmentMap", 0, "irConvolution");
     engine.setMat4("projection", captureProjection, "irConvolution");
@@ -134,8 +140,7 @@ int main()
     for (unsigned int i{0}; i < 6; ++i)
     {
         engine.setMat4("view", captureViews[i], "irConvolution");
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradianceMap,
-                               0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradianceMap, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         renderCube();
