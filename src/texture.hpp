@@ -16,6 +16,9 @@ namespace TextureN
 
     // load hdr irradiance map (for IBL)
     unsigned int loadHDRMap(const char* path, bool* success);
+
+    // load dds texture with mipmaps (for IBL)
+    unsigned int loadDDS(const char* path, bool* success);
 } // namespace TextureN
 
 // Basic texture wrapper class.
