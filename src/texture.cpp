@@ -169,7 +169,7 @@ unsigned int TextureN::loadHDRMap(const char* path, bool* success)
 // load dds file
 unsigned int TextureN::loadDDS(const char* path, bool* success)
 {
-    gli::texture tex {gli::load(path)};
+    gli::texture tex{gli::load(path)};
     if (tex.empty())
     {
         *success = false;
@@ -177,8 +177,8 @@ unsigned int TextureN::loadDDS(const char* path, bool* success)
     }
 
     gli::gl GL{gli::gl::PROFILE_GL33};
-    const gli::gl::format format {GL.translate(tex.format(), tex.swizzles())};
-    GLenum target {GL.translate(tex.target())};
+    const gli::gl::format format{GL.translate(tex.format(), tex.swizzles())};
+    GLenum target{GL.translate(tex.target())};
 
     unsigned int texID;
     glGenTextures(1, &texID);
@@ -191,31 +191,59 @@ unsigned int TextureN::loadDDS(const char* path, bool* success)
     glTexParameteri(target, GL_TEXTURE_SWIZZLE_A, format.Swizzles[3]);
 
     const glm::tvec3<GLsizei> texExtent{tex.extent()};
-    const GLsizei faceTotal {static_cast<GLsizei>(tex.layers() * tex.faces())};
+    const GLsizei faceTotal{static_cast<GLsizei>(tex.layers() * tex.faces())};
 
-    switch(tex.target())
-     {
-        case gli::TARGET_1D:
+    switch (tex.target())
     {
-        int width {texExtent.x};
-        for (unsigned int i{0}; i < tex.levels(); ++i)
+    case gli::TARGET_1D:
         {
-            glTexImage1D(target, i, format.Internal, width, 0, format.External, format.Type, nullptr);
-            width = std::max(1, (width / 2));
+            int width{texExtent.x};
+            for (unsigned int i{0}; i < tex.levels(); ++i)
+            {
+                glTexImage1D(target, i, format.Internal, width, 0, format.External, format.Type, nullptr);
+                width = std::max(1, (width / 2));
+            }
+            break;
+        }
+    case gli::TARGET_1D_ARRAY:
+        {
+            int width{texExtent.x};
+            const int height{texExtent.y};
+            for (unsigned int i{0}; i < tex.levels(); ++i)
+            {
+                glTexImage2D(target, i, format.Internal, width, height, 0, format.External, format.Type, nullptr);
+                width = std::max(1, (width / 2));
+            }
+            break;
+        }
+    case gli::TARGET_2D:
+        {
+            int width{texExtent.x};
+            int height{texExtent.y};
+            for (unsigned int i{0}; i < tex.levels(); ++i)
+            {
+                glTexImage2D(target, i, format.Internal, width, height, 0, format.External, format.Type, nullptr);
+                width = std::max(1, (width / 2));
+                height = std::max(1, (height / 2));
+            }
+            break;
+        }
+    case gli::TARGET_CUBE:
+        {
+            int width{texExtent.x};
+            for (unsigned int i{0}; i < tex.levels(); ++i)
+            {
+
+            }
         }
         break;
+    case gli::TARGET_2D_ARRAY:
+    case gli::TARGET_3D:
+    case gli::TARGET_CUBE_ARRAY:
+        break;
+    default:
+        break;
     }
-        case gli::TARGET_1D_ARRAY:
-        case gli::TARGET_2D:
-        case gli::TARGET_CUBE:
-            break;
-        case gli::TARGET_2D_ARRAY:
-        case gli::TARGET_3D:
-        case gli::TARGET_CUBE_ARRAY:
-            break;
-        default:
-            break;
-        }
     return 0;
 }
 
